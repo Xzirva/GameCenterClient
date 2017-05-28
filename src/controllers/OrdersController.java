@@ -17,7 +17,7 @@ import dao.ProductsDao;
 /**
  * Servlet implementation class OrderController
  */
-@WebServlet("/OrdersController")
+
 public class OrdersController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -38,7 +38,8 @@ public class OrdersController extends HttpServlet {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 		String action = request.getParameter("action");
-		if(action!=null){
+		if(action!=null)
+		{
 						
 			if(action.equals("showForm")){
 				//recuperer la liste Products

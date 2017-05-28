@@ -2,11 +2,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <%@page import="beans.Product"%>
 <%@page import="java.util.List"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; text/css; charset=UTF-8" pageEncoding="UTF-8"%>
     
 <html>
 <head>
-  <link rel="stylesheet" href="mainpage.css">
+  <link href="../Css/login.css" rel="stylesheet" type="text/css">
+  <link href="../Css/tablestyle.css" rel="stylesheet" type="text/css">
+
 </head>
 <body>
 
@@ -81,7 +83,9 @@ Console: <select name="console">
 				<td><%=u.getPrice()%> </td>
 				<td><%=u.getDescription()%> </td>
 				<td>
-					<a href="customersdelete?action=get&id=<%=u.getId()%>">Add</a>	
+					<a href="products?action=edit&id=<%=u.getId()%>">Edit</a>	
+					<a href="products?action=delete&id=<%=u.getId()%>">Delete</a>	
+					
 				</td>
 			</tr>
 			</tbody>
@@ -92,18 +96,21 @@ Console: <select name="console">
 		}
 		else
 		{
-			%><h1>NULL</h1>
+			%><h1>Game Center Empty</h1>
 			<%
 			
 		}
 	%>
-			
 
 </table>
- 
 
 </div>
 
+<section class="about">
+     <p class="about-links">
+      <a href="../ProductsForm.html" target="_parent">Add Product</a>
+    </p>
+    
 
 </body>
 </html>

@@ -16,7 +16,7 @@ import beans.Customer;
 /**
  * Servlet implementation class CustomersController
  */
-@WebServlet("/CustomersController")
+
 public class CustomersController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -49,7 +49,7 @@ public class CustomersController extends HttpServlet {
 			
 			
 			// Forward to /WEB-INF/views/productListView.jsp
-	        RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/Views/CustomersView.jsp");
+	        RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/Views/AdminCustomersView.jsp");
 	        dispatcher.forward(request, response);
 	        
 	}
@@ -57,7 +57,10 @@ public class CustomersController extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPut(HttpServletRequest, HttpServletResponse)
 	 */
-	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPut(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException 
+	{
+				
 		// TODO Auto-generated method stub
 	}
 

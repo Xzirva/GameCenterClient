@@ -32,6 +32,7 @@ Sort :
           <th>Gender</th>
           <th>Username</th>
           <th>Email</th>
+          <th>Action</th>
        </tr>
       <%
 		Object obj = request.getAttribute("CustomersList");
@@ -49,10 +50,11 @@ Sort :
 				<td><%=u.getUsername()%></td>
 				<td><%=u.getEmail()%></td>
 				<td>
+				
 					<a href="addresses?action=get&id=<%=u.getId()%>">Addresses</a>
 					<a href="orders?action=get&id=<%=u.getId()%>">Orders</a>
 					<a href="customers?action=delete&id=<%=u.getId()%>">Delete</a>
-					<a href="customers?action=put&id=<%=u.getId()%>">Edit</a>			
+					<a href="customers?action=put&id=<%=u.getId()%>">Edit</a>	
 				</td>
 			</tr>
 	<%

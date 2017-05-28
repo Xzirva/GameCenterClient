@@ -1,18 +1,27 @@
 <html>
+<head>
+	<link rel="stylesheet" href="Css/login.css">
+  <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+  
+</head>
+ 
 <body>
-	<h1>Address Form</h1>
+<h1>Add a Game to Game Center</h1>
+	<section class="container">
+	<div class="login">
 
 	<form action="http://localhost:8080/GameCenter/web-services/products/add" method="post">
 	
+		 <input type="text" name="name" placeholder="Name" />
+	
 		<p>
-			Name : <input type="text" name="name" />
+			Genre: <select name="publisher">
+  				<option selected value="action">Action</option>
+  				<option value="arcade">Arcade</option>
+  				<option value="race">Race</option>
+  				<option value="dance">Dance</option>
+  			</select>
 		</p>
-		
-		
-		<p>
-			Main Genre : <input type="text" name="genre" />
-		</p>
-		
 		<p>
 			Publisher: <select name="publisher">
   				<option selected value="ubisoft">Ubisoft</option>
@@ -44,7 +53,7 @@
 		
 		</p>
 		<p>
-			Releasing Date: <select name="month">
+			Released: <select name="month">
   				<option value="1">January</option>
   				<option value="2">February</option>
  				<option selected value="3">March</option>
@@ -108,7 +117,7 @@
 		</p>
 		
 		<p>
-			Price : <input type="number" name="price" />
+			<input type="text" name="price" placeholder="Price"/>
 		</p>
 		
 		
@@ -117,8 +126,10 @@
 		</p>
 		
 		<textarea name="description">Enter Description here...</textarea>
-		
+	</div>
+	<div class="submit">
 		<input type="submit" value="Add Address" />
+	</div>
 	</form>
 
 </body>

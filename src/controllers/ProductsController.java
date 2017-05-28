@@ -16,7 +16,7 @@ import java.io.IOException;
 /**
  * Servlet implementation class ProductsController
  */
-@WebServlet("/ProductsController")
+
 public class ProductsController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -36,7 +36,39 @@ public class ProductsController extends HttpServlet {
     {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
+		String action = request.getParameter("action");
 		
+		if(action!=null)
+		{
+			
+			if(action.equals("delete"))
+			{
+				int id = Integer.parseInt(request.getParameter("id"));
+				 
+			       List<Product> listP = new ArrayList<Product>();
+			       //public Product(int id, String name, String genre, String publ, int agemin, String console,
+					//String date, float price, int qtty, String desc)
+			         Publisher pub = new Publisher(1, "ubisoft");
+			         ConsoleType cons = new ConsoleType(1, "Wii");
+					 Product p = new Product(id, "delete", "delete", pub, id, cons, "2016-03-02", (float)34.99, id, "here is a descr");
+					 
+					 listP.add(p);
+				
+					
+					request.setAttribute("ProductsList", listP);
+					
+					
+					// Forward to /WEB-INF/views/productListView.jsp
+			        RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/Views/mainpage.jsp");
+			        dispatcher.forward(request, response);
+			}
+			if(action.equals("edit"))
+			{
+			
+			}
+		}
+		else
+		{
 	       List<Product> listP = new ArrayList<Product>();
 	       //public Customer(int id, String fname, String lname, String gender, String email,
 	       //String username) 
@@ -54,6 +86,7 @@ public class ProductsController extends HttpServlet {
 			// Forward to /WEB-INF/views/productListView.jsp
 	        RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/Views/mainpage.jsp");
 	        dispatcher.forward(request, response);
+		}
 	}
 
 	/**
@@ -94,6 +127,27 @@ public class ProductsController extends HttpServlet {
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException 
 	{
+		 response.getWriter().append("Served at: ").append(request.getContextPath());
+		
+		 int id = Integer.parseInt(request.getParameter("id"));
+		 
+	       List<Product> listP = new ArrayList<Product>();
+	       //public Customer(int id, String fname, String lname, String gender, String email,
+	       //String username) 
+	         Publisher pub = new Publisher(1, "ubisoft");
+	         ConsoleType cons = new ConsoleType(1, "Wii");
+			 Product p = new Product(1, "test1", "action", pub, 18, cons, "2016-03-02", (float)34.99, 5, "here is a descr");
+			 Product p2 = new Product(2, "deleted", "deleted", pub, 18, cons, "2016-03-02", (float)34.99, 5, "here is a descr");
+			
+			 listP.add(p);
+			listP.add(p2);
+			
+			request.setAttribute("ProductsList", listP);
+			
+			
+			// Forward to /WEB-INF/views/productListView.jsp
+	        RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/Views/mainpage.jsp");
+	        dispatcher.forward(request, response);
 	
 	}
 		// TODO Auto-generated method stub
