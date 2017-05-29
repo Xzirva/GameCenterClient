@@ -71,14 +71,28 @@ public class Product implements Serializable, Comparable<Product>
 		return name;
 	}
 	
+	public void setName(String name)
+	{
+		this.name = name;
+	}
+	
 	public String getMaingenre()
 	{
 		return this.maingenre;
 	}
 	
+	public void setMaingenre(String genre)
+	{
+		this.maingenre = genre;
+	}
 	public int getAgemin()
 	{
 		return this.agemin;
+	}
+	
+	public void setAgemin(int agemin)
+	{
+		this.agemin = agemin;
 	}
 	
 	public String getConsole()
@@ -87,6 +101,13 @@ public class Product implements Serializable, Comparable<Product>
 			return this.console.getName();
 		else 
 			return null;
+	}
+	
+	public void setConsole(String console)
+	{
+		if(this.console != null)
+			this.console.setName(console);
+		
 	}
 	
 	public String getPublisher()
@@ -147,7 +168,26 @@ public class Product implements Serializable, Comparable<Product>
 		result = prime * result + id;
 		return result;
 	}
-
+	/*
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Product other = (Product) obj;
+		if (description == null) {
+			if (other.description != null)
+				return false;
+		} else if (!description.equals(other.description))
+			return false;
+		if (id != other.id)
+			return false;
+		return true;
+	}
+	*/
 	@Override
 	public boolean equals(Object obj) {
 		if(obj==null||(!(obj instanceof Product)))
@@ -155,7 +195,6 @@ public class Product implements Serializable, Comparable<Product>
 		Product tmp = (Product)obj;
 		return((this.id==tmp.id) && this.description.equals(tmp.getDescription()));
 	}
-	
 	@Override
 	public int compareTo(Product o) {
 		if(this.price==o.price)

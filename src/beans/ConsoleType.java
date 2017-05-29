@@ -21,6 +21,11 @@ public class ConsoleType implements Serializable
 			return name;
 		}
 		
+		public void setName(String type)
+		{
+			this.name = type;
+		}
+
 		public int getId()
 		{
 			return id;

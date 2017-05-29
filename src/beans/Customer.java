@@ -1,5 +1,9 @@
 package beans;
 import java.io.Serializable;
+import java.sql.SQLException;
+import java.util.List;
+
+
 
 public class Customer implements Serializable, Comparable<Customer>
 {
@@ -53,20 +57,7 @@ public class Customer implements Serializable, Comparable<Customer>
 			this.is_admin = true;
 			this.status = true; 
 		}
-		
-//		public Customer(int id, String fname, String lname, String gender,  String email, String username, String pwd, boolean stat) 
-//		{
-//			super();
-//			this.id = id;
-//			this.firstname = fname;
-//			this.lastname = lname;
-//			this.gender = gender;
-//			this.email = email;
-//			this.username = username;
-//			this.pwd = pwd;
-//			this.status = stat; 
-//		}
-		
+
 		public Customer(Customer cust)
 		{
 			this.id        = cust.getId();
@@ -111,13 +102,34 @@ public class Customer implements Serializable, Comparable<Customer>
 		{
 			return status;
 		}
+		
 		public boolean isAdmin() {
 			return is_admin;
 		}
 		
+		public void setFirstname(String name) {
+			this.firstname = name;
+		}
+		
+		public void setLastname(String name) {
+			this.lastname = name;
+		}
+		
+		
+		public void setEmail(String email) {
+			this.email = email;
+		}
+		
+		
+		public void setUsername(String username)
+		{
+			this.username = username;
+		}
+
 		@Override
 		public int compareTo(Customer o) {
-			return this.lastname.compareTo(o.lastname);
+			// TODO Auto-generated method stub
+			return 0;
 		}
 		
 		

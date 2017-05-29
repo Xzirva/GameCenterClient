@@ -11,6 +11,7 @@ public class Order implements Serializable{
 	private Customer customer;
 	private boolean paid;
 	private Payment payment;
+	private int total;
 	
 	/**
 	 * 
@@ -44,21 +45,17 @@ public class Order implements Serializable{
 		return paid;
 	}
 
+	public int getTotal()
+	{
+		return total;
+	}
+	
 	public List<OrderLine> getOrderLines() {
 		return orderlines;
 	}
 
 	public void setOrderLines(List<OrderLine> lignes) {
 		this.orderlines = lignes;
-	}
-	
-	public double getTotal(){
-		double total = 0;
-	
-		for (OrderLine lc : orderlines){
-			total+=lc.getTotal();
-		}
-		return Math.floor(total * 100) / 100;
 	}
 
 	public int getId() {

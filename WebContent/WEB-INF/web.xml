@@ -9,13 +9,60 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
-
-<servlet> 
-	<servlet-name>javax.ws.rs.core.Application</servlet-name> 
-  </servlet> 
+  <servlet>
+    <servlet-name>javax.ws.rs.core.Application</servlet-name>
+  </servlet>
+  <servlet>
+    <servlet-name>ProductsController</servlet-name>
+    <servlet-class>controllers.ProductsController</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>CustomersController</servlet-name>
+    <servlet-class>controllers.CustomersController</servlet-class>
+  </servlet>
+    <servlet>
+    <servlet-name>AddressesController</servlet-name>
+    <servlet-class>controllers.AddressesController</servlet-class>
+  </servlet>
+   <servlet>
+    <servlet-name>OrdersController</servlet-name>
+    <servlet-class>controllers.OrdersController</servlet-class>
+  </servlet>
+     <servlet>
+    <servlet-name>OrderLinesController</servlet-name>
+    <servlet-class>controllers.OrderLinesController</servlet-class>
+  </servlet>
   
-  <servlet-mapping> 
-    <servlet-name>javax.ws.rs.core.Application</servlet-name> 
-    <url-pattern>/server-test/*</url-pattern> 
-  </servlet-mapping> 
+  
+  <servlet-mapping>
+    <servlet-name>javax.ws.rs.core.Application</servlet-name>
+    <url-pattern>/server-test/*</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>ProductsController</servlet-name>
+    <url-pattern>/products</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>CustomersController</servlet-name>
+    <url-pattern>/customers</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>AddressesController</servlet-name>
+    <url-pattern>/addresses</url-pattern>
+  </servlet-mapping>
+  
+    <servlet-mapping>
+    <servlet-name>OrdersController</servlet-name>
+    <url-pattern>/orders</url-pattern>
+  </servlet-mapping>
+  
+     <servlet-mapping>
+    <servlet-name>OrderLinesController</servlet-name>
+    <url-pattern>/oderlines</url-pattern>
+  </servlet-mapping>
+  
+  
 </web-app>
