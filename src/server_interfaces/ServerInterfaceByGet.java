@@ -20,7 +20,7 @@ public class ServerInterfaceByGet {
 	}
 	
 	public static String get_request(URL url) {
-
+		System.out.print(url);
 		  try {
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
@@ -75,6 +75,7 @@ public class ServerInterfaceByGet {
 		  return null;
 	}
 	public static String post_request(URL url, Map<String,Object> params) throws IOException {
+		System.out.print(url);
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 		byte[] postDataBytes = post_params(params);
         conn.setRequestMethod("POST");

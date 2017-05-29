@@ -20,9 +20,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
 import beans.Customer;
+import beans.Order;
 import beans.Product;
 import server_interfaces.ServerInterfaceByGet;
 import services.CustomersFromServer;
+import services.OrdersFromServer;
 import services.ProductsFromServer;
 
 @Path("test-server") 
@@ -31,15 +33,15 @@ public class TestServer {
 	@GET 
 	@Path("") 
 	@Produces(MediaType.APPLICATION_JSON) 
-	public Product test_server() throws JSONException, ParseException, JsonParseException, JsonMappingException, IOException
+	public Order test_server() throws JSONException, ParseException, JsonParseException, JsonMappingException, IOException
 	{ 
 		String s = ServerInterfaceByGet.test_post();
 		JSONObject json = (JSONObject) new JSONParser().parse(s);
-		
+		Customer c = CustomersFromServer.findId(1);
 		//JSONArray json = (JSONArray) new JSONParser().parse(s);
 		//ObjectMapper mapper = new ObjectMapper();
 		//Customer a = mapper.readValue(json.get(0).toString(), Customer.class);
-		return ProductsFromServer.findId(1);
+		return OrdersFromServer.findId(c, 1);
 	} 
 	
 }
