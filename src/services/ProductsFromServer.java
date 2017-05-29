@@ -1,13 +1,11 @@
 package services;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.json.simple.JSONArray;
-import org.json.JSONException;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -22,7 +20,7 @@ import server_interfaces.ServerInterfaceByGet;
 public class ProductsFromServer {
 
 	
-	public static List<Product> findAll() throws ParseException, JsonParseException, JsonMappingException, IOException, JSONException {
+	public static List<Product> findAll() throws ParseException, JsonParseException, JsonMappingException, IOException {
 		URL url = new URL("http://localhost:8080/GameCenter/web-services/products");
 		String s = ServerInterfaceByGet.get_request(url);
 		JSONArray jsons = (JSONArray) new JSONParser().parse(s);

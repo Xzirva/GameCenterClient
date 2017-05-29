@@ -5,7 +5,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.json.JSONException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -22,7 +21,7 @@ import server_interfaces.ServerInterfaceByGet;
 
 public class OrdersFromServer {
 	private static ObjectMapper mapper = new ObjectMapper();
-	public static List<Order> findAll(Customer customer) throws ParseException, JsonParseException, JsonMappingException, IOException, JSONException {
+	public static List<Order> findAll(Customer customer) throws ParseException, JsonParseException, JsonMappingException, IOException {
 		URL url = new URL("http://localhost:8080/GameCenter/web-services/customers/" + customer.getId() + "/orders");
 		String s = ServerInterfaceByGet.get_request(url);
 		JSONArray jsons = (JSONArray) new JSONParser().parse(s);

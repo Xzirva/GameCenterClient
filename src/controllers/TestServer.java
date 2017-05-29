@@ -9,7 +9,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import org.json.simple.JSONArray;
-import org.json.JSONException;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -33,7 +32,7 @@ public class TestServer {
 	@GET 
 	@Path("") 
 	@Produces(MediaType.APPLICATION_JSON) 
-	public Order test_server() throws JSONException, ParseException, JsonParseException, JsonMappingException, IOException
+	public Order test_server() throws ParseException, JsonParseException, JsonMappingException, IOException
 	{ 
 		String s = ServerInterfaceByGet.test_post();
 		JSONObject json = (JSONObject) new JSONParser().parse(s);
