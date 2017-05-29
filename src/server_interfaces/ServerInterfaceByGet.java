@@ -19,7 +19,7 @@ public class ServerInterfaceByGet {
 		return get_request(url);
 	}
 	
-	private static String get_request(URL url) {
+	public static String get_request(URL url) {
 
 		  try {
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();

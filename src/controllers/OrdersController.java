@@ -1,34 +1,34 @@
-//package controllers;
-//
-//import java.io.IOException;
-//import java.util.List;
-//
-//import javax.servlet.ServletException;
-//import javax.servlet.annotation.WebServlet;
-//import javax.servlet.http.HttpServlet;
-//import javax.servlet.http.HttpServletRequest;
-//import javax.servlet.http.HttpServletResponse;
-//
+package controllers;
+
+import java.io.IOException;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 //import beans.LineOrder;
-//import beans.Order;
-//import beans.Product;
+import beans.Order;
+import beans.Product;
 //import dao.ProductsDao;
-//
-///**
-// * Servlet implementation class OrderController
-// */
-//
-//public class OrdersController extends HttpServlet {
-//	private static final long serialVersionUID = 1L;
-//       
-//    /**
-//     * @see HttpServlet#HttpServlet()
-//     */
-//    public OrdersController() {
-//        super();
-//        // TODO Auto-generated constructor stub
-//    }
-//
+
+/**
+ * Servlet implementation class OrderController
+ */
+
+public class OrdersController extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public OrdersController() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
 //	/**
 //	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 //	 */
@@ -129,5 +129,5 @@
 //	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //		// TODO Auto-generated method stub
 //	}
-//
-//}
+
+}

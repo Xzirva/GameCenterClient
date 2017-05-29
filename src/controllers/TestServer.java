@@ -1,6 +1,7 @@
 package controllers;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.ws.rs.GET; 
 import javax.ws.rs.Path; 
@@ -19,7 +20,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
 import beans.Customer;
+import beans.Product;
 import server_interfaces.ServerInterfaceByGet;
+import services.ProductsFromServer;
 
 @Path("test-server") 
 
@@ -27,7 +30,7 @@ public class TestServer {
 	@GET 
 	@Path("") 
 	@Produces(MediaType.APPLICATION_JSON) 
-	public JSONObject test_server() throws JSONException, ParseException, JsonParseException, JsonMappingException, IOException
+	public List<Product> test_server() throws JSONException, ParseException, JsonParseException, JsonMappingException, IOException
 	{ 
 		String s = ServerInterfaceByGet.test_post();
 		JSONObject json = (JSONObject) new JSONParser().parse(s);
@@ -35,7 +38,7 @@ public class TestServer {
 		//JSONArray json = (JSONArray) new JSONParser().parse(s);
 		//ObjectMapper mapper = new ObjectMapper();
 		//Customer a = mapper.readValue(json.get(0).toString(), Customer.class);
-		return json;
+		return ProductsFromServer.findAll();
 	} 
 	
 }
