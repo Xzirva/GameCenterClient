@@ -41,6 +41,7 @@ public class OrdersFromServer {
 		URL url = new URL("http://localhost:8080/GameCenter/web-services/customers/" + customer.getId() + "/orders/" + id);
 		String s = ServerInterfaceByGet.get_request(url);
 		JSONObject order_json = (JSONObject) new JSONParser().parse(s);
+		System.out.println(order_json.get("id"));
 		Order current = new Order((int)order_json.get("id"), customer, order_json.get("paid") == "true");
 		return current;
 	}

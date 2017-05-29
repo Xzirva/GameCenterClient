@@ -32,15 +32,14 @@ public class TestServer {
 	@GET 
 	@Path("") 
 	@Produces(MediaType.APPLICATION_JSON) 
-	public Order test_server() throws ParseException, JsonParseException, JsonMappingException, IOException
+	public List<Customer> test_server() throws ParseException, JsonParseException, JsonMappingException, IOException
 	{ 
-		String s = ServerInterfaceByGet.test_post();
-		JSONObject json = (JSONObject) new JSONParser().parse(s);
-		Customer c = CustomersFromServer.findId(1);
+		//String s = ServerInterfaceByGet.test_post();
+		//JSONObject json = (JSONObject) new JSONParser().parse(s);
 		//JSONArray json = (JSONArray) new JSONParser().parse(s);
 		//ObjectMapper mapper = new ObjectMapper();
 		//Customer a = mapper.readValue(json.get(0).toString(), Customer.class);
-		return OrdersFromServer.findId(c, 1);
+		return CustomersFromServer.findAll();
 	} 
 	
 }
