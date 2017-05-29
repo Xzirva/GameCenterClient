@@ -11,7 +11,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.parser.ParseException;
+
 import beans.Customer;
+import services.CustomersFromServer;
 
 /**
  * Servlet implementation class CustomersController
@@ -35,19 +38,19 @@ public class CustomersController extends HttpServlet {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	
-		
-	       List<Customer> listC = new ArrayList<Customer>();
-	       //public Customer(int id, String fname, String lname, String gender, String email,
-	       //String username) 
-	        Customer c1 = new Customer(1, "cust1", "cust1", "f", "cust@gmail.com", "user1");
-	        Customer c2 = new Customer(2, "cust2", "cust2", "m", "cust2@gmail.com", "user2");
-	        
-			 listC.add(c1);
-			listC.add(c2);
+		List<Customer> listC = new ArrayList<Customer>();
+		try 
+		{
+			
+			listC = CustomersFromServer.findAll();
+		} catch (ParseException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 			
 			request.setAttribute("CustomersList", listC);
-			
-			
+	
 			// Forward to /WEB-INF/views/productListView.jsp
 	        RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/Views/AdminCustomersView.jsp");
 	        dispatcher.forward(request, response);

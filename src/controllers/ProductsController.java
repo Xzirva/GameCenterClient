@@ -11,8 +11,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.json.simple.parser.ParseException;
+
 import java.io.IOException;
 
+import services.ProductsFromServer;
 /**
  * Servlet implementation class ProductsController
  */
@@ -44,6 +48,14 @@ public class ProductsController extends HttpServlet {
 			{
 				int id = Integer.parseInt(request.getParameter("id"));
 				Product p = new Product();
+				try 
+				{
+					 p = ProductsFromServer.findId(id);
+				} catch (ParseException e) 
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				
 				
 				request.setAttribute("Product", p);
@@ -59,22 +71,22 @@ public class ProductsController extends HttpServlet {
 			{
 				int id = Integer.parseInt(request.getParameter("id"));
 				 
-			       List<Product> listP = new ArrayList<Product>();
-			       //public Product(int id, String name, String genre, String publ, int agemin, String console,
-					//String date, float price, int qtty, String desc)
+					List<Product> listP = new ArrayList<Product>();
 			       
-			         Publisher pub = new Publisher(1, "ubisoft");
-			         ConsoleType cons = new ConsoleType(1, "Wii");
-					 Product p = new Product(id, "delete", "delete", pub, id, cons, "2016-03-02", (float)34.99, id, "here is a descr");
-					 
-					 listP.add(p);
-				
+			       try
+			       {
+			    	   listP = ProductsFromServer.findAll();
+			       } catch (ParseException e) 
+			       {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+			       }
 					
 					request.setAttribute("ProductsList", listP);
 					
 					
 					// Forward to /WEB-INF/views/productListView.jsp
-			        RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/Views/mainpage.jsp");
+			        RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/Views/AdminProductsView.jsp");
 			        dispatcher.forward(request, response);
 			}
 			if(action.equals("edit"))
@@ -85,21 +97,21 @@ public class ProductsController extends HttpServlet {
 		else
 		{
 	       List<Product> listP = new ArrayList<Product>();
-	       //public Customer(int id, String fname, String lname, String gender, String email,
-	       //String username) 
-	         Publisher pub = new Publisher(1, "ubisoft");
-	         ConsoleType cons = new ConsoleType(1, "Wii");
-			 Product p = new Product(1, "test1", "action", pub, 18, cons, "2016-03-02", (float)34.99, 5, "here is a descr");
-			 Product p2 = new Product(2, "test2", "action", pub, 18, cons, "2016-03-02", (float)34.99, 5, "here is a descr");
-			
-			 listP.add(p);
-			listP.add(p2);
-			
+	       
+	       try
+	       {
+	    	   listP = ProductsFromServer.findAll();
+	       } catch (ParseException e) 
+	       {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+	       }
+	      
 			request.setAttribute("ProductsList", listP);
 			
 			
 			// Forward to /WEB-INF/views/productListView.jsp
-	        RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/Views/mainpage.jsp");
+	        RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/Views/AdminProductsView.jsp");
 	        dispatcher.forward(request, response);
 		}
 	}
