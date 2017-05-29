@@ -48,6 +48,7 @@
     </table>
 
 <h3>
-<a href="Customerform.html">Add</a>
+<a href="orders?action=show">View Orders</a>
+<a href="products?action=">View Products</a>
 </body>
 </html>
