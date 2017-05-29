@@ -15,7 +15,7 @@ public class Customer implements Serializable, Comparable<Customer>
 		private String username;
 		private String pwd;
 		private boolean status;
-		private boolean is_admin;
+		private boolean admin;
 		
 		public Customer(){}
 		
@@ -54,7 +54,7 @@ public class Customer implements Serializable, Comparable<Customer>
 			this.email = email;
 			this.username = username;
 			this.pwd = pwd;
-			this.is_admin = true;
+			this.admin = true;
 			this.status = true; 
 		}
 
@@ -104,7 +104,7 @@ public class Customer implements Serializable, Comparable<Customer>
 		}
 		
 		public boolean isAdmin() {
-			return is_admin;
+			return admin;
 		}
 		
 		public void setFirstname(String name) {
