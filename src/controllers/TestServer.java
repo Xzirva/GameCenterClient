@@ -31,7 +31,7 @@ public class TestServer {
 	@GET 
 	@Path("") 
 	@Produces(MediaType.APPLICATION_JSON) 
-	public Customer test_server() throws JSONException, ParseException, JsonParseException, JsonMappingException, IOException
+	public Product test_server() throws JSONException, ParseException, JsonParseException, JsonMappingException, IOException
 	{ 
 		String s = ServerInterfaceByGet.test_post();
 		JSONObject json = (JSONObject) new JSONParser().parse(s);
@@ -39,7 +39,7 @@ public class TestServer {
 		//JSONArray json = (JSONArray) new JSONParser().parse(s);
 		//ObjectMapper mapper = new ObjectMapper();
 		//Customer a = mapper.readValue(json.get(0).toString(), Customer.class);
-		return CustomersFromServer.findId(1);
+		return ProductsFromServer.findId(1);
 	} 
 	
 }
