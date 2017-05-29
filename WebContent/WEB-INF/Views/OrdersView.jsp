@@ -28,10 +28,7 @@
 	%>
 			<tr>
 				<td><%=u.getTotal()%></td>
-				<td>
-					<a href="orderline?action=put&id=<%=u.getId()%>">View</a>	
-					<a href="oderline?action=delete&id=<%=u.getId()%>">Delete</a>
-				</td>
+				
 			</tr>
 	<%
 			}

@@ -40,7 +40,21 @@ public class ProductsController extends HttpServlet {
 		
 		if(action!=null)
 		{
-			
+			if(action.equals("show"))
+			{
+				int id = Integer.parseInt(request.getParameter("id"));
+				Product p = new Product();
+				
+				
+				request.setAttribute("Product", p);
+				
+				
+				// Forward to /WEB-INF/views/productListView.jsp
+		        RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/Views/achatProduct.jsp");
+		        dispatcher.forward(request, response);
+				
+				
+			}
 			if(action.equals("delete"))
 			{
 				int id = Integer.parseInt(request.getParameter("id"));
@@ -48,6 +62,7 @@ public class ProductsController extends HttpServlet {
 			       List<Product> listP = new ArrayList<Product>();
 			       //public Product(int id, String name, String genre, String publ, int agemin, String console,
 					//String date, float price, int qtty, String desc)
+			       
 			         Publisher pub = new Publisher(1, "ubisoft");
 			         ConsoleType cons = new ConsoleType(1, "Wii");
 					 Product p = new Product(id, "delete", "delete", pub, id, cons, "2016-03-02", (float)34.99, id, "here is a descr");
