@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="stylesheet" href="Css/login.css">
+	<link rel="stylesheet" href="login.css">
   <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
   
 </head>

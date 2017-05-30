@@ -1,7 +1,7 @@
 <html>
 <head>
-	<link rel="stylesheet" href="Css/login.css">
-  <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+	<link rel="stylesheet" href="login.css">
+    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
   
 </head>
  
@@ -10,7 +10,7 @@
 	<section class="container">
 	<div class="login">
 
-	<form action="http://localhost:8080/GameCenter/web-services/products/add" method="post">
+	<form action="products" method="post">
 	
 		 <input type="text" name="name" placeholder="Name" />
 	
@@ -22,6 +22,7 @@
   				<option value="dance">Dance</option>
   			</select>
 		</p>
+		
 		<p>
 			Publisher: <select name="publisher">
   				<option selected value="ubisoft">Ubisoft</option>
@@ -126,11 +127,14 @@
 		</p>
 		
 		<textarea name="description">Enter Description here...</textarea>
+	</form>
 	</div>
+	
 	<div class="submit">
 		<input type="submit" value="Add Address" />
 	</div>
-	</form>
+	
+</section>
 
 </body>
 </html>

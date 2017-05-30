@@ -39,12 +39,9 @@ public class AddressesController extends HttpServlet {
 		int id = Integer.parseInt(request.getParameter("id"));
 		
 		List<Address> listA  = new ArrayList<Address>();
-		Customer c2 = new Customer(2, "cust2", "cust2", "m", "cust2@gmail.com", "user2");
-	    Address a1 = new Address(1, "test1", "05890", "test", "test", "test", true, c2);    
-	    listA.add(a1);
-	    
+		
 	    request.setAttribute("AddressesList", listA);
-	    RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/Views/AddressesView.jsp");
+	    RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/AddressesView.jsp");
         dispatcher.forward(request, response);
 	}
 
@@ -56,18 +53,6 @@ public class AddressesController extends HttpServlet {
 		doGet(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPut(HttpServletRequest, HttpServletResponse)
-	 */
-	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-	}
 
-	/**
-	 * @see HttpServlet#doDelete(HttpServletRequest, HttpServletResponse)
-	 */
-	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-	}
 
 }

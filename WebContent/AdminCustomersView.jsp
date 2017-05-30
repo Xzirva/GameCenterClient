@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <%@page import="beans.Customer"%>
 <%@page import="java.util.List"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<link rel="stylesheet" href="login.css">
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
     
 <!DOCTYPE html>
 <html>
@@ -17,7 +17,7 @@ Sort :
 	<input name="sortType" type="radio" value="1"/>firstname
 	<input name="sortType" type="radio" value="1"/>lastname
 	<input name="sortType" type="radio" value="2"/>username
-	<input type="hidden" name="action" valce="sort" />
+	<input type="hidden" name="action" value="sort" />
 	<input type="submit" value="Trier" />
 </form>
     
@@ -64,14 +64,14 @@ Sort :
 		}
 		else
 		{
-			%><h1>NULL</h1>
+			%>
+			   <h2>NULL</h2>
 			<%
 			
 		}
 	%>
     </table>
 
-<h3>
-<a href="Customerform.html">Add</a>
+<a href="CustomerForm.jsp">Add</a>
 </body>
 </html>
