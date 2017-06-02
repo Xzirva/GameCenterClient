@@ -58,6 +58,16 @@ public class OrdersFromServer {
 		return serializeOrder(order_json);
 	}
 	
+	public static Order setOrderLine(int customer_id, int product_id, int quantity) throws ParseException, JsonParseException, JsonMappingException, IOException{
+		URL url = new URL("http://localhost:8080/GameCenter/web-services/customers/" + customer_id  + "/current_cart/set_orderline");
+		Map<String,Object> params = new LinkedHashMap<>();
+		params.put("product_id", product_id);
+		params.put("quantity", quantity);
+		String s = ServerInterfaceByGet.post_request(url, params);
+		JSONObject order_json = (JSONObject) new JSONParser().parse(s);
+		return serializeOrder(order_json);
+	}
+	
 	private static List<OrderLine> serialiseOrderLines(JSONObject OrderJson) throws JsonParseException, JsonMappingException, IOException{
 		JSONArray orderlines_json = (JSONArray) OrderJson.get("orderLines");
 		List<OrderLine> lu = new ArrayList<OrderLine>();

@@ -40,7 +40,7 @@ public class TestServer {
 		//JSONArray json = (JSONArray) new JSONParser().parse(s);
 		//ObjectMapper mapper = new ObjectMapper();
 		//Customer a = mapper.readValue(json.get(0).toString(), Customer.class);
-		return OrdersFromServer.addToCart(1, 1, 6);
+		return OrdersFromServer.setOrderLine(1, 1, 1);
 	} 
 	
 }
