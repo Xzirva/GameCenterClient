@@ -62,7 +62,7 @@ public class ProductsController extends HttpServlet {
 				
 				
 				// Forward to /WEB-INF/views/productListView.jsp
-		        RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/Views/achatProduct.jsp");
+		        RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/achatProduct.jsp");
 		        dispatcher.forward(request, response);
 				
 				
@@ -86,7 +86,7 @@ public class ProductsController extends HttpServlet {
 					
 					
 					// Forward to /WEB-INF/views/productListView.jsp
-			        RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/Views/AdminProductsView.jsp");
+			        RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/AdminProductsView.jsp");
 			        dispatcher.forward(request, response);
 			}
 			if(action.equals("edit"))
@@ -111,7 +111,7 @@ public class ProductsController extends HttpServlet {
 			
 			
 			// Forward to /WEB-INF/views/productListView.jsp
-	        RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/Views/AdminProductsView.jsp");
+	        RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/AdminProductsView.jsp");
 	        dispatcher.forward(request, response);
 		}
 	}
@@ -159,21 +159,21 @@ public class ProductsController extends HttpServlet {
 		 int id = Integer.parseInt(request.getParameter("id"));
 		 
 	       List<Product> listP = new ArrayList<Product>();
-	       //public Customer(int id, String fname, String lname, String gender, String email,
-	       //String username) 
-	         Publisher pub = new Publisher(1, "ubisoft");
-	         ConsoleType cons = new ConsoleType(1, "Wii");
-			 Product p = new Product(1, "test1", "action", pub, 18, cons, "2016-03-02", (float)34.99, 5, "here is a descr");
-			 Product p2 = new Product(2, "deleted", "deleted", pub, 18, cons, "2016-03-02", (float)34.99, 5, "here is a descr");
-			
-			 listP.add(p);
-			listP.add(p2);
-			
+	       
+	       try
+	       {
+	    	   listP = ProductsFromServer.findAll();
+	       } catch (ParseException e) 
+	       {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+	       }
+	      
 			request.setAttribute("ProductsList", listP);
 			
 			
 			// Forward to /WEB-INF/views/productListView.jsp
-	        RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/Views/mainpage.jsp");
+	        RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/AdminProductsView.jsp");
 	        dispatcher.forward(request, response);
 	
 	}

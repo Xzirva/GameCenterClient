@@ -6,8 +6,8 @@
     
 <html>
 <head>
-  <link href="../Css/login.css" rel="stylesheet" type="text/css">
-  <link href="../Css/tablestyle.css" rel="stylesheet" type="text/css">
+  <link href="login.css" rel="stylesheet" type="text/css">
+  <link href="tablestyle.css" rel="stylesheet" type="text/css">
 
 </head>
 <body>
@@ -48,8 +48,6 @@ Console: <select name="console">
 </div>
 
 <div class= right>
- <form method="get" action="products">
-
  	<table>
  	 <thead>
         <tr>
@@ -60,7 +58,6 @@ Console: <select name="console">
             <th>Console</th>
             <th>Released date</th>
             <th>Price</th>
-            <th>Description</th>
 
         </tr>
     </thead>
@@ -82,9 +79,8 @@ Console: <select name="console">
 				<td><%=u.getConsole()%> </td>
 				<td><%=u.getReleasedate()%> </td>
 				<td><%=u.getPrice()%> </td>
-				<td><%=u.getDescription()%> </td>
 				<td>
-					<a href="products?action=show&id=<%=u.getId()%>">View Product</a>		
+					<a href="orders?action=showProduct&id=<%=u.getId()%>">View Product</a>		
 				</td>
 			</tr>
 			</tbody>
@@ -102,7 +98,6 @@ Console: <select name="console">
 	%>
 
 </table>
- </form>
 </div>
 
 <section class="about">

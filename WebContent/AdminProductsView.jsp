@@ -108,7 +108,7 @@ Console: <select name="console">
 
 <section class="about">
      <p class="about-links">
-      <a href="../ProductsForm.html" target="_parent">Add Product</a>
+      <a href="ProductForm.jsp">Add Product</a>
     </p>
     
 
