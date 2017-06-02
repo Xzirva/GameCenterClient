@@ -37,17 +37,20 @@ public class OrdersFromServer {
 		
 	}
 	
-	public static Order findId(Customer customer, int id) throws ParseException, JsonParseException, JsonMappingException, IOException {
-		URL url = new URL("http://localhost:8080/GameCenter/web-services/customers/" + customer.getId() + "/orders/" + id);
+	public static Order findCart(int customer_id) throws ParseException, JsonParseException, JsonMappingException, IOException {
+		URL url = new URL("http://localhost:8080/GameCenter/web-services/customers/" + customer_id  + "/current_cart/cart");
 		String s = ServerInterfaceByGet.get_request(url);
 		JSONObject order_json = (JSONObject) new JSONParser().parse(s);
-		System.out.println(order_json.get("id"));
-		Order current = new Order((int)order_json.get("id"), customer, order_json.get("paid") == "true");
+		System.out.println(order_json.keySet());
+		Customer customer = mapper.readValue(order_json.get("customer").toString(), Customer.class);
+		Order current = new Order(Integer.parseInt(order_json.get("id").toString()), customer, order_json.get("paid") == "true");
+		List<OrderLine> list = serialiseOrderLines(order_json);
+		current.setOrderLines(list);
 		return current;
 	}
 	
 	private static List<OrderLine> serialiseOrderLines(JSONObject OrderJson) throws JsonParseException, JsonMappingException, IOException{
-		JSONArray orderlines_json = (JSONArray) OrderJson.get("orderlines");
+		JSONArray orderlines_json = (JSONArray) OrderJson.get("orderLines");
 		List<OrderLine> lu = new ArrayList<OrderLine>();
 
 		for (int i = 0; i < orderlines_json.size(); i++) {

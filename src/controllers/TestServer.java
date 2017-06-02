@@ -23,6 +23,7 @@ import beans.Order;
 import beans.Product;
 import server_interfaces.ServerInterfaceByGet;
 import services.CustomersFromServer;
+import services.LoginToServer;
 import services.OrdersFromServer;
 import services.ProductsFromServer;
 
@@ -32,14 +33,14 @@ public class TestServer {
 	@GET 
 	@Path("") 
 	@Produces(MediaType.APPLICATION_JSON) 
-	public List<Customer> test_server() throws ParseException, JsonParseException, JsonMappingException, IOException
+	public Order test_server() throws ParseException, JsonParseException, JsonMappingException, IOException
 	{ 
 		//String s = ServerInterfaceByGet.test_post();
 		//JSONObject json = (JSONObject) new JSONParser().parse(s);
 		//JSONArray json = (JSONArray) new JSONParser().parse(s);
 		//ObjectMapper mapper = new ObjectMapper();
 		//Customer a = mapper.readValue(json.get(0).toString(), Customer.class);
-		return CustomersFromServer.findAll();
+		return OrdersFromServer.findCart(1);
 	} 
 	
 }

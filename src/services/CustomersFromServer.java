@@ -34,7 +34,7 @@ public class CustomersFromServer {
 	}
 	
 	public static Customer findId(int id) throws ParseException, JsonParseException, JsonMappingException, IOException {
-		URL url = new URL("http://localhost:8080/GameCenter/web-services/customers/" + id);
+		URL url = new URL("http://localhost:8080/GameCenter/web-services/admins/customers/" + id);
 		String s = ServerInterfaceByGet.get_request(url);
 		JSONObject jsons = (JSONObject) new JSONParser().parse(s);
 		ObjectMapper mapper = new ObjectMapper();
