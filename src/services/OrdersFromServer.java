@@ -3,7 +3,9 @@ package services;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -42,11 +44,18 @@ public class OrdersFromServer {
 		String s = ServerInterfaceByGet.get_request(url);
 		JSONObject order_json = (JSONObject) new JSONParser().parse(s);
 		System.out.println(order_json.keySet());
-		Customer customer = mapper.readValue(order_json.get("customer").toString(), Customer.class);
-		Order current = new Order(Integer.parseInt(order_json.get("id").toString()), customer, order_json.get("paid") == "true");
-		List<OrderLine> list = serialiseOrderLines(order_json);
-		current.setOrderLines(list);
-		return current;
+
+		return serializeOrder(order_json);
+	}
+	
+	public static Order addToCart(int customer_id, int product_id, int quantity) throws ParseException, JsonParseException, JsonMappingException, IOException{
+		URL url = new URL("http://localhost:8080/GameCenter/web-services/customers/" + customer_id  + "/current_cart/add_to_cart");
+		Map<String,Object> params = new LinkedHashMap<>();
+		params.put("product_id", product_id);
+		params.put("quantity", quantity);
+		String s = ServerInterfaceByGet.post_request(url, params);
+		JSONObject order_json = (JSONObject) new JSONParser().parse(s);
+		return serializeOrder(order_json);
 	}
 	
 	private static List<OrderLine> serialiseOrderLines(JSONObject OrderJson) throws JsonParseException, JsonMappingException, IOException{
@@ -59,4 +68,14 @@ public class OrdersFromServer {
 		}
 		return lu;
 	}
+	
+	private static Order serializeOrder(JSONObject order_json) throws ParseException, JsonParseException, JsonMappingException, IOException{
+		Customer customer = mapper.readValue(order_json.get("customer").toString(), Customer.class);
+		Order current = new Order(Integer.parseInt(order_json.get("id").toString()), customer, order_json.get("paid") == "true");
+		List<OrderLine> list = serialiseOrderLines(order_json);
+		current.setOrderLines(list);
+		return current;
+	}
+	
+	
 }
