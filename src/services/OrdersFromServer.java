@@ -81,7 +81,7 @@ public class OrdersFromServer {
 	
 	private static Order serializeOrder(JSONObject order_json) throws ParseException, JsonParseException, JsonMappingException, IOException{
 		Customer customer = mapper.readValue(order_json.get("customer").toString(), Customer.class);
-		Order current = new Order(Integer.parseInt(order_json.get("id").toString()), customer, order_json.get("paid") == "true");
+		Order current = new Order(Integer.parseInt(order_json.get("id").toString()), customer, order_json.get("paid") == "true", Double.parseDouble(order_json.get("total").toString()));
 		List<OrderLine> list = serialiseOrderLines(order_json);
 		current.setOrderLines(list);
 		return current;

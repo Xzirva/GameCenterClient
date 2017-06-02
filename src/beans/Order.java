@@ -11,7 +11,7 @@ public class Order implements Serializable{
 	private Customer customer;
 	private boolean paid;
 	private Payment payment;
-	private int total;
+	private double total;
 	
 	/**
 	 * 
@@ -24,6 +24,14 @@ public class Order implements Serializable{
 		this.customer = attr_customer;
 		this.paid = attr_paid;
 		this.payment = attr_payment;
+	}
+	
+	public Order(int attr_id, Customer attr_customer, boolean attr_paid, double total) {
+		super();
+		this.id = attr_id;
+		this.customer = attr_customer;
+		this.paid = attr_paid;
+		this.total = total;
 	}
 	
 	public Order(int attr_id, Customer attr_customer, boolean attr_paid) {
@@ -45,7 +53,7 @@ public class Order implements Serializable{
 		return paid;
 	}
 
-	public int getTotal()
+	public double getTotal()
 	{
 		return total;
 	}
