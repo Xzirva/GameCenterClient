@@ -55,14 +55,14 @@ public class ServerInterfaceByGet {
 
 		}
 	
-	public static String test_post() {
+	public static String test_post() throws Exception {
 
 		  try {
 			  	URL url = new URL("http://localhost:8080/GameCenter/web-services/auth/login");
 			  	Map<String,Object> params = new LinkedHashMap<>();
 				params.put("username", "xxxxxx");
 				params.put("password", "xxxxxx");
-			  	return post_request(url, params);
+			  	return write_request(url, "POST", params);
 			  } 
 		  catch (MalformedURLException e) {
 
@@ -74,11 +74,18 @@ public class ServerInterfaceByGet {
 		  }
 		  return null;
 	}
-	public static String post_request(URL url, Map<String,Object> params) throws IOException {
+	
+	public static String write_request(URL url, String type) throws Exception {
+		return write_request(url, type, new LinkedHashMap<>());
+	}
+	public static String write_request(URL url, String type ,Map<String,Object> params) throws Exception {
 		System.out.print(url);
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 		byte[] postDataBytes = post_params(params);
-        conn.setRequestMethod("POST");
+		if (type != "POST" && type != "PUT" && type != "DELETE")
+			throw new Exception("Unhandled request type " + type);
+		
+        conn.setRequestMethod(type);
         conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
         conn.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
         conn.setDoOutput(true);

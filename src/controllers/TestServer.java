@@ -33,14 +33,14 @@ public class TestServer {
 	@GET 
 	@Path("") 
 	@Produces(MediaType.APPLICATION_JSON) 
-	public Order test_server() throws ParseException, JsonParseException, JsonMappingException, IOException
+	public Order test_server() throws Exception
 	{ 
 		//String s = ServerInterfaceByGet.test_post();
 		//JSONObject json = (JSONObject) new JSONParser().parse(s);
 		//JSONArray json = (JSONArray) new JSONParser().parse(s);
 		//ObjectMapper mapper = new ObjectMapper();
 		//Customer a = mapper.readValue(json.get(0).toString(), Customer.class);
-		return OrdersFromServer.setOrderLine(1, 1, 1);
+		return OrdersFromServer.clear(1);
 	} 
 	
 }

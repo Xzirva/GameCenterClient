@@ -48,22 +48,36 @@ public class OrdersFromServer {
 		return serializeOrder(order_json);
 	}
 	
-	public static Order addToCart(int customer_id, int product_id, int quantity) throws ParseException, JsonParseException, JsonMappingException, IOException{
+	public static Order addToCart(int customer_id, int product_id, int quantity) throws Exception{
 		URL url = new URL("http://localhost:8080/GameCenter/web-services/customers/" + customer_id  + "/current_cart/add_to_cart");
 		Map<String,Object> params = new LinkedHashMap<>();
 		params.put("product_id", product_id);
 		params.put("quantity", quantity);
-		String s = ServerInterfaceByGet.post_request(url, params);
+		String s = ServerInterfaceByGet.write_request(url, "POST", params);
 		JSONObject order_json = (JSONObject) new JSONParser().parse(s);
 		return serializeOrder(order_json);
 	}
 	
-	public static Order setOrderLine(int customer_id, int product_id, int quantity) throws ParseException, JsonParseException, JsonMappingException, IOException{
+	public static Order setOrderLine(int customer_id, int product_id, int quantity) throws Exception{
 		URL url = new URL("http://localhost:8080/GameCenter/web-services/customers/" + customer_id  + "/current_cart/set_orderline");
 		Map<String,Object> params = new LinkedHashMap<>();
 		params.put("product_id", product_id);
 		params.put("quantity", quantity);
-		String s = ServerInterfaceByGet.post_request(url, params);
+		String s = ServerInterfaceByGet.write_request(url, "POST", params);
+		JSONObject order_json = (JSONObject) new JSONParser().parse(s);
+		return serializeOrder(order_json);
+	}
+	
+	public static Order removeOrderLine(int customer_id, int product_id) throws Exception {
+		URL url = new URL("http://localhost:8080/GameCenter/web-services/customers/" + customer_id  + "/current_cart/remove?product_id=" + product_id);
+		String s = ServerInterfaceByGet.write_request(url, "DELETE");
+		JSONObject order_json = (JSONObject) new JSONParser().parse(s);
+		return serializeOrder(order_json);
+	}
+	
+	public static Order clear(int customer_id) throws Exception {
+		URL url = new URL("http://localhost:8080/GameCenter/web-services/customers/" + customer_id  + "/current_cart/clear");
+		String s = ServerInterfaceByGet.write_request(url, "DELETE");
 		JSONObject order_json = (JSONObject) new JSONParser().parse(s);
 		return serializeOrder(order_json);
 	}
@@ -78,6 +92,8 @@ public class OrdersFromServer {
 		}
 		return lu;
 	}
+	
+	
 	
 	private static Order serializeOrder(JSONObject order_json) throws ParseException, JsonParseException, JsonMappingException, IOException{
 		Customer customer = mapper.readValue(order_json.get("customer").toString(), Customer.class);

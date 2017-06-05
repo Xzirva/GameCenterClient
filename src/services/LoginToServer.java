@@ -18,12 +18,12 @@ import server_interfaces.ServerInterfaceByGet;
 
 public class LoginToServer {
 
-	public static Customer login(String username, String password) throws JsonParseException, JsonMappingException, IOException, ParseException {
+	public static Customer login(String username, String password) throws Exception {
 		URL url = new URL("http://localhost:8080/GameCenter/web-services/auth/login");
 		Map<String,Object> params = new LinkedHashMap<>();
 		params.put("username", username);
 		params.put("pwd", password);
-	  	String response = ServerInterfaceByGet.post_request(url, params);
+	  	String response = ServerInterfaceByGet.write_request(url, "POST", params);
 	  	JSONObject jsons = (JSONObject) new JSONParser().parse(response);
 		ObjectMapper mapper = new ObjectMapper();
 		Customer current = mapper.readValue(jsons.get("user").toString(), Customer.class);
