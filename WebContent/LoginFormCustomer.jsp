@@ -11,7 +11,7 @@
    <section class="container">
     <div class="login">
       <h1>Login to Game Center</h1>
-      <form method="post" action="index.html">
+      <form method="post" action="auth">
         <input type="text" name="username" value="" placeholder="Username">
         <input type="password" name="password" value="" placeholder="Password">
         

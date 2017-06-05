@@ -16,6 +16,8 @@ public class Customer implements Serializable, Comparable<Customer>
 		private String pwd;
 		private boolean status;
 		private boolean admin;
+		private String auth_token;
+		
 		
 		public Customer(){}
 		
@@ -54,8 +56,23 @@ public class Customer implements Serializable, Comparable<Customer>
 			this.email = email;
 			this.username = username;
 			this.pwd = pwd;
-			this.admin = true;
+			this.admin = is_admin;
 			this.status = true; 
+		}
+		
+		public Customer(int id, String fname, String lname, String gender, String email, String username, String pwd, boolean is_admin, String authToken) 
+		{
+			super();
+			this.id = id;
+			this.firstname = fname;
+			this.lastname = lname;
+			this.gender = gender;
+			this.email = email;
+			this.username = username;
+			this.pwd = pwd;
+			this.admin = is_admin;
+			this.status = true;
+			this.auth_token = authToken;
 		}
 
 		public Customer(Customer cust)
@@ -124,6 +141,10 @@ public class Customer implements Serializable, Comparable<Customer>
 		public void setUsername(String username)
 		{
 			this.username = username;
+		}
+		
+		public String getAuthToken() {
+			return auth_token;
 		}
 
 		@Override

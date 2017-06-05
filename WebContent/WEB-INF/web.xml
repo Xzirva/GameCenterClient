@@ -33,6 +33,11 @@
     <servlet-class>controllers.OrderLinesController</servlet-class>
   </servlet>
   
+  <servlet>
+    <servlet-name>AuthenticationController</servlet-name>
+    <servlet-class>controllers.AuthenticationController</servlet-class>
+  </servlet>
+  
   
   <servlet-mapping>
     <servlet-name>javax.ws.rs.core.Application</servlet-name>
@@ -62,6 +67,11 @@
      <servlet-mapping>
     <servlet-name>OrderLinesController</servlet-name>
     <url-pattern>/oderlines</url-pattern>
+  </servlet-mapping>
+  
+   <servlet-mapping>
+    <servlet-name>AuthenticationController</servlet-name>
+    <url-pattern>/auth</url-pattern>
   </servlet-mapping>
   
   
