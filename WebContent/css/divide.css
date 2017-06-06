@@ -1,0 +1,12 @@
+
+	
+	#sidebar {
+		background-color: #d2d2d2;
+	    float: left;
+	    width: 15%;
+	}
+	
+	#content-wrap {
+	    float: right;
+	    width: 95%;
+	}  

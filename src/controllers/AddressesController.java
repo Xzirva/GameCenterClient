@@ -36,13 +36,32 @@ public class AddressesController extends HttpServlet {
 	{
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
-		int id = Integer.parseInt(request.getParameter("id"));
+		String action = request.getParameter("action");
+		if(action == null)
+		{
+			
+		}
+		else if (action == "showBilling")
+		{
+			List<Address> listA  = new ArrayList<Address>();
+			
+		    request.setAttribute("AddressesList", listA);
+		    RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/AddressesView.jsp");
+	        dispatcher.forward(request, response);
+	        
+		}
+		else if(action == "showShipping")
+		{
+			List<Address> listA  = new ArrayList<Address>();
+			
+		    request.setAttribute("AddressesList", listA);
+		    RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/AddressesView.jsp");
+	        dispatcher.forward(request, response);
+		}
 		
-		List<Address> listA  = new ArrayList<Address>();
 		
-	    request.setAttribute("AddressesList", listA);
-	    RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/AddressesView.jsp");
-        dispatcher.forward(request, response);
+		
+	   
 	}
 
 	/**

@@ -52,7 +52,7 @@ public class CustomersController extends HttpServlet {
 			request.setAttribute("CustomersList", listC);
 	
 			// Forward to /WEB-INF/views/productListView.jsp
-	        RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/AdminCustomersView.jsp");
+	        RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/AdminCustomersView.jsp");
 	        dispatcher.forward(request, response);
 	        
 	}

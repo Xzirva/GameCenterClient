@@ -14,6 +14,7 @@ import org.json.simple.parser.ParseException;
 
 import beans.OrderLine;
 import beans.Order;
+import beans.Customer;
 import beans.Product;
 import services.ProductsFromServer;
 import services.OrdersFromServer;
@@ -93,10 +94,23 @@ public class OrdersController extends HttpServlet {
 					e.printStackTrace();
 			       }
 			}
-			else if(action.equals("showPanier"))
+			else if(action.equals("showCart"))
 			{
-				//montre la liste dans une nouvelle page
-				request.getRequestDispatcher("showPanier.jsp").forward(request,response);
+				try 
+				{
+					//Object o  = request.getSession().getAttribute("Customer");
+					//Customer cust = (Customer) o;
+					
+					
+					Order cart = OrdersFromServer.findCart(3);
+					request.setAttribute("Cart", cart);		
+					request.getRequestDispatcher("cart.jsp").forward(request,response);
+				} catch (ParseException e) 
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
 			}
 			else if(action.equals("removeProduct"))
 			{
@@ -120,6 +134,24 @@ public class OrdersController extends HttpServlet {
 				request.getSession().removeAttribute("panier");
 				request.getRequestDispatcher("panier.jsp").forward(request, response);
 			}
+			else if(action.equals("paydelivery"))
+			{
+		
+				request.getSession().removeAttribute("panier");
+				request.getRequestDispatcher("paydelivery.jsp").forward(request, response);
+			}
+			else if(action.equals("paybilling"))
+			{
+		
+				request.getSession().removeAttribute("panier");
+				request.getRequestDispatcher("paybilling.jsp").forward(request, response);
+			}
+			else if(action.equals("paypayment"))
+			{
+		
+				request.getSession().removeAttribute("panier");
+				request.getRequestDispatcher("paypayment.jsp").forward(request, response);
+			}
 			
 		}
 		
@@ -134,38 +166,27 @@ public class OrdersController extends HttpServlet {
 	{
 		// TODO Auto-generated method stub
 		//recuperer les parametres: idProduct, qte
-				int idProduct = Integer.parseInt(request.getParameter("id"));
+				int idProduct = Integer.parseInt(request.getParameter("productid"));
 				int qty = Integer.parseInt(request.getParameter("quantity"));
 				
 				try 
 				{
-					//Get the Product
-					Product p = ProductsFromServer.findId(idProduct);
-			
+					//Object o  = request.getSession().getAttribute("Customer");
+					//Customer cust = (Customer) o;
+					
 					//Get the cart
-					Order cart = null;//OrdersFromServer.findCart();
+					Order cart = OrdersFromServer.findCart(3);
 				
 					if(cart == null) 
 					{
 						cart = new Order();
 						//insert new cart in the DB
-					}
+					} 
+				
+					cart = OrdersFromServer.addToCart(3, idProduct, qty);
 					
-					//Check if the product already there
-					OrderLine ol = new OrderLine();
-					//ol = OrdersFromServer.findProduct(cart.getId(), idProduct);
-					
-					if(ol == null)//add LineOrder to the cart
-					{
-						ol = new OrderLine();
-						ol.setProd(p);
-						ol.setQte(qty);
-//						OrdersFromServer.addOrderLine(cart.getId(), lo);
-					}
-					else
-					{
-//						OrdersFromServer.setOrderLine(cart.getId(), ol.getId(), qty);
-					}
+					request.setAttribute("Cart", cart);		
+					request.getRequestDispatcher("cart.jsp").forward(request,response);
 					
 					
 				} catch (ParseException e) {
@@ -173,32 +194,8 @@ public class OrdersController extends HttpServlet {
 					e.printStackTrace();
 				}
 				
-							
 				
-				//int position=panier.getLignes().indexOf(lc);
-				//indexOf mi restituisce la posizione dell'elemento lc nella lista panier
-//				if(position==-1)
-//					//se non ho ancora scelto quel prodotto lo aggiungo
-//					panier.getLignes().add(lc);
-//				else{
-//					//se il prodotto esiste già nel paniere aggiorno la quantità
-//					int newQty=lc.getQte() + panier.getLignes().get(position).getQte();
-//					panier.getLignes().get(position).setQte(newQty);
-				//}
-				//request.getSession().setAttribute("panier", cart);
 				
-				List<Product> lp;
-				try 
-				{
-					lp = ProductsFromServer.findAll();
-					
-					request.setAttribute("listeP", lp);
-					request.getRequestDispatcher("achat.jsp").forward(request, response);
-				} catch (ParseException e) 
-				{
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
 				
 	}
 }
