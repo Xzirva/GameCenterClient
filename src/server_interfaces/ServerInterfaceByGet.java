@@ -76,7 +76,7 @@ public class ServerInterfaceByGet {
 	}
 	
 	public static String write_request(URL url, String type) throws Exception {
-		return write_request(url, type, new LinkedHashMap<>());
+		return write_request(url, type, new LinkedHashMap<String, Object>());
 	}
 	public static String write_request(URL url, String type ,Map<String,Object> params) throws Exception {
 		System.out.print(url);
