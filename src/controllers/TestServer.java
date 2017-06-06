@@ -40,11 +40,11 @@ public class TestServer {
 		//JSONArray json = (JSONArray) new JSONParser().parse(s);
 		//ObjectMapper mapper = new ObjectMapper();
 		//Customer a = mapper.readValue(json.get(0).toString(), Customer.class);
-		String first_name = "firstname";
-		String last_name = "lastname";
+		String first_name = "firstdddnaddddddddmeze";
+		String last_name = "ladsdddtnamddddeddddsssss";
 		String gender = "M";
-		String email = "email@mail.com";
-		String username = "username";
+		String email = "emaildddddddddddddddddd@mail.com";
+		String username = "usernaddddsssssssssdddddme12";
 		String password = "password";
 		return LoginToServer.register(gender, first_name, last_name, email, username, password);
 	}	

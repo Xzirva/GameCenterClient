@@ -76,8 +76,8 @@ public class AuthenticationController extends HttpServlet {
 				{
 					cart = OrdersFromServer.findCart(user.getId());
 					
-					request.setAttribute("Panier", cart);
-					request.getRequestDispatcher("panier.jsp").forward(request, response);
+					request.setAttribute("cart", cart);
+					request.getRequestDispatcher("cart.jsp").forward(request, response);
 				} catch (Exception e) 
 				{
 					// TODO Auto-generated catch block

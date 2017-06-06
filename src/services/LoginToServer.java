@@ -48,7 +48,9 @@ public class LoginToServer {
 	  	String response = ServerInterfaceByGet.write_request(url, "POST", params);
 	  	JSONObject json = (JSONObject) new JSONParser().parse(response);
 		JSONObject user_json = (JSONObject) json.get("user");
-		Customer loggedIn = new Customer(toIntExact( (long) user_json.get("id")), 
+		System.out.print(json.keySet().toString());
+		//toIntExact( (long) user_json.get("id"))
+		Customer loggedIn = new Customer(1, 
 				(String) user_json.get("firstname"), (String)  user_json.get("lastname"), 
 				(String) user_json.get("gender"), (String) user_json.get("email"), (String) user_json.get("username"), 
 				(String) user_json.get("pwd"), (boolean) user_json.get("admin"), (String) json.get("authentication_token"));
