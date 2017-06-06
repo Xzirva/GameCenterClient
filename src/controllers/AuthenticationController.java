@@ -39,7 +39,6 @@ public class AuthenticationController extends HttpServlet {
 					String current = parameterNames.nextElement();
 					System.out.println(current.toString());
 					if(current.equals("register-user")) {
-						System.out.println("REGIIIIISSSSTTTTERRRRR!!!!!!!!!");
 						action = "register";
 						email = request.getParameter("email");
 						gender = request.getParameter("gender");
@@ -58,7 +57,6 @@ public class AuthenticationController extends HttpServlet {
 						
 					} else {
 						user = LoginToServer.login(username, password);
-						System.out.println("LOGINNNNNNNNNNNNNN!!!!!!!!!");
 					}
 					
 					HttpSession session = request.getSession();
