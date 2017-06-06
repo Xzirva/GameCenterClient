@@ -10,7 +10,7 @@
 <h1>Become Member of Game Center</h1>
 <section class="container">
 <div class="login">
-	<form method="post" action="customers">
+	<form method="post" action="auth">
 	
 			<input type="text" class="demoInputBox" name="username" placeholder="Username">
 		
