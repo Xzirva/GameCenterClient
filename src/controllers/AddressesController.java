@@ -37,9 +37,13 @@ public class AddressesController extends HttpServlet {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 		String action = request.getParameter("action");
-		if(action == null)
+		if(action == null || action == "showAll")
 		{
+			List<Address> listA  = new ArrayList<Address>();
 			
+		    request.setAttribute("AddressesList", listA);
+		    RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/AddressesView.jsp");
+	        dispatcher.forward(request, response);
 		}
 		else if (action == "showBilling")
 		{
@@ -58,9 +62,6 @@ public class AddressesController extends HttpServlet {
 		    RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/WEB-INF/AddressesView.jsp");
 	        dispatcher.forward(request, response);
 		}
-		
-		
-		
 	   
 	}
 

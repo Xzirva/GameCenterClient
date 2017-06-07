@@ -52,7 +52,7 @@
 								<li class="current"><a href="index.html">ABOUT</a></li>
 								<li><a href="http://localhost:8080/GameCenterClient/orders">OUR GAMES</a></li>
 								<li><a href="index-2.html"> SALES </a></li>
-								<li><a href="LoginFormCustomer.jsp">MY ACCOUNT</a></li>
+								<li><a href="http://localhost:8080/GameCenterClient/customers">MY ACCOUNT</a></li>
 								<li><a href="index-4.html">CONTACTS</a></li>
 							</ul>
 						</nav>

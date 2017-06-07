@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.parser.ParseException;
 
@@ -17,6 +18,7 @@ import beans.Order;
 import beans.Customer;
 import beans.Product;
 import services.ProductsFromServer;
+import services.CustomersFromServer;
 import services.OrdersFromServer;
 //import dao.ProductsDao;
 
@@ -42,30 +44,12 @@ public class OrdersController extends HttpServlet {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 		String action = request.getParameter("action");
-		if(action == null)
+		
+		switch(action)
 		{
-			
-			List<Product> listP = new ArrayList<Product>();
-				       
-			try
+			case "show":
 			{
-				 listP = ProductsFromServer.findAll();
-				 request.setAttribute("ProductsList", listP);
-				request.getRequestDispatcher("achat.jsp").forward(request, response);
-			
-			} catch (ParseException e) 
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-				      			
-		}
-		else
-		{
-						
-			if(action.equals("show"))
-			{
-				  List<Product> listP = new ArrayList<Product>();
+				List<Product> listP = new ArrayList<Product>();
 			       
 			       try
 			       {
@@ -77,9 +61,10 @@ public class OrdersController extends HttpServlet {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 			       }
-				
+			       break;
 			}
-			else if(action.equals("showProduct"))
+			       
+			case "showProduct":
 			{
 				try
 				{
@@ -93,16 +78,18 @@ public class OrdersController extends HttpServlet {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 			       }
+				break;
 			}
-			else if(action.equals("showCart"))
+			case "showCart":
 			{
+				HttpSession session = request.getSession(false);
 				try 
 				{
-					//Object o  = request.getSession().getAttribute("Customer");
-					//Customer cust = (Customer) o;
+					int custid =(int)session.getAttribute("user_id"); 
+					System.out.println("Customer id: " + custid);
 					
 					
-					Order cart = OrdersFromServer.findCart(3);
+					Order cart = OrdersFromServer.findCart(custid);
 					request.setAttribute("Cart", cart);		
 					request.getRequestDispatcher("cart.jsp").forward(request,response);
 				} catch (ParseException e) 
@@ -110,50 +97,115 @@ public class OrdersController extends HttpServlet {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
-			}
-			else if(action.equals("removeProduct"))
-			{
-				int id = Integer.parseInt(request.getParameter("id"));
-				Object o = request.getSession().getAttribute("panier");
-				
-				if(o!=null)
-				{
-//					Order panier = (Order)o;
-//					if(panier.getLignes().size()>num){
-//						panier.getLignes().remove(num);
-//						request.getSession().setAttribute("panier",panier);
-//						/** con l'ultima istruzione ripristiniamo 
-//						 * il paniere nella sessione**/
-				}
-				request.getRequestDispatcher("panier.jsp").forward(request, response);
+				break;
 			}	
-			else if(action.equals("removePanier"))
+			case "removeProduct":
 			{
-		
-				request.getSession().removeAttribute("panier");
-				request.getRequestDispatcher("panier.jsp").forward(request, response);
+				int productid = Integer.parseInt(request.getParameter("productid"));
+				
+				try 
+				{
+					HttpSession session = request.getSession(false);
+					
+					int custid =(int)session.getAttribute("user_id"); 
+					System.out.println("Customer id: " + custid);
+						
+					//Get the cart
+					Order cart = OrdersFromServer.findCart(custid);
+								
+					cart = OrdersFromServer.removeOrderLine(3, productid);
+					
+					request.setAttribute("Cart", cart);		
+					request.getRequestDispatcher("cart.jsp").forward(request,response);
+						
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				
 			}
-			else if(action.equals("paydelivery"))
+			case "removeCart":
 			{
-		
-				request.getSession().removeAttribute("panier");
-				request.getRequestDispatcher("paydelivery.jsp").forward(request, response);
+				try 
+				{
+					HttpSession session = request.getSession(false);
+					
+					int custid =(int)session.getAttribute("user_id"); 
+					System.out.println("Customer id: " + custid);
+					
+					Order cart = OrdersFromServer.findCart(custid);
+					if(cart!= null)
+						cart = OrdersFromServer.clear(custid);
+					
+					request.setAttribute("Cart", cart);		
+					request.getRequestDispatcher("cart.jsp").forward(request,response);
+						
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 			}
-			else if(action.equals("paybilling"))
+			case "showOrders":
 			{
-		
-				request.getSession().removeAttribute("panier");
-				request.getRequestDispatcher("paybilling.jsp").forward(request, response);
+				try 
+				{
+					HttpSession session = request.getSession(false);
+					
+					int custid =(int)session.getAttribute("user_id"); 
+					System.out.println("Customer id: " + custid);
+					Customer cust = CustomersFromServer.findId(custid);
+					
+					List <Order> orders = OrdersFromServer.findAll(cust);
+					
+					
+					request.setAttribute("ListOrders", orders);		
+					request.getRequestDispatcher("OrdersView.jsp").forward(request,response);
+						
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 			}
-			else if(action.equals("paypayment"))
-			{
-		
-				request.getSession().removeAttribute("panier");
-				request.getRequestDispatcher("paypayment.jsp").forward(request, response);
-			}
+			default:
+				List<Product> listP = new ArrayList<Product>();
+			       
+				try
+				{
+					 listP = ProductsFromServer.findAll();
+					 request.setAttribute("ProductsList", listP);
+					request.getRequestDispatcher("achat.jsp").forward(request, response);
+				
+				} catch (ParseException e) 
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+					      	
+				
 			
+		
 		}
+	
+		
+//			else if(action.equals("paydelivery"))
+//			{
+//		
+//				request.getSession().removeAttribute("panier");
+//				request.getRequestDispatcher("paydelivery.jsp").forward(request, response);
+//			}
+//			else if(action.equals("paybilling"))
+//			{
+//		
+//				request.getSession().removeAttribute("panier");
+//				request.getRequestDispatcher("paybilling.jsp").forward(request, response);
+//			}
+//			else if(action.equals("paypayment"))
+//			{
+//		
+//				request.getSession().removeAttribute("panier");
+//				request.getRequestDispatcher("paypayment.jsp").forward(request, response);
+//			}
+			
 		
 	}
 	
@@ -171,25 +223,25 @@ public class OrdersController extends HttpServlet {
 				
 				try 
 				{
-					//Object o  = request.getSession().getAttribute("Customer");
-					//Customer cust = (Customer) o;
+					HttpSession session = request.getSession(false);
 					
+					
+					int custid =(int)session.getAttribute("user_id"); 
+					System.out.println("Customer id: " + custid);
+						
 					//Get the cart
-					Order cart = OrdersFromServer.findCart(3);
+					Order cart = OrdersFromServer.findCart(custid);
 				
-					if(cart == null) 
-					{
-						cart = new Order();
-						//insert new cart in the DB
-					} 
-				
+					
 					cart = OrdersFromServer.addToCart(3, idProduct, qty);
 					
-					request.setAttribute("Cart", cart);		
+							
+				
+ 	    			request.setAttribute("Cart", cart);		
 					request.getRequestDispatcher("cart.jsp").forward(request,response);
 					
 					
-				} catch (ParseException e) {
+				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}

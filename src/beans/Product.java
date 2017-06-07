@@ -101,6 +101,7 @@ public class Product implements Serializable, Comparable<Product>
 			return this.console.getName();
 		else 
 			return null;
+	
 	}
 	
 	public void setConsole(String console)
