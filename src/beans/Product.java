@@ -12,7 +12,7 @@ public class Product implements Serializable, Comparable<Product>
 	private int agemin;
 	private ConsoleType console;
 	private String releasedate;
-	private float price;
+	private double price;
 	private int quantity;
 	private String description;
 		
@@ -22,7 +22,7 @@ public class Product implements Serializable, Comparable<Product>
 	 * @param price
 	 */
 	public Product(int id, String name, String genre, String publ, int agemin, String console,
-			String date, float price, int qtty, String desc)
+			String date, double price, int qtty, String desc)
 	{
 		super();
 		this.id = id;

@@ -33,19 +33,20 @@ public class TestServer {
 	@GET 
 	@Path("") 
 	@Produces(MediaType.APPLICATION_JSON) 
-	public Customer test_server() throws Exception
+	public List<Product> test_server() throws Exception
 	{ 
 		//String s = ServerInterfaceByGet.test_post();
 		//JSONObject json = (JSONObject) new JSONParser().parse(s);
 		//JSONArray json = (JSONArray) new JSONParser().parse(s);
 		//ObjectMapper mapper = new ObjectMapper();
 		//Customer a = mapper.readValue(json.get(0).toString(), Customer.class);
-		String first_name = "firstdddnaddddddddmeze";
-		String last_name = "ladsdddtnamddddeddddsssss";
-		String gender = "M";
-		String email = "emaildddddddddddddddddd@mail.com";
-		String username = "usernaddddsssssssssdddddme12";
-		String password = "password";
-		return LoginToServer.register(gender, first_name, last_name, email, username, password);
+//		String first_name = "firstdddnaddddddddmeze";
+//		String last_name = "ladsdddtnamddddeddddsssss";
+//		String gender = "M";
+//		String email = "emaildddddddddddddddddd@mail.com";
+//		String username = "usernaddddsssssssssdddddme12";
+//		String password = "password";
+//		return LoginToServer.register(gender, first_name, last_name, email, username, password);
+		return ProductsFromServer.findAll();
 	}	
 }
