@@ -1,11 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <?xml version="1.0" encoding="UTF-8" ?>
-<%@page import="beans.Order"%>
-<%@page import="beans.OrderLine"%>
+<%@page import="beans.Address"%>
+<%@page import="beans.Payment"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; text/css; charset=UTF-8" pageEncoding="UTF-8"%>
     
-<html>
 	<head>
 		<title>GAME CENTER</title>
 		<meta charset="utf-8">
@@ -13,12 +12,11 @@
 		<link rel="icon" href="images/favicon.ico">
 		<link rel="shortcut icon" href="images/favicon.ico" />
 		<link rel="stylesheet" href="css/style.css">
-		<link rel="stylesheet" href="css/table.css">
 		<link rel="stylesheet" href="css/form.css">
-		<link rel="stylesheet" href="css/divide.css">	
+		<link rel="stylesheet" href="css/divide.css">
+		<link rel="stylesheet" href="css/table.css">
 		<script src="js/script.js"></script>
 		<script src="js/superfish.js"></script>
-	
 		<script>
 		$(document).ready(function(){
 			$().UItoTop({ easingType: 'easeOutQuart' });
@@ -36,8 +34,9 @@
 		<link rel="stylesheet" media="screen" href="css/ie.css">
 		<![endif]-->
 	</head>
-	<body>
-<!--==============================header=================================-->
+ <body>
+ 
+ <!--==============================header=================================-->
 		<header>
 			<div class="container_12">
 				<div class="grid_12">
@@ -62,61 +61,77 @@
 					</h1>
 				</div>
 			</div>
-		</header>  
+		</header> 
 
-<table class="container">
-	<thead>
-        <tr>
-            <th><h1>Product</h1></th>
-            <th><h1>Quantity</h1></th>
-            <th><h1>Price</h1></th>
-            <th><h1>Total</h1></th>
-        </tr>
-    </thead>
-    <%
-		Object obj = request.getAttribute("Cart");
+<section class="container">
+    <div class="login">
+      <h1>Confirm Order</h1>
+<form method="post" action="orders">
+
+<p>
+			Shipping Address<select name="shipping">
+		
+<% 
+		Object obj = request.getAttribute("AddressesShippingList");
 		if(obj!=null)
 		{
-			Order o = (Order)obj;
-			List<OrderLine> lo = o.getOrderLines();
-			for(OrderLine u : lo)
+			List<Address> las = (List<Address>)obj;
+			for(Address u : las)
 			{
-	%>
-		<tr>
-				<td><%=u.getProd().getName()%>(<%=u.getProd().getConsole()%>)</td>
-				<td><%=u.getQte()%> </td>
-				<td> <%=u.getTotal()%></td>	
-				<td>				
-					<a href="orders?action=removeProduct&productid=<%=u.getProd().getId()%>">Remove</a>						
-				</td>	
-		</tr>
-			</tbody>
-			<% 
-			}
-			%>
-			<tr>
-				<td>Total Price<td>
-				<td><%= o.getTotal() %><td>
-			</tr>
-		</table>
 		
-		 <p><h2><a href="orders?action=pay">Pay</a></h2></p>
 		
-		 <h2><a href="orders?action=removeCart">Remove</a></h2>
-		<%
+%>
+		<option value=<%=u.getId()%>><%=u.getAddress()%></option>
+	
+		<%  } 
 		}
-		
-		else
-		{
-			%> 
-			<h1>Empty Cart.. Start you shopping now!</h1>
-			<%
-			
-		}
-		
 		%>
 		
-		<p> <h2><a href="orders?action=show">View Products</a><p> <h2>
+</select>
+</p>
 
+<p>
+			Billing Address<select name="billing">
+		
+<% 	
+		obj = request.getAttribute("AddressesBllingList");
+		if(obj!=null)
+		{
+			List<Address> lab = (List<Address>)obj;
+			for(Address u : lab)
+			{
+%>	
+
+		<option value=<%=u.getId()%>><%=u.getAddress()%></option>
+	
+		<% } 
+		}
+		%>	
+</select>
+</p>
+	
+<p>
+			Credit Card <select name="payment">
+<%	
+		obj = request.getAttribute("PaymentList");
+		if(obj!=null)
+		{
+			List<Payment> lp = (List<Payment>)obj;
+			for(Payment u : lp)
+			{
+%>
+	<option value=<%=u.getId()%>><%=u.getCvv()%></option>
+	
+		<% } 
+		}
+		%>	
+</select>
+</p>
+	
+
+
+</form>
+</div>
+</section>
 </body>
 </html>

@@ -13,8 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.simple.parser.ParseException;
 
 import beans.Customer;
+import beans.Order;
 import beans.Product;
 import services.CustomersFromServer;
+import services.OrdersFromServer;
 import services.ProductsFromServer;
 
 /**
@@ -39,7 +41,8 @@ public class AdminCustomersController extends HttpServlet {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 		String action = request.getParameter("action");
-		
+		if(action.equals("show"))
+		{
 			List<Customer> listC = new ArrayList<Customer>();
 			try 
 			{
@@ -53,7 +56,27 @@ public class AdminCustomersController extends HttpServlet {
 			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}	      		        
+			}	
+		}
+		else if(action.equals("showOrders"))
+		{
+			try {
+			int custid = Integer.parseInt(request.getParameter("id"));
+			Customer cust;
+			
+			cust = CustomersFromServer.findId(custid);
+				
+			List <Order> orders = OrdersFromServer.findAll(cust);
+					
+			request.setAttribute("ListOrders", orders);		
+			request.getRequestDispatcher("AdminOrdersView.jsp").forward(request,response);
+			} 
+			catch (ParseException e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	/**

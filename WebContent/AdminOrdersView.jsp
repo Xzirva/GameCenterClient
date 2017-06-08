@@ -1,10 +1,11 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <?xml version="1.0" encoding="UTF-8" ?>
-<%@page import="beans.Order"%>
 <%@page import="beans.OrderLine"%>
+<%@page import="beans.Order"%>
 <%@page import="java.util.List"%>
-<%@ page language="java" contentType="text/html; text/css; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
     
+<!DOCTYPE html>
 <html>
 	<head>
 		<title>GAME CENTER</title>
@@ -13,12 +14,16 @@
 		<link rel="icon" href="images/favicon.ico">
 		<link rel="shortcut icon" href="images/favicon.ico" />
 		<link rel="stylesheet" href="css/style.css">
-		<link rel="stylesheet" href="css/table.css">
 		<link rel="stylesheet" href="css/form.css">
-		<link rel="stylesheet" href="css/divide.css">	
+		<link rel="stylesheet" href="css/divide.css">
+		<script src="js/jquery.js"></script>
+		<script src="js/jquery-migrate-1.2.1.js"></script>
 		<script src="js/script.js"></script>
 		<script src="js/superfish.js"></script>
-	
+		<script src="js/jquery.ui.totop.js"></script>
+		<script src="js/jquery.equalheights.js"></script>
+		<script src="js/jquery.mobilemenu.js"></script>
+		<script src="js/jquery.easing.1.3.js"></script>
 		<script>
 		$(document).ready(function(){
 			$().UItoTop({ easingType: 'easeOutQuart' });
@@ -36,8 +41,9 @@
 		<link rel="stylesheet" media="screen" href="css/ie.css">
 		<![endif]-->
 	</head>
-	<body>
-<!--==============================header=================================-->
+ <body>
+ 
+ <!--==============================header=================================-->
 		<header>
 			<div class="container_12">
 				<div class="grid_12">
@@ -45,9 +51,9 @@
 						<nav class="horizontal-nav full-width horizontalNav-notprocessed">
 							<ul class="sf-menu">
 								<li class="current"><a href="index.html">ABOUT</a></li>
-								<li><a href="http://localhost:8080/GameCenterClient/orders?action=show">OUR GAMES</a></li>
+								<li><a href="http://localhost:8080/GameCenterClient/products">OUR GAMES</a></li>
 								<li><a href="index-2.html"> SALES </a></li>
-								<li><a href="http://localhost:8080/GameCenterClient/customers?action=myaccount">MY ACCOUNT</a></li>
+								<li><a href="http://localhost:8080/GameCenterClient/admincustomers">OUR CUSTOMERS</a></li>
 								<li><a href="index-4.html">CONTACTS</a></li>
 							</ul>
 						</nav>
@@ -63,60 +69,37 @@
 				</div>
 			</div>
 		</header>  
-
-<table class="container">
-	<thead>
-        <tr>
-            <th><h1>Product</h1></th>
-            <th><h1>Quantity</h1></th>
-            <th><h1>Price</h1></th>
-            <th><h1>Total</h1></th>
-        </tr>
-    </thead>
-    <%
-		Object obj = request.getAttribute("Cart");
+  <table class="container">
+  <thead>
+       <tr>
+          <th><h1>Total</h1><th>
+          <th><h1>Action</h1></th>
+       </tr>
+  </thead>
+      <%
+		Object obj = request.getAttribute("ListOrders");
 		if(obj!=null)
 		{
-			Order o = (Order)obj;
-			List<OrderLine> lo = o.getOrderLines();
-			for(OrderLine u : lo)
+			List<Order> la = (List<Order>)obj;
+			for(Order u : la)
 			{
 	%>
-		<tr>
-				<td><%=u.getProd().getName()%>(<%=u.getProd().getConsole()%>)</td>
-				<td><%=u.getQte()%> </td>
-				<td> <%=u.getTotal()%></td>	
-				<td>				
-					<a href="orders?action=removeProduct&productid=<%=u.getProd().getId()%>">Remove</a>						
-				</td>	
-		</tr>
-			</tbody>
-			<% 
-			}
-			%>
 			<tr>
-				<td>Total Price<td>
-				<td><%= o.getTotal() %><td>
+				<td><%=u.getTotal()%></td>
+				
 			</tr>
-		</table>
-		
-		 <p><h2><a href="orders?action=pay">Pay</a></h2></p>
-		
-		 <h2><a href="orders?action=removeCart">Remove</a></h2>
-		<%
+	<%
+			}
+			
+			
 		}
-		
 		else
 		{
-			%> 
-			<h1>Empty Cart.. Start you shopping now!</h1>
+			%><h1>NULL</h1>
 			<%
 			
 		}
-		
-		%>
-		
-		<p> <h2><a href="orders?action=show">View Products</a><p> <h2>
-
+	%>
+    </table>
 </body>
 </html>
