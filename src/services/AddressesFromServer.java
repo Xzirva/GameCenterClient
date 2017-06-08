@@ -1,14 +1,11 @@
 package services;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.ws.rs.FormParam;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -18,12 +15,11 @@ import org.json.simple.parser.ParseException;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sun.istack.internal.NotNull;
 
 import beans.Customer;
 import beans.Address;
 import server_interfaces.ServerInterfaceByGet;
-import beans.Address;
+
 public class AddressesFromServer 
 {
 	private static ObjectMapper mapper = new ObjectMapper();
@@ -59,6 +55,21 @@ public class AddressesFromServer
 		params.put("country", country);
 		params.put("type", type);
 		String s = ServerInterfaceByGet.write_request(url, "POST", params);
+		JSONObject address_json = (JSONObject) new JSONParser().parse(s);
+		System.out.println(address_json.keySet());
+
+		return serializeAddress(address_json);
+	}
+	
+	public static Address update(int customer_id, int address_id,String address, String zipcode, String city, String country, String type) throws Exception {
+		URL url = new URL("http://localhost:8080/GameCenter/web-services/customers/" + customer_id  + "/addresses/" + address_id + "/update");
+		Map<String,Object> params = new LinkedHashMap<>();
+		params.put("address", address);
+		params.put("zipcode", zipcode);
+		params.put("city", city);
+		params.put("country", country);
+		params.put("type", type);
+		String s = ServerInterfaceByGet.write_request(url, "PUT", params);
 		JSONObject address_json = (JSONObject) new JSONParser().parse(s);
 		System.out.println(address_json.keySet());
 

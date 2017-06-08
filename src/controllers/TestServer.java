@@ -35,7 +35,7 @@ public class TestServer {
 	@GET 
 	@Path("") 
 	@Produces(MediaType.APPLICATION_JSON) 
-	public Order test_server() throws Exception
+	public Address test_server() throws Exception
 	{ 
 		//String s = ServerInterfaceByGet.test_post();
 		//JSONObject json = (JSONObject) new JSONParser().parse(s);
@@ -52,7 +52,7 @@ public class TestServer {
 		// String address, String zipcode, String city, String country, String type
 		//return AddressesFromServer.create(35, "address","12457", "city", "country","shipping");
 		//OrdersFromServer.addToCart(1, 3, 5);
-		return OrdersFromServer.clear(1);
+		return AddressesFromServer.update(35, 123, "My fucking address", "66699", "The fucking city", "FREAER", "shipping");
 		
 		
 	}	
