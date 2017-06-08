@@ -16,14 +16,8 @@
 		<link rel="stylesheet" href="css/table.css">
 		<link rel="stylesheet" href="css/form.css">
 		<link rel="stylesheet" href="css/divide.css">
-		<script src="js/jquery.js"></script>
-		<script src="js/jquery-migrate-1.2.1.js"></script>
 		<script src="js/script.js"></script>
 		<script src="js/superfish.js"></script>
-		<script src="js/jquery.ui.totop.js"></script>
-		<script src="js/jquery.equalheights.js"></script>
-		<script src="js/jquery.mobilemenu.js"></script>
-		<script src="js/jquery.easing.1.3.js"></script>
 		<script>
 		$(document).ready(function(){
 			$().UItoTop({ easingType: 'easeOutQuart' });
@@ -54,7 +48,7 @@
 								<li class="current"><a href="index.html">ABOUT</a></li>
 								<li><a href="http://localhost:8080/GameCenterClient/orders">OUR GAMES</a></li>
 								<li><a href="index-2.html"> SALES </a></li>
-								<li><a href="LoginFormCustomer.jsp">MY ACCOUNT</a></li>
+								<li><a href="http://localhost:8080/GameCenterClient/customers">OUR CUSTOMERS</a></li>
 								<li><a href="index-4.html">CONTACTS</a></li>
 							</ul>
 						</nav>
@@ -72,7 +66,7 @@
 		</header>  
 		
 <div id="sidebar">
-<form method="get" action="products">
+<form method="get" action="adminproducts">
 Search : <input type="text" name="product" placeholder="Username" />
 <br>
   			
@@ -147,8 +141,8 @@ Search : <input type="text" name="product" placeholder="Username" />
 				<td><%=u.getPrice()%> </td>
 				<td><%=u.getDescription()%> </td>
 				<td>
-					<a href="products?action=edit&id=<%=u.getId()%>">Edit</a>	
-					<a href="products?action=delete&id=<%=u.getId()%>">Delete</a>	
+					<a href="adminproducts?action=edit&id=<%=u.getId()%>">Edit</a>	
+					<a href="adminproducts?action=delete&id=<%=u.getId()%>">Delete</a>	
 					
 				</td>
 			</tr>

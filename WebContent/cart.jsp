@@ -15,15 +15,10 @@
 		<link rel="stylesheet" href="css/style.css">
 		<link rel="stylesheet" href="css/table.css">
 		<link rel="stylesheet" href="css/form.css">
-		<link rel="stylesheet" href="css/divide.css">
-		<script src="js/jquery.js"></script>
-		<script src="js/jquery-migrate-1.2.1.js"></script>
+		<link rel="stylesheet" href="css/divide.css">	
 		<script src="js/script.js"></script>
 		<script src="js/superfish.js"></script>
-		<script src="js/jquery.ui.totop.js"></script>
-		<script src="js/jquery.equalheights.js"></script>
-		<script src="js/jquery.mobilemenu.js"></script>
-		<script src="js/jquery.easing.1.3.js"></script>
+	
 		<script>
 		$(document).ready(function(){
 			$().UItoTop({ easingType: 'easeOutQuart' });
@@ -52,7 +47,7 @@
 								<li class="current"><a href="index.html">ABOUT</a></li>
 								<li><a href="http://localhost:8080/GameCenterClient/orders">OUR GAMES</a></li>
 								<li><a href="index-2.html"> SALES </a></li>
-								<li><a href="LoginFormCustomer.jsp">MY ACCOUNT</a></li>
+								<li><a href="http://localhost:8080/GameCenterClient/customers">MY ACCOUNT</a></li>
 								<li><a href="index-4.html">CONTACTS</a></li>
 							</ul>
 						</nav>
@@ -88,11 +83,11 @@
 			{
 	%>
 		<tr>
-				<td><%=u.getProd().getName()%> </td>
+				<td><%=u.getProd().getName()%>(<%=u.getProd().getConsole()%>)</td>
 				<td><%=u.getQte()%> </td>
 				<td> <%=u.getTotal()%></td>	
 				<td>				
-					<a href="orders?action=removeProduct&id=<%=o.getId()%>">Remove</a>						
+					<a href="orders?action=removeProduct&productid=<%=u.getProd().getId()%>">Remove</a>						
 				</td>	
 		</tr>
 			</tbody>
@@ -101,14 +96,13 @@
 			%>
 			<tr>
 				<td>Total Price<td>
-				
 				<td><%= o.getTotal() %><td>
 			</tr>
 		</table>
 		
-		 <p><h2><a href="Orders?action=pay">Pay</a></h2></p>
+		 <p><h2><a href="orders?action=pay">Pay</a></h2></p>
 		
-		 <h2><a href="Orders?action=remove">Remove</a></h2>
+		 <h2><a href="orders?action=removeCart">Remove</a></h2>
 		<%
 		}
 		
