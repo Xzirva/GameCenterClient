@@ -20,7 +20,7 @@ import server_interfaces.ServerInterfaceByGet;
 public class CustomersFromServer {
 
 	public static List<Customer> findAll() throws ParseException, JsonParseException, JsonMappingException, IOException {
-		URL url = new URL("http://localhost:8080/GameCenter/web-services/customers");
+		URL url = new URL("http://localhost:8080/GameCenter/web-services/admins/customers");
 		String s = ServerInterfaceByGet.get_request(url);
 		JSONArray jsons = (JSONArray) new JSONParser().parse(s);
 		ObjectMapper mapper = new ObjectMapper();
