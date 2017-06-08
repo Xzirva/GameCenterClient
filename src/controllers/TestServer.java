@@ -33,7 +33,7 @@ public class TestServer {
 	@GET 
 	@Path("") 
 	@Produces(MediaType.APPLICATION_JSON) 
-	public List<Product> test_server() throws Exception
+	public Customer test_server() throws Exception
 	{ 
 		//String s = ServerInterfaceByGet.test_post();
 		//JSONObject json = (JSONObject) new JSONParser().parse(s);
@@ -47,6 +47,6 @@ public class TestServer {
 //		String username = "usernaddddsssssssssdddddme12";
 //		String password = "password";
 //		return LoginToServer.register(gender, first_name, last_name, email, username, password);
-		return ProductsFromServer.findAll();
+		return CustomersFromServer.findId(1);
 	}	
 }
