@@ -17,6 +17,8 @@ import beans.OrderLine;
 import beans.Order;
 import beans.Customer;
 import beans.Product;
+import beans.Address;
+import beans.Payment;
 import services.ProductsFromServer;
 import services.CustomersFromServer;
 import services.OrdersFromServer;
@@ -45,10 +47,10 @@ public class OrdersController extends HttpServlet {
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 		String action = request.getParameter("action");
 		
-		switch(action)
+	
+		if (action.equals("show"))
 		{
-			case "show":
-			{
+				
 				List<Product> listP = new ArrayList<Product>();
 			       
 			       try
@@ -61,10 +63,10 @@ public class OrdersController extends HttpServlet {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 			       }
-			       break;
+			       
 			}
 			       
-			case "showProduct":
+		else if (action.equals("showProduct"))
 			{
 				try
 				{
@@ -78,11 +80,18 @@ public class OrdersController extends HttpServlet {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 			       }
-				break;
+				
 			}
-			case "showCart":
+		else if (action.equals("showCart"))
 			{
 				HttpSession session = request.getSession(false);
+				
+				if(session == null)
+				{	
+					request.getRequestDispatcher("LoginFormCustomer.jsp").forward(request,response);
+			
+				}
+				
 				try 
 				{
 					int custid =(int)session.getAttribute("user_id"); 
@@ -97,15 +106,21 @@ public class OrdersController extends HttpServlet {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				break;
+				
 			}	
-			case "removeProduct":
+		else if (action.equals("removeProduct"))
 			{
 				int productid = Integer.parseInt(request.getParameter("productid"));
 				
 				try 
 				{
 					HttpSession session = request.getSession(false);
+					
+					if(session == null)
+					{	
+						request.getRequestDispatcher("LoginFormCustomer.jsp").forward(request,response);
+				
+					}
 					
 					int custid =(int)session.getAttribute("user_id"); 
 					System.out.println("Customer id: " + custid);
@@ -124,11 +139,17 @@ public class OrdersController extends HttpServlet {
 					}
 				
 			}
-			case "removeCart":
+		else if (action.equals("removeCart"))
 			{
 				try 
 				{
 					HttpSession session = request.getSession(false);
+					
+					if(session == null)
+					{	
+						request.getRequestDispatcher("LoginFormCustomer.jsp").forward(request,response);
+				
+					}
 					
 					int custid =(int)session.getAttribute("user_id"); 
 					System.out.println("Customer id: " + custid);
@@ -144,12 +165,20 @@ public class OrdersController extends HttpServlet {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+
 			}
-			case "showOrders":
+		
+		else if (action.equals("showOrders"))
 			{
 				try 
 				{
 					HttpSession session = request.getSession(false);
+					
+					if(session == null)
+					{	
+						request.getRequestDispatcher("LoginFormCustomer.jsp").forward(request,response);
+				
+					}
 					
 					int custid =(int)session.getAttribute("user_id"); 
 					System.out.println("Customer id: " + custid);
@@ -165,49 +194,66 @@ public class OrdersController extends HttpServlet {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-			}
-			default:
-				List<Product> listP = new ArrayList<Product>();
-			       
-				try
-				{
-					 listP = ProductsFromServer.findAll();
-					 request.setAttribute("ProductsList", listP);
-					request.getRequestDispatcher("achat.jsp").forward(request, response);
 				
-				} catch (ParseException e) 
-				{
+			}
+		else if(action.equals("pay"))
+		{
+			try 
+			{
+				HttpSession session = request.getSession(false);
+				
+				if(session == null)
+				{	
+					request.getRequestDispatcher("LoginFormCustomer.jsp").forward(request,response);
+			
+				}
+				
+				int custid =(int)session.getAttribute("user_id"); 
+				System.out.println("Customer id: " + custid);
+			
+				List<Address> Lshipping = null;
+				List<Address> Lbilling  = null;
+				List<Payment> Lpayment = null;
+				
+				request.setAttribute("AddressesShippingList", Lshipping);		
+				request.setAttribute("AddressesBllingList", Lbilling);
+				request.setAttribute("PaymentList", Lpayment);
+				request.getRequestDispatcher("OrdersView.jsp").forward(request,response);
+					
+				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-					      	
-				
+		
+		
+		}
+		else
+		{
+			List<Product> listP = new ArrayList<Product>();
+		       
+		       try
+		       {
+		    	   listP = ProductsFromServer.findAll();
+		    	   request.setAttribute("ProductsList", listP);		
+					request.getRequestDispatcher("achat.jsp").forward(request, response);
+		       } catch (ParseException e) 
+		       {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+		       }
+		       
+			
+		}
+		
+		
 			
 		
 		}
 	
 		
-//			else if(action.equals("paydelivery"))
-//			{
-//		
-//				request.getSession().removeAttribute("panier");
-//				request.getRequestDispatcher("paydelivery.jsp").forward(request, response);
-//			}
-//			else if(action.equals("paybilling"))
-//			{
-//		
-//				request.getSession().removeAttribute("panier");
-//				request.getRequestDispatcher("paybilling.jsp").forward(request, response);
-//			}
-//			else if(action.equals("paypayment"))
-//			{
-//		
-//				request.getSession().removeAttribute("panier");
-//				request.getRequestDispatcher("paypayment.jsp").forward(request, response);
-//			}
-			
+
 		
-	}
+	
 	
 
 	/**
@@ -225,6 +271,12 @@ public class OrdersController extends HttpServlet {
 				{
 					HttpSession session = request.getSession(false);
 					
+					if(session == null)
+					{	
+						request.getRequestDispatcher("LoginFormCustomer.jsp").forward(request,response);
+						
+				
+					}
 					
 					int custid =(int)session.getAttribute("user_id"); 
 					System.out.println("Customer id: " + custid);

@@ -35,9 +35,9 @@
 						<nav class="horizontal-nav full-width horizontalNav-notprocessed">
 							<ul class="sf-menu">
 								<li class="current"><a href="index.html">ABOUT</a></li>
-								<li><a href="http://localhost:8080/GameCenterClient/orders">OUR GAMES</a></li>
+								<li><a href="http://localhost:8080/GameCenterClient/products">OUR GAMES</a></li>
 								<li><a href="index-2.html"> SALES </a></li>
-								<li><a href="http://localhost:8080/GameCenterClient/customers">OUR CUSTOMERS</a></li>
+								<li><a href="http://localhost:8080/GameCenterClient/admincustomers">OUR CUSTOMERS</a></li>
 								<li><a href="index-4.html">CONTACTS</a></li>
 							</ul>
 						</nav>
@@ -100,7 +100,7 @@
 				
 					<a href="addresses?action=showallget&id=<%=u.getId()%>">Addresses</a>
 					<br>
-					<a href="orders?action=showget&id=<%=u.getId()%>">Orders</a>
+					<a href="orders?action=showOrders&id=<%=u.getId()%>">Orders</a>
 					
 				</td>
 			</tr>

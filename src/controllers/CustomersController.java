@@ -35,13 +35,13 @@ public class CustomersController extends HttpServlet {
 	{
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
-		
-		HttpSession session = request.getSession(false);
+	
 		String action = request.getParameter("action");
-		if(action == null || action=="myaccount")
+		if(action.equals("myaccount"))
 		{
+			HttpSession session = request.getSession(false);
 			if(session == null)
-			{
+			{	
 				request.getRequestDispatcher("LoginFormCustomer.jsp").forward(request,response);
 		
 			}
@@ -49,19 +49,19 @@ public class CustomersController extends HttpServlet {
 			{
 				int custid = (int)session.getAttribute("user_id"); 
 				System.out.println("ID Cust " + custid);
-				try 
-				{
-					Customer cust = CustomersFromServer.findId(custid);
-					request.setAttribute("CustomersList", cust);
-					request.getRequestDispatcher("CustomersView.jsp").forward(request, response);
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+//					try 
+//					{
+//						Customer cust = CustomersFromServer.findId(custid);
+//						request.setAttribute("CustomersList", cust);
+//						request.getRequestDispatcher("CustomersView.jsp").forward(request, response);
+//					} 
+					//catch (ParseException e) 
+	//   			{
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
 				}
-				
-			}
-		}	
-		
+		}
 	}
 
 	/**
