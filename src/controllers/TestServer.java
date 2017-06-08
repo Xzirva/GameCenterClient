@@ -35,7 +35,7 @@ public class TestServer {
 	@GET 
 	@Path("") 
 	@Produces(MediaType.APPLICATION_JSON) 
-	public List<Address> test_server() throws Exception
+	public boolean test_server() throws Exception
 	{ 
 		//String s = ServerInterfaceByGet.test_post();
 		//JSONObject json = (JSONObject) new JSONParser().parse(s);
@@ -49,6 +49,8 @@ public class TestServer {
 //		String username = "usernaddddsssssssssdddddme12";
 //		String password = "password";
 //		return LoginToServer.register(gender, first_name, last_name, email, username, password);
-		return AddressesFromServer.findAll(35, "shipping");
+		// String address, String zipcode, String city, String country, String type
+		//return AddressesFromServer.create(35, "address","12457", "city", "country","shipping");
+		return AddressesFromServer.delete(35, 129);
 	}	
 }
