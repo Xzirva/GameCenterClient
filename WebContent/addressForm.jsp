@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <?xml version="1.0" encoding="UTF-8" ?>
 <%@page import="beans.Address"%>
+<%@page import="beans.Payment"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; text/css; charset=UTF-8" pageEncoding="UTF-8"%>
     
@@ -10,7 +11,8 @@
 		<meta name="format-detection" content="telephone=no" />
 		<link rel="icon" href="images/favicon.ico">
 		<link rel="shortcut icon" href="images/favicon.ico" />
-		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="css/login.css"/>
+	     <link rel="stylesheet" href="css/style.css">
 		<link rel="stylesheet" href="css/form.css">
 		<link rel="stylesheet" href="css/divide.css">
 		<link rel="stylesheet" href="css/table.css">
@@ -61,51 +63,66 @@
 				</div>
 			</div>
 		</header> 
-    
- 
-    <p style="color: red;">${errorString}</p>
- 
-    <table border="1" cellpadding="5" cellspacing="1" >
-       <tr>
-          <th>Address</th>
-          <th>Zipcode</th>
-          <th>City</th>
-          <th>Country</th>
-          <th>Type</th>
-          <th>Action</th>
-       </tr>
-      <%
-		Object obj = request.getAttribute("AddressesList");
-		if(obj!=null)
-		{
-			List<Address> la = (List<Address>)obj;
-			for(Address u : la)
-			{
-	%>
-			<tr>
-			   <td>
-					<a href="orders?action=paybilling&id=<%=u.getId()%>">Select</a>
-				</td>
-				<td><%=u.getAddress()%></td>
-				<td><%=u.getZipcode()%></td>
-				<td><%=u.getCity()%></td>
-				
-			</tr>
-	<%
-			}
-			
-			
-		}
-		else
-		{
-			%><h1>NULL</h1>
-			<%
-			
-		}
-	%>
-    </table>
 
-<h3>
-<a href="Customerform.html">Add</a>
+<section class="container">
+    <div class="login">
+<form method="post" action="addresses">
+	<h1>Address Form</h1>
+<br>	
+<p>
+		<input type="text" name="address" placeholder="Address" />
+		</p>
+		<p>
+		<input type="text" name="zipcode" placeholder="Zip Code"/>
+	</p>
+	<p>
+       <input type="text" name="city" placeholder="City"/>
+		</p>
+		<p>
+		<input type="text" name="country" placeholder="Country"/>
+	</p>
+		<p>
+			<select name="type">
+  				<option value="shipping">Shipping</option>
+  				<option value="billing">Billing</option>
+  				<option value="both">Both</option>
+  			</select>
+		</p>
+		
+		 <div class="submit">
+        	<input type="submit" name="commit" value="Add Address">
+        </div>
+        
+        
+	</form>
+	</div>
+	</section>
+	
+<footer>
+			<div class="container_12">
+				<div class="grid_12">
+					<div class="socials">
+						<a href="#" class="fa fa-facebook"></a>
+						<a href="#" class="fa fa-twitter"></a>
+						<a href="#" class="fa fa-google-plus"></a>
+					</div>
+					<div class="copy">
+						Your Trip (c) 2014 | <a href="#">Privacy Policy</a> | Website Template Designed by <a href="http://www.templatemonster.com/" rel="nofollow">TemplateMonster.com</a>
+					</div>
+				</div>
+			</div>
+		</footer>
+		<script>
+			$(function (){
+				$('#bookingForm').bookingForm({
+					ownerEmail: '#'
+				});
+			})
+			$(function() {
+				$('#bookingForm input, #bookingForm textarea').placeholder();
+			});
+		</script>
+		
+		
 </body>
 </html>

@@ -21,17 +21,6 @@
 			$().UItoTop({ easingType: 'easeOutQuart' });
 		});
 		</script>
-		<!--[if lt IE 8]>
-		<div style=' clear: both; text-align:center; position: relative;'>
-			<a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
-				<img src="http://storage.ie6countdown.com/assets/100/images/banners/warning_bar_0000_us.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today." />
-			</a>
-		</div>
-		<![endif]-->
-		<!--[if lt IE 9]>
-		<script src="js/html5shiv.js"></script>
-		<link rel="stylesheet" media="screen" href="css/ie.css">
-		<![endif]-->
 	</head>
  <body>
  
@@ -45,7 +34,7 @@
 								<li class="current"><a href="index.html">ABOUT</a></li>
 								<li><a href="http://localhost:8080/GameCenterClient/orders?action=show">OUR GAMES</a></li>
 								<li><a href="index-2.html"> SALES </a></li>
-								<li><a href="http://localhost:8080/GameCenterClient/customers?action=myaccount">MY ACCOUNT</a></li>
+						<li><a href="http://localhost:8080/GameCenterClient/customers?action=myaccount">MY ACCOUNT</a></li>
 								<li><a href="index-4.html">CONTACTS</a></li>
 							</ul>
 						</nav>
@@ -62,18 +51,27 @@
 			</div>
 		</header> 
 
-    <h4>Sort by</h4>
-Sort :
-<form method="get" action="customers">
-	<input name="sortType" type="radio" value="1"/>Shipping
-	<input name="sortType" type="radio" value="1"/>Billing
-	<input type="submit" value="Trier" />
-</form>
-    
- 
-    <p style="color: red;">${errorString}</p>
- 
-    <table border="1" cellpadding="5" cellspacing="1" >
+    	<div id="sidebar">
+			<div class="grid_3 prefix_1">
+					<h3 class="head1">My Profile</h3>
+					<ul class="list">
+						<li><a href="orders?action=showCart">My Cart</a></li>
+						<li><a href="addresses?action=showShipping">My Shipping Addresses</a></li>
+						<li><a href="addresses?action=showBilling">My Billing Addresses</a></li>
+						<li><a href="payments?action=showAll">My Payments</a></li>
+						<li><a href="orders?action=showOrders">My Orders</a></li>		
+					</ul>
+					
+					<h3 class="head1">Update Information </h3>
+					<ul class="list">
+						<li><a href="addressFrom.jsp">Add Address</a></li>
+						<li><a href="paymentForm.jsp">Add Payment</a></li>		
+					</ul>
+					
+				</div>
+			</div>
+
+    <table class="container">
        <tr>
           <th>Address</th>
           <th>Zipcode</th>
@@ -108,14 +106,13 @@ Sort :
 		}
 		else
 		{
-			%><h1>NULL</h1>
+			%><h1>No Address</h1>
 			<%
 			
 		}
 	%>
     </table>
+    
 
-<h3>
-<a href="Customerform.html">Add</a>
 </body>
 </html>
