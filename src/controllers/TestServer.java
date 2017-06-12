@@ -56,8 +56,8 @@ public class TestServer {
 		//return AddressesFromServer.update(35, 123, "My fucking address", "66699", "The fucking city", "FREAER", "shipping");
 		//return PaymentsFromServer.create(1, "mastercard", "1600160016001600", "158", 7, 2563);
 		//return AddressesFromServer.find(35, 123);
-		//return OrdersFromServer.addToCart(1, 2, 5);
-		return OrdersFromServer.payCart(1, 103);
+		//OrdersFromServer.addToCart(1, 2, 5);
+		return OrdersFromServer.findOrder(1, 10);
 		//return PaymentsFromServer.delete(1, 103);
 	}	
 }

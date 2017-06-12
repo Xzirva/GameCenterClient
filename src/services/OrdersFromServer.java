@@ -49,6 +49,15 @@ public class OrdersFromServer {
 		return serializeOrder(order_json);
 	}
 	
+	public static Order findOrder(int customer_id, int id) throws ParseException, JsonParseException, JsonMappingException, IOException {
+		URL url = new URL("http://localhost:8080/GameCenter/web-services/customers/" + customer_id +"/orders/" + id);
+		String s = ServerInterfaceByGet.get_request(url);
+		JSONObject order_json = (JSONObject) new JSONParser().parse(s);
+		System.out.println(order_json.keySet());
+
+		return serializeOrder(order_json);
+	}
+	
 	public static Order addToCart(int customer_id, int product_id, int quantity) throws Exception{
 		URL url = new URL("http://localhost:8080/GameCenter/web-services/customers/" + customer_id  + "/current_cart/add_to_cart");
 		Map<String,Object> params = new LinkedHashMap<>();
@@ -102,8 +111,6 @@ public class OrdersFromServer {
 		}
 		return lu;
 	}
-	
-	
 	
 	private static Order serializeOrder(JSONObject order_json) throws ParseException, JsonParseException, JsonMappingException, IOException{
 		Customer customer = mapper.readValue(order_json.get("customer").toString(), Customer.class);
