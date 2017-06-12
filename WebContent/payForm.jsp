@@ -12,6 +12,7 @@
 		<link rel="icon" href="images/favicon.ico">
 		<link rel="shortcut icon" href="images/favicon.ico" />
 		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="css/login.css">
 		<link rel="stylesheet" href="css/form.css">
 		<link rel="stylesheet" href="css/divide.css">
 		<link rel="stylesheet" href="css/table.css">
@@ -65,10 +66,10 @@
 
 <section class="container">
     <div class="login">
-      <h1>Confirm Order</h1>
+      <h1>Place Order</h1>
 <form method="post" action="orders">
 
-<p>
+<div>
 			Shipping Address<select name="shipping">
 		
 <% 
@@ -88,9 +89,9 @@
 		%>
 		
 </select>
-</p>
+</div>
 
-<p>
+<div>
 			Billing Address<select name="billing">
 		
 <% 	
@@ -108,9 +109,9 @@
 		}
 		%>	
 </select>
-</p>
+</div>
 	
-<p>
+<div>
 			Credit Card <select name="payment">
 <%	
 		obj = request.getAttribute("PaymentList");
@@ -125,13 +126,43 @@
 		<% } 
 		}
 		%>	
+		
 </select>
-</p>
+</div>
+	<div class="submit">
+        	<input type="submit" name="commit" value="Place Order">
+        </div>
 	
-
-
+	<input type="hidden" name="type" value="placeorder">
 </form>
 </div>
 </section>
+
+<footer>
+			<div class="container_12">
+				<div class="grid_12">
+					<div class="socials">
+						<a href="#" class="fa fa-facebook"></a>
+						<a href="#" class="fa fa-twitter"></a>
+						<a href="#" class="fa fa-google-plus"></a>
+					</div>
+					<div class="copy">
+						Your Trip (c) 2014 | <a href="#">Privacy Policy</a> | Website Template Designed by <a href="http://www.templatemonster.com/" rel="nofollow">TemplateMonster.com</a>
+					</div>
+				</div>
+			</div>
+		</footer>
+		<script>
+			$(function (){
+				$('#bookingForm').bookingForm({
+					ownerEmail: '#'
+				});
+			})
+			$(function() {
+				$('#bookingForm input, #bookingForm textarea').placeholder();
+			});
+		</script>
+		
+		
 </body>
 </html>

@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <?xml version="1.0" encoding="UTF-8" ?>
-<%@page import="beans.Address"%>
+<%@page import="beans.Payment"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; text/css; charset=UTF-8" pageEncoding="UTF-8"%>
     
@@ -21,17 +21,6 @@
 			$().UItoTop({ easingType: 'easeOutQuart' });
 		});
 		</script>
-		<!--[if lt IE 8]>
-		<div style=' clear: both; text-align:center; position: relative;'>
-			<a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
-				<img src="http://storage.ie6countdown.com/assets/100/images/banners/warning_bar_0000_us.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today." />
-			</a>
-		</div>
-		<![endif]-->
-		<!--[if lt IE 9]>
-		<script src="js/html5shiv.js"></script>
-		<link rel="stylesheet" media="screen" href="css/ie.css">
-		<![endif]-->
 	</head>
  <body>
  
@@ -61,36 +50,54 @@
 				</div>
 			</div>
 		</header> 
+		
+		    	<div id="sidebar">
+			<div class="grid_3 prefix_1">
+					<h3 class="head1">My Profile</h3>
+					<ul class="list">
+						<li><a href="orders?action=showCart">My Cart</a></li>
+						<li><a href="addresses?action=showShipping">My Shipping Addresses</a></li>
+						<li><a href="addresses?action=showBilling">My Billing Addresses</a></li>
+						<li><a href="payments?action=showAll">My Payments</a></li>
+						<li><a href="orders?action=showOrders">My Orders</a></li>		
+					</ul>
+					
+					<h3 class="head1">Update Information </h3>
+					<ul class="list">
+						<li><a href="addressFrom.jsp">Add Address</a></li>
+						<li><a href="paymentForm.jsp">Add Payment</a></li>		
+					</ul>
+					
+				</div>
+			</div>
 
-    
- 
-    <p style="color: red;">${errorString}</p>
- 
-    <table border="1" cellpadding="5" cellspacing="1" >
+    <table class="container">
        <tr>
-          <th>Address</th>
-          <th>Zipcode</th>
-          <th>City</th>
-          <th>Country</th>
           <th>Type</th>
+          <th>Cvv</th>
+          <th>Pan</th>
+          <th>Expiration Month</th>
+          <th>Expiration Year</th>
           <th>Action</th>
        </tr>
       <%
 		Object obj = request.getAttribute("AddressesList");
 		if(obj!=null)
 		{
-			List<Address> la = (List<Address>)obj;
-			for(Address u : la)
+			List<Payment> lp = (List<Payment>)obj;
+			for(Payment u : lp)
 			{
 	%>
 			<tr>
-			   <td>
-					<a href="orders?action=paybilling&id=<%=u.getId()%>">Select</a>
+				<td><%=u.getType()%></td>
+				<td><%=u.getCvv()%></td>
+				<td><%=u.getPan()%></td>
+				<td><%=u.getMonth()%></td>
+				<td><%=u.getYear() %></td>
+				<td>
+					<a href="payments?action=delete&id=<%=u.getId()%>">Delete</a>
+					<a href="payments?action=edit&id=<%=u.getId()%>">Edit</a>	
 				</td>
-				<td><%=u.getAddress()%></td>
-				<td><%=u.getZipcode()%></td>
-				<td><%=u.getCity()%></td>
-				
 			</tr>
 	<%
 			}
@@ -99,14 +106,14 @@
 		}
 		else
 		{
-			%><h1>NULL</h1>
+			%><h1>No Address</h1>
 			<%
 			
 		}
 	%>
     </table>
+    
 
-<h3>
-<a href="Customerform.html">Add</a>
+
 </body>
 </html>

@@ -37,7 +37,7 @@ public class CustomersController extends HttpServlet {
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	
 		String action = request.getParameter("action");
-		if(action.equals("myaccount"))
+		if(action== null || action.equals("myaccount"))
 		{
 			HttpSession session = request.getSession(false);
 			if(session == null)
@@ -49,17 +49,17 @@ public class CustomersController extends HttpServlet {
 			{
 				int custid = (int)session.getAttribute("user_id"); 
 				System.out.println("ID Cust " + custid);
-//					try 
-//					{
-//						Customer cust = CustomersFromServer.findId(custid);
-//						request.setAttribute("CustomersList", cust);
-//						request.getRequestDispatcher("CustomersView.jsp").forward(request, response);
-//					} 
-					//catch (ParseException e) 
-	//   			{
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
+					try 
+					{
+						Customer cust = CustomersFromServer.findId(custid);
+						request.setAttribute("CustomersList", cust);
+						request.getRequestDispatcher("CustomersView.jsp").forward(request, response);
+					} 
+					catch (ParseException e) 
+	   			{
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 		}
 	}

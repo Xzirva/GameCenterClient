@@ -20,6 +20,7 @@ import beans.Product;
 import beans.Address;
 import beans.Payment;
 import services.ProductsFromServer;
+import services.AddressesFromServer;
 import services.CustomersFromServer;
 import services.OrdersFromServer;
 //import dao.ProductsDao;
@@ -211,14 +212,18 @@ public class OrdersController extends HttpServlet {
 				int custid =(int)session.getAttribute("user_id"); 
 				System.out.println("Customer id: " + custid);
 			
-				List<Address> Lshipping = null;
-				List<Address> Lbilling  = null;
-				List<Payment> Lpayment = null;
+				List<Address> Lshipping = AddressesFromServer.findAll(custid, "shipping");
+				List<Address> Lbilling  = AddressesFromServer.findAll(custid, "billing");
+				Customer cust = CustomersFromServer.findId(custid);
+				
+				Payment testpay = new Payment(1, "visa", "4253765387619862",  "753",  7, 2025,cust);
+				List<Payment> Lpayment = new ArrayList<Payment>();
+				Lpayment.add(testpay);
 				
 				request.setAttribute("AddressesShippingList", Lshipping);		
 				request.setAttribute("AddressesBllingList", Lbilling);
 				request.setAttribute("PaymentList", Lpayment);
-				request.getRequestDispatcher("OrdersView.jsp").forward(request,response);
+				request.getRequestDispatcher("payForm.jsp").forward(request,response);
 					
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
@@ -244,10 +249,7 @@ public class OrdersController extends HttpServlet {
 		       
 			
 		}
-		
-		
-			
-		
+	
 		}
 	
 		
@@ -264,46 +266,46 @@ public class OrdersController extends HttpServlet {
 	{
 		// TODO Auto-generated method stub
 		//recuperer les parametres: idProduct, qte
-				int idProduct = Integer.parseInt(request.getParameter("productid"));
-				int qty = Integer.parseInt(request.getParameter("quantity"));
+		
+			HttpSession session = request.getSession(false);
+		
+			if(session == null)
+			{	
+				request.getRequestDispatcher("LoginFormCustomer.jsp").forward(request,response);
+			}
+		
+			int custid =(int)session.getAttribute("user_id"); 
+			
+			
+			String type = request.getParameter("type");
 				
-				try 
+			try 
+			{
+				if(type.equals("addproduct"))
 				{
-					HttpSession session = request.getSession(false);
 					
-					if(session == null)
-					{	
-						request.getRequestDispatcher("LoginFormCustomer.jsp").forward(request,response);
-						
+					int idProduct = Integer.parseInt(request.getParameter("productid"));
+					int qty = Integer.parseInt(request.getParameter("quantity"));
 				
-					}
-					
-					int custid =(int)session.getAttribute("user_id"); 
-					System.out.println("Customer id: " + custid);
-						
-					//Get the cart
-					Order cart = OrdersFromServer.findCart(custid);
 				
+					Order cart = OrdersFromServer.addToCart(custid, idProduct, qty);
 					
-					cart = OrdersFromServer.addToCart(3, idProduct, qty);
-					
-							
-				
  	    			request.setAttribute("Cart", cart);		
 					request.getRequestDispatcher("cart.jsp").forward(request,response);
 					
+				}
+				else if (type.equals("placeorder"))
+				{
 					
-				} catch (Exception e) {
+				}
+			} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}
-				
-				
-				
-				
+			}
 	}
+				
+			
 }
-
 //
 //
 //}

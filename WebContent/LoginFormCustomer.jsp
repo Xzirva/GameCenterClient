@@ -56,7 +56,7 @@
     </div>
     
     <div class="login-help">
-      <p>Not Member? <a href="CustomerForm.html">Click here to Register!</a>.</p>
+      <p>Not Member? <a href="CustomerForm.jsp">Click here to Register!</a>.</p>
     </div>
     
   </section>

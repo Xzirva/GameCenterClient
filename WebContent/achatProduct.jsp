@@ -12,6 +12,7 @@
 		<link rel="shortcut icon" href="images/favicon.ico" />
 		<link rel="stylesheet" href="css/style.css">
 		<link rel="stylesheet" href="css/form.css">
+		<link rel="stylesheet" href="css/login.css">
 		<link rel="stylesheet" href="css/divide.css">
 		<script src="js/script.js"></script>
 		<script src="js/superfish.js"></script>
@@ -90,6 +91,7 @@
 					<form method="post" action="orders">
 						<input type="number" class="demoInputBox" name="quantity" placeholder="Quantity">
 						<input type="hidden" name="productid" value="<%=p.getId()%>">
+						<input type="hidden" name="type" value="addproduct">
 						<div class="submit">
 			 			<input type="submit" name="register-user" value="Add to Cart" class="btnRegister"> 
 					</input>
