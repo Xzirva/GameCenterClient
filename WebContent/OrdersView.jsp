@@ -1,45 +1,33 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<%@page import="beans.OrderLine"%>
 <%@page import="beans.Order"%>
 <%@page import="java.util.List"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
     
 <!DOCTYPE html>
 <html>
-	<head>
+<head>
 		<title>GAME CENTER</title>
 		<meta charset="utf-8">
 		<meta name="format-detection" content="telephone=no" />
 		<link rel="icon" href="images/favicon.ico">
 		<link rel="shortcut icon" href="images/favicon.ico" />
 		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="css/table.css">
+		<link rel="stylesheet" href="login.css">
 		<link rel="stylesheet" href="css/form.css">
 		<link rel="stylesheet" href="css/divide.css">
-		<link rel="stylesheet" href="css/table.css">
 		<script src="js/script.js"></script>
 		<script src="js/superfish.js"></script>
-		
 		<script>
 		$(document).ready(function(){
 			$().UItoTop({ easingType: 'easeOutQuart' });
 		});
 		</script>
-		<!--[if lt IE 8]>
-		<div style=' clear: both; text-align:center; position: relative;'>
-			<a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
-				<img src="http://storage.ie6countdown.com/assets/100/images/banners/warning_bar_0000_us.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today." />
-			</a>
-		</div>
-		<![endif]-->
-		<!--[if lt IE 9]>
-		<script src="js/html5shiv.js"></script>
-		<link rel="stylesheet" media="screen" href="css/ie.css">
-		<![endif]-->
 	</head>
- <body>
- 
- <!--==============================header=================================-->
+	
+<!--==============================header=================================-->
+	
+<body>
 		<header>
 			<div class="container_12">
 				<div class="grid_12">
@@ -65,6 +53,26 @@
 				</div>
 			</div>
 		</header>  
+
+<div id="sidebar">
+			<div class="grid_3 prefix_1">
+					<h3 class="head1">My Profile</h3>
+					<ul class="list">
+						<li><a href="orders?action=showCart">My Cart</a></li>
+						<li><a href="addresses?action=showShipping">My Shipping Addresses</a></li>
+						<li><a href="addresses?action=showBilling">My Billing Addresses</a></li>
+						<li><a href="payments?action=showAll">My Payments</a></li>
+						<li><a href="orders?action=showOrders">My Orders</a></li>		
+					</ul>
+					
+					<h3 class="head1">Update Information </h3>
+					<ul class="list">
+						<li><a href="addressForm.jsp">Add Address</a></li>
+						<li><a href="paymentForm.jsp">Add Payment</a></li>		
+					</ul>
+				</div>
+			</div>
+			 
   <table class="container">
   <thead>
        <tr>
@@ -76,14 +84,14 @@
 		Object obj = request.getAttribute("ListOrders");
 		if(obj!=null)
 		{
-			List<Order> la = (List<Order>)obj;
-			for(Order u : la)
+			List<Order> lo = (List<Order>)obj;
+			for(Order u : lo)
 			{
 	%>
 			<tr>
 				<td><%=u.getTotal()%></td>
 				<td>				
-					<a href="orders?action=showOrder&orderid=<%=u.getId()%>">Show</a>						
+					<a href="orders?action=showOrder&id=<%=u.getId()%>">Show</a>						
 				</td>
 			</tr>
 	<%

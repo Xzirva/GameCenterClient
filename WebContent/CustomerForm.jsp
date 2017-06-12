@@ -85,6 +85,8 @@
 			<input type="radio" name="gender" value="f" checked />Female
 			</p>
 			
+			<input type="hidden" name="typeaction" value="add" />
+			
 		<p>
 		 <div class="submit">
 			<input type="checkbox" name="terms"> I accept Terms and Conditions

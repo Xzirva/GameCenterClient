@@ -48,7 +48,10 @@
     <servlet-class>controllers.AuthenticationController</servlet-class>
   </servlet>
   
-  
+  <servlet>
+    <servlet-name>PaymentsController</servlet-name>
+    <servlet-class>controllers.PaymentsController</servlet-class>
+  </servlet>
   
   
   
@@ -85,6 +88,11 @@
   <servlet-mapping>
   <servlet-name>CustomersController</servlet-name>
     <url-pattern>/customers</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>PaymentsController</servlet-name>
+    <url-pattern>/payments</url-pattern>
   </servlet-mapping>
   
   <servlet-mapping>

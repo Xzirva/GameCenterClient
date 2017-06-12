@@ -70,6 +70,7 @@
 <form method="post" action="orders">
 
 <div>
+<p>
 			Shipping Address<select name="shipping">
 		
 <% 
@@ -89,9 +90,11 @@
 		%>
 		
 </select>
+</p>
 </div>
 
 <div>
+<p>
 			Billing Address<select name="billing">
 		
 <% 	
@@ -105,13 +108,17 @@
 
 		<option value=<%=u.getId()%>><%=u.getAddress()%></option>
 	
-		<% } 
-		}
-		%>	
+		<% } %>
+			
 </select>
+<input type="hidden" name="customer" value=<%=lab.get(0).getCustomer().getId()%>>
+<%}
+		%>
+<p>
 </div>
 	
 <div>
+<p>
 			Credit Card <select name="payment">
 <%	
 		obj = request.getAttribute("PaymentList");
@@ -121,19 +128,20 @@
 			for(Payment u : lp)
 			{
 %>
-	<option value=<%=u.getId()%>><%=u.getCvv()%></option>
+	<option value=<%=u.getId()%>><%=u.getPan()%></option>
 	
 		<% } 
 		}
 		%>	
 		
 </select>
+</p>
 </div>
+<input type="hidden" name="type" value="placeorder">
+
 	<div class="submit">
         	<input type="submit" name="commit" value="Place Order">
-        </div>
-	
-	<input type="hidden" name="type" value="placeorder">
+        </div>	
 </form>
 </div>
 </section>

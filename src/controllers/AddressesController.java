@@ -80,6 +80,16 @@ public class AddressesController extends HttpServlet {
 				request.getRequestDispatcher("AddressesView.jsp").forward(request,response);
 				
 			}
+			else if(action.equals("edit"))
+			{
+				int idadd = Integer.parseInt(request.getParameter("id"));
+				
+				Address address = AddressesFromServer.find(idcust, idadd);
+				
+				request.setAttribute("Address", address);
+				request.getRequestDispatcher("AddressesEdit.jsp").forward(request,response);
+				
+			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -92,17 +102,19 @@ public class AddressesController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
 		try 
 		{
 		HttpSession session = request.getSession(false);
 		
-		if(session == null)
+		if(session==null || (session != null && session.getAttribute("user_id")== null))
 		{	
 			request.getRequestDispatcher("LoginFormCustomer.jsp").forward(request,response);
+	
 		}
 		
 		int idcust =(int)session.getAttribute("user_id"); 
+		
+		String typeaction = request.getParameter("typeaction");
 		
 		String address = request.getParameter("address");
 		String zipcode = request.getParameter("zipcode");
@@ -110,8 +122,16 @@ public class AddressesController extends HttpServlet {
 		String country = request.getParameter("country");
 		String type = request.getParameter("type");
 		
+		if(typeaction.equals("add"))
+		{
+			AddressesFromServer.create(idcust, address, zipcode, city, country, type);
+		}
+		if(typeaction.equals("update"))
+		{
+			int idadd = Integer.parseInt(request.getParameter("idaddress"));
+			AddressesFromServer.update(idcust, idadd, address, zipcode, city, country, type);
+		}
 		
-		AddressesFromServer.create(idcust, address, zipcode, city, country, type);
 		
 		List<Address> listA = AddressesFromServer.findAll(idcust, "shipping");
 		

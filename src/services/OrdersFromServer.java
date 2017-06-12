@@ -32,7 +32,7 @@ public class OrdersFromServer {
 		List<Order> lu = new ArrayList<Order>();
 		for (int i = 0; i < jsons.size(); i++) {
 			JSONObject order_json = (JSONObject) jsons.get(i);
-			  Order current = new Order((int)order_json.get("id"), customer, order_json.get("paid") == "true");
+			  Order current = new Order(Integer.parseInt(order_json.get("id").toString()), customer, order_json.get("paid") == "true");
 			  current.setOrderLines(serialiseOrderLines(order_json));
 			  lu.add(current);
 		}

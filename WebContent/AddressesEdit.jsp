@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <?xml version="1.0" encoding="UTF-8" ?>
-<%@page import="beans.Payment"%>
+<%@page import="beans.Address"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; text/css; charset=UTF-8" pageEncoding="UTF-8"%>
     
@@ -34,7 +34,7 @@
 								<li class="current"><a href="index.html">ABOUT</a></li>
 								<li><a href="http://localhost:8080/GameCenterClient/orders?action=show">OUR GAMES</a></li>
 								<li><a href="index-2.html"> SALES </a></li>
-								<li><a href="http://localhost:8080/GameCenterClient/customers?action=myaccount">MY ACCOUNT</a></li>
+						<li><a href="http://localhost:8080/GameCenterClient/customers?action=myaccount">MY ACCOUNT</a></li>
 								<li><a href="index-4.html">CONTACTS</a></li>
 							</ul>
 						</nav>
@@ -50,8 +50,8 @@
 				</div>
 			</div>
 		</header> 
-		
-		    	<div id="sidebar">
+
+    	<div id="sidebar">
 			<div class="grid_3 prefix_1">
 					<h3 class="head1">My Profile</h3>
 					<ul class="list">
@@ -70,50 +70,52 @@
 					
 				</div>
 			</div>
-
-    <table class="container">
-       <tr>
-          <th>Type</th>
-          <th>Cvv</th>
-          <th>Pan</th>
-          <th>Expiration Month</th>
-          <th>Expiration Year</th>
-          <th>Action</th>
-       </tr>
-      <%
-		Object obj = request.getAttribute("PaymentsList");
+			
+			 <%
+		Object obj = request.getAttribute("Address");
 		if(obj!=null)
 		{
-			List<Payment> lp = (List<Payment>)obj;
-			for(Payment u : lp)
-			{
+			Address a = (Address)obj;
+		
 	%>
-			<tr>
-				<td><%=u.getType()%></td>
-				<td><%=u.getCvv()%></td>
-				<td><%=u.getPan()%></td>
-				<td><%=u.getMonth()%></td>
-				<td><%=u.getYear() %></td>
-				<td>
-					<a href="payments?action=delete&id=<%=u.getId()%>">Delete</a>
-					<a href="payments?action=edit&id=<%=u.getId()%>">Edit</a>	
-				</td>
-			</tr>
-	<%
-			}
-			
-			
-		}
-		else
-		{
-			%><h1>No Address</h1>
-			<%
-			
-		}
-	%>
-    </table>
-    
-
-
+	<section class="container">
+    <div class="login">
+	<form method="post" action="addresses">
+	<h1>Address Form</h1>
+<br>	
+<p>
+		<input type="text" name="address" value=<%=a.getAddress()%> />
+		</p>
+		<p>
+		<input type="text" name="zipcode" value=<%=a.getZipcode()%> />
+	</p>
+	<p>
+       <input type="text" name="city" value=<%=a.getCity()%>/>
+		</p>
+		<p>
+		<input type="text" name="country" value=<%=a.getCountry()%>/>
+	</p>
+		<p>
+			<select name="type">
+  				<option value="shipping">Shipping</option>
+  				<option value="billing">Billing</option>
+  				<option value="both">Both</option>
+  			</select>
+		</p>
+		
+		<input type="hidden" name="idaddress" value=<%=a.getId()%> />
+		<input type="hidden" name="typeaction" value="update" />
+		 <div class="submit">
+        	<input type="submit" name="commit" value="Edit Address">
+        </div>
+        
+        
+	</form>
+	
+	
+	
+	<%} %>
+	</div>
+	</section>
 </body>
 </html>

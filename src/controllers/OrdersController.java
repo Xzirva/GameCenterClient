@@ -23,6 +23,7 @@ import services.ProductsFromServer;
 import services.AddressesFromServer;
 import services.CustomersFromServer;
 import services.OrdersFromServer;
+import services.PaymentsFromServer;
 //import dao.ProductsDao;
 
 /**
@@ -197,13 +198,41 @@ public class OrdersController extends HttpServlet {
 					}
 				
 			}
+		else if(action.equals("showOrder"))
+		{
+			try 
+			{
+				HttpSession session = request.getSession(false);
+				
+				if(session==null || (session != null && session.getAttribute("user_id")== null))
+				{	
+					request.getRequestDispatcher("LoginFormCustomer.jsp").forward(request,response);
+			
+				}
+				
+				int custid =(int)session.getAttribute("user_id"); 
+				int orderid = Integer.parseInt(request.getParameter("id"));
+				
+				System.out.println("Customer id: " + custid);
+				
+				Order order = OrdersFromServer.findOrder(custid, orderid);
+
+				
+				request.setAttribute("Order", order);		
+				request.getRequestDispatcher("OrdersView.jsp").forward(request,response);
+					
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
 		else if(action.equals("pay"))
 		{
 			try 
 			{
 				HttpSession session = request.getSession(false);
 				
-				if(session == null)
+				if(session==null || (session != null && session.getAttribute("user_id")== null))
 				{	
 					request.getRequestDispatcher("LoginFormCustomer.jsp").forward(request,response);
 			
@@ -214,12 +243,12 @@ public class OrdersController extends HttpServlet {
 			
 				List<Address> Lshipping = AddressesFromServer.findAll(custid, "shipping");
 				List<Address> Lbilling  = AddressesFromServer.findAll(custid, "billing");
-				Customer cust = CustomersFromServer.findId(custid);
+				List<Payment> Lpayment = PaymentsFromServer.findAll(custid);
 				
-				Payment testpay = new Payment(1, "visa", "4253765387619862",  "753",  7, 2025,cust);
-				List<Payment> Lpayment = new ArrayList<Payment>();
-				Lpayment.add(testpay);
-				
+				if(Lshipping==null || Lbilling==null || Lpayment==null)
+				{
+					request.getRequestDispatcher("http://localhost:8080/GameCenterClient/customers?action=myaccount").forward(request,response);
+				}
 				request.setAttribute("AddressesShippingList", Lshipping);		
 				request.setAttribute("AddressesBllingList", Lbilling);
 				request.setAttribute("PaymentList", Lpayment);
@@ -269,9 +298,10 @@ public class OrdersController extends HttpServlet {
 		
 			HttpSession session = request.getSession(false);
 		
-			if(session == null)
+			if(session==null || (session != null && session.getAttribute("user_id")== null))
 			{	
 				request.getRequestDispatcher("LoginFormCustomer.jsp").forward(request,response);
+		
 			}
 		
 			int custid =(int)session.getAttribute("user_id"); 
@@ -296,7 +326,12 @@ public class OrdersController extends HttpServlet {
 				}
 				else if (type.equals("placeorder"))
 				{
-					
+					int idcust = Integer.parseInt(request.getParameter("customer"));
+					int idpay = Integer.parseInt(request.getParameter("payment"));
+					Order order = OrdersFromServer.payCart(idcust, idpay);
+			
+					request.setAttribute("Order", order);		
+					request.getRequestDispatcher("OrdersView.jsp").forward(request,response);
 				}
 			} catch (Exception e) {
 					// TODO Auto-generated catch block

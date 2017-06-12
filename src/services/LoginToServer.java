@@ -50,7 +50,7 @@ public class LoginToServer {
 		JSONObject user_json = (JSONObject) json.get("user");
 		System.out.print(json.keySet().toString());
 		//toIntExact( (long) user_json.get("id"))
-		Customer loggedIn = new Customer(1, 
+		Customer loggedIn = new Customer(Integer.parseInt(user_json.get("id").toString()), 
 				(String) user_json.get("firstname"), (String)  user_json.get("lastname"), 
 				(String) user_json.get("gender"), (String) user_json.get("email"), (String) user_json.get("username"), 
 				(String) user_json.get("pwd"), (boolean) user_json.get("admin"), (String) json.get("authentication_token"));
