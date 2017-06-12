@@ -77,6 +77,10 @@ public class Payment implements Serializable, Comparable<Payment>
 		status = false;
 	}
 	
+	public Customer getCustomer() {
+		return customer;
+	}
+	
 	@Override
 	public int compareTo(Payment o) {
 		return (this.cvv.compareTo(o.cvv));

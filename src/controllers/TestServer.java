@@ -21,12 +21,14 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import beans.Address;
 import beans.Customer;
 import beans.Order;
+import beans.Payment;
 import beans.Product;
 import server_interfaces.ServerInterfaceByGet;
 import services.CustomersFromServer;
 import services.AddressesFromServer;
 import services.LoginToServer;
 import services.OrdersFromServer;
+import services.PaymentsFromServer;
 import services.ProductsFromServer;
 
 @Path("test-server") 
@@ -35,7 +37,7 @@ public class TestServer {
 	@GET 
 	@Path("") 
 	@Produces(MediaType.APPLICATION_JSON) 
-	public Address test_server() throws Exception
+	public Payment test_server() throws Exception
 	{ 
 		//String s = ServerInterfaceByGet.test_post();
 		//JSONObject json = (JSONObject) new JSONParser().parse(s);
@@ -51,9 +53,8 @@ public class TestServer {
 //		return LoginToServer.register(gender, first_name, last_name, email, username, password);
 		// String address, String zipcode, String city, String country, String type
 		//return AddressesFromServer.create(35, "address","12457", "city", "country","shipping");
-		//OrdersFromServer.addToCart(1, 3, 5);
-		return AddressesFromServer.update(35, 123, "My fucking address", "66699", "The fucking city", "FREAER", "shipping");
-		
-		
+		//return AddressesFromServer.update(35, 123, "My fucking address", "66699", "The fucking city", "FREAER", "shipping");
+		return PaymentsFromServer.create(1, "mastercard", "1600160016001600", "158", 7, 2563);
+		//return PaymentsFromServer.delete(1, 103);
 	}	
 }
