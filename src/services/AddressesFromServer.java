@@ -83,4 +83,11 @@ public class AddressesFromServer
 		return (boolean) address_json.get("deleted");
 	}
 	
+	public static Address find(int customer_id, int address_id) throws Exception {
+		URL url = new URL("http://localhost:8080/GameCenter/web-services/customers/" + customer_id  + "/addresses/" + address_id);
+		String s = ServerInterfaceByGet.get_request(url);
+		JSONObject address_json = (JSONObject) new JSONParser().parse(s);
+		return serializeAddress(address_json);
+	}
+	
 }
