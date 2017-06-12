@@ -1,6 +1,7 @@
 package services;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -82,6 +83,15 @@ public class OrdersFromServer {
 		return serializeOrder(order_json);
 	}
 	
+	public static Order payCart(int customer_id, int payment_id) throws Exception {
+		URL url = new URL("http://localhost:8080/GameCenter/web-services/customers/" + customer_id  + "/orders/pay");
+		Map<String,Object> params = new LinkedHashMap<>();
+		params.put("payment_id", payment_id);
+		String s = ServerInterfaceByGet.write_request(url, "POST", params);
+		JSONObject order_json = (JSONObject) new JSONParser().parse(s);
+		return serializeOrder(order_json);
+	}
+	
 	private static List<OrderLine> serialiseOrderLines(JSONObject OrderJson) throws JsonParseException, JsonMappingException, IOException{
 		JSONArray orderlines_json = (JSONArray) OrderJson.get("orderLines");
 		List<OrderLine> lu = new ArrayList<OrderLine>();
@@ -102,6 +112,5 @@ public class OrdersFromServer {
 		current.setOrderLines(list);
 		return current;
 	}
-	
 	
 }
