@@ -74,10 +74,8 @@
     <table class="container">
        <tr>
           <th>Type</th>
-          <th>Cvv</th>
           <th>Pan</th>
-          <th>Expiration Month</th>
-          <th>Expiration Year</th>
+          <th>Expiration </th>
           <th>Action</th>
        </tr>
       <%
@@ -90,12 +88,12 @@
 	%>
 			<tr>
 				<td><%=u.getType()%></td>
-				<td><%=u.getCvv()%></td>
 				<td><%=u.getPan()%></td>
-				<td><%=u.getMonth()%></td>
-				<td><%=u.getYear() %></td>
+				<td><%=u.getMonth()%> / <%=u.getYear() %></td>
+				
 				<td>
 					<a href="payments?action=delete&id=<%=u.getId()%>">Delete</a>
+			
 					<a href="payments?action=edit&id=<%=u.getId()%>">Edit</a>	
 				</td>
 			</tr>

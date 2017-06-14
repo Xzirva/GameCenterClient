@@ -4,8 +4,8 @@
 	
 	<link rel="stylesheet" href="css/login.css"/>
 	<link rel="stylesheet" href="css/style.css">
-		<link rel="stylesheet" href="css/form.css">
-		<link rel="stylesheet" href="css/divide.css">
+	<link rel="stylesheet" href="css/form.css">
+	<link rel="stylesheet" href="css/divide.css">
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	
 	<title>Login Page</title>
