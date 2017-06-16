@@ -37,7 +37,7 @@ public class TestServer {
 	@GET 
 	@Path("") 
 	@Produces(MediaType.APPLICATION_JSON) 
-	public Order test_server() throws Exception
+	public List<Order> test_server() throws Exception
 	{ 
 		//String s = ServerInterfaceByGet.test_post();
 		//JSONObject json = (JSONObject) new JSONParser().parse(s);
@@ -56,8 +56,11 @@ public class TestServer {
 		//return AddressesFromServer.update(35, 123, "My fucking address", "66699", "The fucking city", "FREAER", "shipping");
 		//return PaymentsFromServer.create(1, "mastercard", "1600160016001600", "158", 7, 2563);
 		//return AddressesFromServer.find(35, 123);
-		//OrdersFromServer.addToCart(1, 2, 5);
-		return OrdersFromServer.findOrder(1, 10);
+//		OrdersFromServer.addToCart(1, 2, 5);
+//		return OrdersFromServer.payCart(1, 102);
 		//return PaymentsFromServer.delete(1, 103);
+		Customer cust = CustomersFromServer.findId(1);
+		return OrdersFromServer.findAll(cust);
+		//return ProductsFromServer.create("product name 4", 50, 15, 12, 2014, 85, 100, "Super Jeu de la mort qui tue 2 fois", "xbox", "action", "ubisoft");
 	}	
 }
