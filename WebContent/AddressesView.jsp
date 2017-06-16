@@ -64,7 +64,7 @@
 					
 					<h3 class="head1">Update Information </h3>
 					<ul class="list">
-						<li><a href="addressFrom.jsp">Add Address</a></li>
+						<li><a href="addressForm.jsp">Add Address</a></li>
 						<li><a href="paymentForm.jsp">Add Payment</a></li>		
 					</ul>
 					

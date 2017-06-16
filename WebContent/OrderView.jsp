@@ -1,48 +1,34 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<%@page import="beans.Order"%>
 <%@page import="beans.OrderLine"%>
 <%@page import="java.util.List"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
     
 <!DOCTYPE html>
 <html>
-	<head>
+<head>
 		<title>GAME CENTER</title>
 		<meta charset="utf-8">
 		<meta name="format-detection" content="telephone=no" />
 		<link rel="icon" href="images/favicon.ico">
 		<link rel="shortcut icon" href="images/favicon.ico" />
 		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="css/table.css">
+		<link rel="stylesheet" href="login.css">
 		<link rel="stylesheet" href="css/form.css">
 		<link rel="stylesheet" href="css/divide.css">
-		<script src="js/jquery.js"></script>
-		<script src="js/jquery-migrate-1.2.1.js"></script>
 		<script src="js/script.js"></script>
 		<script src="js/superfish.js"></script>
-		<script src="js/jquery.ui.totop.js"></script>
-		<script src="js/jquery.equalheights.js"></script>
-		<script src="js/jquery.mobilemenu.js"></script>
-		<script src="js/jquery.easing.1.3.js"></script>
 		<script>
 		$(document).ready(function(){
 			$().UItoTop({ easingType: 'easeOutQuart' });
 		});
 		</script>
-		<!--[if lt IE 8]>
-		<div style=' clear: both; text-align:center; position: relative;'>
-			<a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
-				<img src="http://storage.ie6countdown.com/assets/100/images/banners/warning_bar_0000_us.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today." />
-			</a>
-		</div>
-		<![endif]-->
-		<!--[if lt IE 9]>
-		<script src="js/html5shiv.js"></script>
-		<link rel="stylesheet" media="screen" href="css/ie.css">
-		<![endif]-->
 	</head>
- <body>
- 
- <!--==============================header=================================-->
+	
+<!--==============================header=================================-->
+	
+<body>
 		<header>
 			<div class="container_12">
 				<div class="grid_12">
@@ -68,33 +54,59 @@
 				</div>
 			</div>
 		</header>  
-    <p style="color: red;">${errorString}</p>
- 
-    <table border="1" cellpadding="5" cellspacing="1" >
+
+<div id="sidebar">
+			<div class="grid_3 prefix_1">
+					<h3 class="head1">My Profile</h3>
+					<ul class="list">
+						<li><a href="orders?action=showCart">My Cart</a></li>
+						<li><a href="addresses?action=showShipping">My Shipping Addresses</a></li>
+						<li><a href="addresses?action=showBilling">My Billing Addresses</a></li>
+						<li><a href="payments?action=showAll">My Payments</a></li>
+						<li><a href="orders?action=showOrders">My Orders</a></li>		
+					</ul>
+					
+					<h3 class="head1">Update Information </h3>
+					<ul class="list">
+						<li><a href="addressForm.jsp">Add Address</a></li>
+						<li><a href="paymentForm.jsp">Add Payment</a></li>		
+					</ul>
+				</div>
+			</div>
+			 
+  <table class="container">
+  <thead>
        <tr>
-          <th>Product</th>
-          <th>Quantity</th>
-          <th>Total</th>
+          <th><h1>Product</h1><th>
+          <th><h1>Quantity</h1></th>
+          <th><h1>Price</h1></th>
        </tr>
+  </thead>
       <%
-		Object obj = request.getAttribute("OrderLinesView");
+		Object obj = request.getAttribute("ListOrders");
 		if(obj!=null)
 		{
-			List<OrderLine> la = (List<OrderLine>)obj;
-			for(OrderLine u : la)
+			Order o = (Order)obj;
+			List<OrderLine> lo = o.getOrderLines();
+			for(OrderLine u : lo)
 			{
 	%>
 			<tr>
-				<td><%=u.getProd().getName()%></td>
+				<td><%=u.getProd()%></td>
 				<td><%=u.getQte()%></td>
 				<td><%=u.getTotal()%></td>
-				
 			</tr>
 	<%
 			}
+			%>
+			<tr>
+				<td><h1>Total</h1></td>
+				<td> </td>
+				<td><%=o.getTotal()%></td>
+			</tr>
 			
-			
-		}
+			</table>
+		<% }
 		else
 		{
 			%><h1>NULL</h1>
@@ -102,10 +114,6 @@
 			
 		}
 	%>
-    </table>
-
-<h3>
-<a href="orders?action=show">View Orders</a>
-<a href="products?action=">View Products</a>
+    
 </body>
 </html>

@@ -1,19 +1,21 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <?xml version="1.0" encoding="UTF-8" ?>
-<%@page import="beans.Payment"%>
+<%@page import="beans.Customer"%>
 <%@page import="java.util.List"%>
-<%@ page language="java" contentType="text/html; text/css; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
     
-	<head>
+<!DOCTYPE html>
+<html>
+<head>
 		<title>GAME CENTER</title>
 		<meta charset="utf-8">
 		<meta name="format-detection" content="telephone=no" />
 		<link rel="icon" href="images/favicon.ico">
 		<link rel="shortcut icon" href="images/favicon.ico" />
 		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="css/table.css">
+		<link rel="stylesheet" href="login.css">
 		<link rel="stylesheet" href="css/form.css">
 		<link rel="stylesheet" href="css/divide.css">
-		<link rel="stylesheet" href="css/table.css">
 		<script src="js/script.js"></script>
 		<script src="js/superfish.js"></script>
 		<script>
@@ -22,9 +24,10 @@
 		});
 		</script>
 	</head>
- <body>
- 
- <!--==============================header=================================-->
+	
+<!--==============================header=================================-->
+	
+<body>
 		<header>
 			<div class="container_12">
 				<div class="grid_12">
@@ -49,9 +52,9 @@
 					</h1>
 				</div>
 			</div>
-		</header> 
-		
-		    	<div id="sidebar">
+		</header>  
+
+<div id="sidebar">
 			<div class="grid_3 prefix_1">
 					<h3 class="head1">My Profile</h3>
 					<ul class="list">
@@ -67,51 +70,50 @@
 						<li><a href="addressForm.jsp">Add Address</a></li>
 						<li><a href="paymentForm.jsp">Add Payment</a></li>		
 					</ul>
-					
 				</div>
 			</div>
-
-    <table class="container">
-       <tr>
-          <th>Type</th>
-          <th>Pan</th>
-          <th>Expiration </th>
-          <th>Action</th>
-       </tr>
-      <%
-		Object obj = request.getAttribute("PaymentsList");
+			
+			
+     <% Object obj = request.getAttribute("Customer");
 		if(obj!=null)
 		{
-			List<Payment> lp = (List<Payment>)obj;
-			for(Payment u : lp)
-			{
+			Customer c = (Customer)obj;
+		
 	%>
-			<tr>
-				<td><%=u.getType()%></td>
-				<td><%=u.getPan()%></td>
-				<td><%=u.getMonth()%> / <%=u.getYear() %></td>
-				
-				<td>
-					<a href="payments?action=delete&id=<%=u.getId()%>">Delete</a>
+	
+   <section class="container">
+    <div class="login">
+	<form method="post" action="customers">
+	<h1>Customers Form</h1>
+<br>	
+<p>
+		<input type="text" name="firstname" value=<%=c.getFirstname()%> />
+		</p>
+		<p>
+		<input type="text" name="lastname" value=<%=c.getLastname()%> />
+	</p>
+	<p>
+       <input type="text" name="email" value=<%=c.getEmail()%>/>
+	</p>
+	
+	<p>
+			<input type="radio" name="gender" value="m" />Male
+			<input type="radio" name="gender" value="f" checked />Female
+		</p>
 			
-					<a href="payments?action=edit&id=<%=u.getId()%>">Edit</a>	
-				</td>
-			</tr>
-	<%
-			}
-			
-			
-		}
-		else
-		{
-			%><h1>No Address</h1>
-			<%
-			
-		}
-	%>
-    </table>
-    
-
-
-</body>
-</html>
+		<input type="hidden" name="username" value=<%=c.getUsername()%> />
+		<input type="hidden" name="idcustomer" value=<%=c.getId()%> />
+		<input type="hidden" name="typeaction" value="update" />
+		
+		 <div class="submit">
+        	<input type="submit" name="commit" value="Edit Address">
+        </div>
+        
+      <%} %>  
+	</form>
+	
+	</div>
+	</section>
+	
+	</body>
+	</html>

@@ -40,7 +40,7 @@ public class CustomersController extends HttpServlet {
 		if(action== null || action.equals("myaccount"))
 		{
 			HttpSession session = request.getSession(false);
-			if(session == null)
+			if(session==null || (session != null && session.getAttribute("user_id")== null))
 			{	
 				request.getRequestDispatcher("LoginFormCustomer.jsp").forward(request,response);
 		
@@ -69,7 +69,14 @@ public class CustomersController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		String lastname = request.getParameter("firstname");
+		String firstname = request.getParameter("lastname");
+		String email = request.getParameter("email");
+		String username = request.getParameter("username");
+		String gender = request.getParameter("gender");
+		
+		//CustomersFromServer.
+		
 	}
 
 }

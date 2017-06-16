@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import beans.Address;
 import beans.Payment;
 import services.AddressesFromServer;
+import services.PaymentsFromServer;
 
 /**
  * Servlet implementation class PaymentsController
@@ -39,9 +40,10 @@ public class PaymentsController extends HttpServlet {
 		String action = request.getParameter("action");
 		HttpSession session = request.getSession(false);
 		
-		if(session == null)
+		if(session==null || (session != null && session.getAttribute("user_id")== null))
 		{	
 			request.getRequestDispatcher("LoginFormCustomer.jsp").forward(request,response);
+	
 		}
 		
 		int idcust =(int)session.getAttribute("user_id"); 
@@ -51,8 +53,7 @@ public class PaymentsController extends HttpServlet {
 			if (action.equals("showAll"))
 			{	
 				
-				List<Payment> listP  = new ArrayList<Payment>();
-					//AddressesFromServer.findAll(idcust, "billing");
+				 List<Payment> listP = PaymentsFromServer.findAll(idcust);
 				
 				request.setAttribute("PaymentsList", listP);
 				request.getRequestDispatcher("PaymentsView.jsp").forward(request,response);
@@ -71,7 +72,6 @@ public class PaymentsController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
 		
 		try 
 		{
@@ -92,10 +92,10 @@ public class PaymentsController extends HttpServlet {
 		int year = Integer.parseInt(request.getParameter("year"));
 		
 		
-//		PaymentsFromServer.create(idcust, );
+		PaymentsFromServer.create(idcust, type, pan, cvv, month, year);
 		
 		List<Payment> listP =  new ArrayList<Payment>();
-//		PaymentsFromServer.findAll(idcust);
+		PaymentsFromServer.findAll(idcust);
 		
 		request.setAttribute("PaymentsList", listP);
 		request.getRequestDispatcher("PaymentsView.jsp").forward(request,response);

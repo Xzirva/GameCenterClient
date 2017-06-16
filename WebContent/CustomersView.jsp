@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <%@page import="beans.Customer"%>
 <%@page import="java.util.List"%>
-<link rel="stylesheet" href="login.css">
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
     
 <!DOCTYPE html>
@@ -14,6 +13,7 @@
 		<link rel="shortcut icon" href="images/favicon.ico" />
 		<link rel="stylesheet" href="css/style.css">
 		<link rel="stylesheet" href="css/table.css">
+		<link rel="stylesheet" href="login.css">
 		<link rel="stylesheet" href="css/form.css">
 		<link rel="stylesheet" href="css/divide.css">
 		<script src="js/script.js"></script>

@@ -18,15 +18,6 @@
     <servlet-class>controllers.CustomersController</servlet-class>
   </servlet>
   
-  <servlet>
-    <servlet-name>AdminProductsController</servlet-name>
-    <servlet-class>controllers.AdminProductsController</servlet-class>
-  </servlet>
-  
-  <servlet>
-    <servlet-name>AdminCustomersController</servlet-name>
-    <servlet-class>controllers.AdminCustomersController</servlet-class>
-  </servlet>
   
   <servlet>
     <servlet-name>AddressesController</servlet-name>
@@ -48,7 +39,20 @@
     <servlet-class>controllers.AuthenticationController</servlet-class>
   </servlet>
   
+  <servlet>
+    <servlet-name>PaymentsController</servlet-name>
+    <servlet-class>controllers.PaymentsController</servlet-class>
+  </servlet>
   
+    <servlet>
+    <servlet-name>AdminProductsController</servlet-name>
+    <servlet-class>controllers.AdminProductsController</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>AdminCustomersController</servlet-name>
+    <servlet-class>controllers.AdminCustomersController</servlet-class>
+  </servlet>
   
   
   
@@ -57,15 +61,6 @@
     <url-pattern>/server-test/*</url-pattern>
   </servlet-mapping>
   
-  <servlet-mapping>
-    <servlet-name>AdminProductsController</servlet-name>
-    <url-pattern>/adminproducts</url-pattern>
-  </servlet-mapping>
-  
-  <servlet-mapping>
-    <servlet-name>AdminCustomersController</servlet-name>
-    <url-pattern>/admincustomers</url-pattern>
-  </servlet-mapping>
   
   <servlet-mapping>
     <servlet-name>AddressesController</servlet-name>
@@ -88,8 +83,23 @@
   </servlet-mapping>
   
   <servlet-mapping>
+    <servlet-name>PaymentsController</servlet-name>
+    <url-pattern>/payments</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
     <servlet-name>AuthenticationController</servlet-name>
     <url-pattern>/auth</url-pattern>
+  </servlet-mapping>
+  
+    <servlet-mapping>
+    <servlet-name>AdminProductsController</servlet-name>
+    <url-pattern>/adminproducts</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>AdminCustomersController</servlet-name>
+    <url-pattern>/admincustomers</url-pattern>
   </servlet-mapping>
   
 </web-app>

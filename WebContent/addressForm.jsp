@@ -89,6 +89,8 @@
   			</select>
 		</p>
 		
+		<input type="hidden" name="typeaction" value="add" />
+		
 		 <div class="submit">
         	<input type="submit" name="commit" value="Add Address">
         </div>
