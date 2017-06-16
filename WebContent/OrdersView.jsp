@@ -101,7 +101,7 @@
 		}
 		else
 		{
-			%><h1>NULL</h1>
+			%><h1>Orders Empty... Order Now!</h1>
 			<%
 			
 		}

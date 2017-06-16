@@ -187,7 +187,7 @@ public class OrdersController extends HttpServlet {
 					Customer cust = CustomersFromServer.findId(custid);
 					
 					List <Order> orders = OrdersFromServer.findAll(cust);
-					
+					System.out.println("******" + orders.size());
 					
 					request.setAttribute("ListOrders", orders);		
 					request.getRequestDispatcher("OrdersView.jsp").forward(request,response);

@@ -36,17 +36,31 @@ public class AuthenticationController extends HttpServlet {
 		
 		Cookie[] mycookies = request.getCookies();
 		
-		for (Cookie c : mycookies)
-		{
-			if(c.getName() == "authentication_token")
-				c.setValue("YOU WISH");
+//		for (int index=0; index< mycookies.length; index++)
+//		{
+//			if(mycookies[index].getName().equals("authentication_token"))
+//			{
+//				Cookie newcook = new Cookie("authentication_token", "TRY AGAIN!");
+//				mycookies[index].setValue("YOU WISH!");	
+//				response.addCookie(newcook);
+//				System.out.println("Hello I am here");
+//			}
+//		}
+		
+		for (Cookie c : mycookies) {
+			if(c.getName().equals("authentication_token")) {
+				c.setValue("TRY AGAIN");
+				response.addCookie(c);
+				break;
+			}
 		}
+		
 		if (session != null) 
 		{
 		    session.invalidate();
 		}
 		
-		return;
+		request.getRequestDispatcher("index.html").forward(request,response);
 			
 	}
 	
