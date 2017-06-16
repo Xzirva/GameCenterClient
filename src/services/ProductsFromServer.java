@@ -73,9 +73,8 @@ public class ProductsFromServer {
 	
 	}
 	private static Product build_product(JSONObject jsons) {
-		Product current = new Product(toIntExact( (long) jsons.get("id")), (String) jsons.get("name"), (String) jsons.get("genre"), (String) jsons.get("publisher"), toIntExact( (long) jsons.get("agemin")), (String) jsons.get("console"),
+		Product current = new Product(toIntExact( (long) jsons.get("id")), (String) jsons.get("name"), (String) jsons.get("maingenre"), (String) jsons.get("publisher"), toIntExact( (long) jsons.get("agemin")), (String) jsons.get("console"),
 				(String) jsons.get("releasedate"), (double) jsons.get("price"), toIntExact( (long) jsons.get("quantity")), (String) jsons.get("description"));
-
 		return current;
 	}
 }
