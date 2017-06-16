@@ -261,6 +261,107 @@ public class OrdersController extends HttpServlet {
 		
 		
 		}
+		else if(action.equals("console"))
+		{
+			try
+			{
+			String consolename = request.getParameter("name");
+
+			if(consolename.equals("XBox"))
+			{
+				List<Product> listP = ProductsFromServer.filter("console", "xbox");
+				
+				request.setAttribute("ProductsList", listP);		
+				request.getRequestDispatcher("achat.jsp").forward(request, response);
+			}
+			else if(consolename.equals("Wii"))
+			{
+				List<Product> listP = ProductsFromServer.filter("console", "wii");
+				
+				request.setAttribute("ProductsList", listP);		
+				request.getRequestDispatcher("achat.jsp").forward(request, response);
+			}
+			else if(consolename.equals("WiiU"))
+			{
+				List<Product> listP = ProductsFromServer.filter("console", "wiiu");
+				
+				request.setAttribute("ProductsList", listP);		
+				request.getRequestDispatcher("achat.jsp").forward(request, response);
+				
+			}
+			else if(consolename.equals("PSP"))
+			{
+				List<Product> listP = ProductsFromServer.filter("console", "psp");
+				
+				request.setAttribute("ProductsList", listP);		
+				request.getRequestDispatcher("achat.jsp").forward(request, response);
+				
+			}
+			else if(consolename.equals("PlayStation"))
+			{
+				List<Product> listP = ProductsFromServer.filter("console", "playstation");
+				
+				request.setAttribute("ProductsList", listP);		
+				request.getRequestDispatcher("achat.jsp").forward(request, response);
+				
+			}
+			else if(consolename.equals("GameCube"))
+			{
+				List<Product> listP = ProductsFromServer.filter("console", "game cube");
+				
+				request.setAttribute("ProductsList", listP);		
+				request.getRequestDispatcher("achat.jsp").forward(request, response);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		}
+		else if(action.equals("genre"))
+		{
+			try
+			{
+			String name = request.getParameter("name");
+			if(name.equals("action"))
+			{
+				List<Product> listP = ProductsFromServer.filter("genre", "action");
+				
+				request.setAttribute("ProductsList", listP);		
+				request.getRequestDispatcher("achat.jsp").forward(request, response);
+			}
+			else if(name.equals("adventure"))
+			{
+				List<Product> listP = ProductsFromServer.filter("genre", "adventure");
+				
+				request.setAttribute("ProductsList", listP);		
+				request.getRequestDispatcher("achat.jsp").forward(request, response);
+			}
+			else if(name.equals("race"))
+			{
+				List<Product> listP = ProductsFromServer.filter("genre", "race");
+				
+				request.setAttribute("ProductsList", listP);		
+				request.getRequestDispatcher("achat.jsp").forward(request, response);
+			}
+			else if(name.equals("dance"))
+			{
+				List<Product> listP = ProductsFromServer.filter("genre", "dancing");
+				
+				request.setAttribute("ProductsList", listP);		
+				request.getRequestDispatcher("achat.jsp").forward(request, response);
+			}
+			else if(name.equals("educational"))
+			{
+				List<Product> listP = ProductsFromServer.filter("genre", "educational");
+				
+				request.setAttribute("ProductsList", listP);		
+				request.getRequestDispatcher("achat.jsp").forward(request, response);
+			}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		else
 		{
 			List<Product> listP = new ArrayList<Product>();
@@ -293,26 +394,21 @@ public class OrdersController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException 
 	{
-		// TODO Auto-generated method stub
-		//recuperer les parametres: idProduct, qte
-		
-			HttpSession session = request.getSession(false);
-		
-			if(session==null || (session != null && session.getAttribute("user_id")== null))
-			{	
-				request.getRequestDispatcher("LoginFormCustomer.jsp").forward(request,response);
-		
-			}
-		
-			int custid =(int)session.getAttribute("user_id"); 
-			
-			
-			String type = request.getParameter("type");
-				
+		String type = request.getParameter("type");
+						
 			try 
 			{
 				if(type.equals("addproduct"))
 				{
+					HttpSession session = request.getSession(false);
+					
+					if(session==null || (session != null && session.getAttribute("user_id")== null))
+					{	
+						request.getRequestDispatcher("LoginFormCustomer.jsp").forward(request,response);
+				
+					}
+				
+					int custid =(int)session.getAttribute("user_id"); 
 					
 					int idProduct = Integer.parseInt(request.getParameter("productid"));
 					int qty = Integer.parseInt(request.getParameter("quantity"));
@@ -326,12 +422,31 @@ public class OrdersController extends HttpServlet {
 				}
 				else if (type.equals("placeorder"))
 				{
+					HttpSession session = request.getSession(false);
+					
+					if(session==null || (session != null && session.getAttribute("user_id")== null))
+					{	
+						request.getRequestDispatcher("LoginFormCustomer.jsp").forward(request,response);
+				
+					}
+				
+					int custid =(int)session.getAttribute("user_id"); 
+					
 					int idcust = Integer.parseInt(request.getParameter("customer"));
 					int idpay = Integer.parseInt(request.getParameter("payment"));
 					Order order = OrdersFromServer.payCart(idcust, idpay);
 			
 					request.setAttribute("Order", order);		
 					request.getRequestDispatcher("OrdersView.jsp").forward(request,response);
+				}
+				else if(type.equals("search"))
+				{
+					String productname = request.getParameter("product");
+					List<Product> listP = ProductsFromServer.filter("name", productname);
+				
+					request.setAttribute("ProductsList", listP);		
+					request.getRequestDispatcher("achat.jsp").forward(request, response);
+				
 				}
 			} catch (Exception e) {
 					// TODO Auto-generated catch block
