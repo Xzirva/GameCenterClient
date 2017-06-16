@@ -1,6 +1,7 @@
 package services;
 
 import java.io.IOException;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -20,7 +21,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import beans.Customer;
 import beans.Order;
 import beans.OrderLine;
+import beans.Product;
 import server_interfaces.ServerInterfaceByGet;
+import services.ProductsFromServer;
 
 public class OrdersFromServer {
 	private static ObjectMapper mapper = new ObjectMapper();
@@ -32,9 +35,7 @@ public class OrdersFromServer {
 		List<Order> lu = new ArrayList<Order>();
 		for (int i = 0; i < jsons.size(); i++) {
 			JSONObject order_json = (JSONObject) jsons.get(i);
-			System.out.println(" -------------- ORDER PAID ? " + order_json.get("_paid"));
-			Order current = new Order( Integer.parseInt(order_json.get("id").toString()), customer, (boolean)order_json.get("_paid"));
-			current.setOrderLines(serialiseOrderLines(order_json));
+			Order current = serializeOrder(order_json);
 			lu.add(current);
 		}
 		return lu;
@@ -107,8 +108,10 @@ public class OrdersFromServer {
 		List<OrderLine> lu = new ArrayList<OrderLine>();
 
 		for (int i = 0; i < orderlines_json.size(); i++) {
-			  OrderLine current = mapper.readValue(orderlines_json.get(i).toString(), OrderLine.class);
-			  lu.add(current);
+			JSONObject order_line_json = (JSONObject) orderlines_json.get(i);
+			Product prod = ProductsFromServer.build_product((JSONObject) order_line_json.get("prod"));
+			OrderLine current = new OrderLine(Integer.parseInt(order_line_json.get("id").toString()), prod, Integer.parseInt(order_line_json.get("qte").toString()), (double) order_line_json.get("total"));
+			lu.add(current);
 		}
 		return lu;
 	}
@@ -120,5 +123,7 @@ public class OrdersFromServer {
 		current.setOrderLines(list);
 		return current;
 	}
+	
+	
 	
 }

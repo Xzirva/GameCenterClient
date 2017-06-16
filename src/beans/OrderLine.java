@@ -9,7 +9,7 @@ public class OrderLine implements Serializable{
 	private Product prod;
 	private int qte;
 	private Order order;
-	private float total;
+	private double total;
 	/**
 	 * @param prod
 	 * @param qte
@@ -23,10 +23,18 @@ public class OrderLine implements Serializable{
 		this.qte = qte;
 	}
 	
-	public OrderLine(int id, Order order, Product prod, int qte, float total) {
+	public OrderLine(int id, Order order, Product prod, int qte, double total) {
 		super();
 		this.id = id;
 		this.order = order;
+		this.prod = prod;
+		this.qte = qte;
+		this.total = total;
+	}
+	
+	public OrderLine(int id, Product prod, int qte, double total) {
+		super();
+		this.id = id;
 		this.prod = prod;
 		this.qte = qte;
 		this.total = total;

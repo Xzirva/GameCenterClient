@@ -72,9 +72,21 @@ public class ProductsFromServer {
 		return build_product(jsons);
 	
 	}
-	private static Product build_product(JSONObject jsons) {
+	public static Product build_product(JSONObject jsons) {
 		Product current = new Product(toIntExact( (long) jsons.get("id")), (String) jsons.get("name"), (String) jsons.get("maingenre"), (String) jsons.get("publisher"), toIntExact( (long) jsons.get("agemin")), (String) jsons.get("console"),
 				(String) jsons.get("releasedate"), (double) jsons.get("price"), toIntExact( (long) jsons.get("quantity")), (String) jsons.get("description"));
 		return current;
+	}
+	
+	public static List<Product> filter(String feature, String value) throws ParseException, JsonParseException, JsonMappingException, IOException {
+		URL url = new URL("http://localhost:8080/GameCenter/web-services/products/filter?feature="+ feature +"&value=" + value);
+		String s = ServerInterfaceByGet.get_request(url);
+		JSONArray jsons = (JSONArray) new JSONParser().parse(s);
+		List<Product> lu = new ArrayList<Product>();
+		for (int i = 0; i < jsons.size(); i++) {
+			  Product current = build_product((JSONObject) jsons.get(i));
+			  lu.add(current);
+		}
+		return lu;
 	}
 }
