@@ -88,7 +88,7 @@ public class OrdersController extends HttpServlet {
 			{
 				HttpSession session = request.getSession(false);
 				
-				if(session == null)
+				if(session==null || (session != null && session.getAttribute("user_id")== null))
 				{	
 					request.getRequestDispatcher("LoginFormCustomer.jsp").forward(request,response);
 			

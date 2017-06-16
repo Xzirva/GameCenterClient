@@ -23,6 +23,33 @@ import services.ProductsFromServer;
 
 public class AuthenticationController extends HttpServlet {
 	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException 
+	{
+		HttpSession session = request.getSession(false);
+		
+		if(session==null || (session != null && session.getAttribute("user_id")== null))
+		{	
+			request.getRequestDispatcher("LoginFormCustomer.jsp").forward(request,response);
+	
+		}
+		
+		Cookie[] mycookies = request.getCookies();
+		
+		for (Cookie c : mycookies)
+		{
+			if(c.getName() == "authentication_token")
+				c.setValue("YOU WISH");
+		}
+		if (session != null) 
+		{
+		    session.invalidate();
+		}
+		
+		return;
+			
+	}
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 	{
 		// TODO Auto-generated method stub

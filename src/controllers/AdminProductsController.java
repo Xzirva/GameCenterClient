@@ -49,7 +49,7 @@ public class AdminProductsController extends HttpServlet
 					request.setAttribute("ProductsList", listP);
 						
 					// Forward to /WEB-INF/views/productListView.jsp
-			        RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("AdminProductsView.jsp");
+			        RequestDispatcher dispatcher = request.getRequestDispatcher("AdminProductsView.jsp");
 			        dispatcher.forward(request, response);
 					
 				} 
@@ -60,17 +60,6 @@ public class AdminProductsController extends HttpServlet
 				}	
 				
 			}
-			if(action.equals("delete"))
-			{
-//				int idproduct = Integer.parseInt(request.getParameter("id"));
-				 
-			
-			}
-			if(action.equals("edit"))
-			{
-				
-				
-			}
 
 	}
 
@@ -79,15 +68,33 @@ public class AdminProductsController extends HttpServlet
 			throws ServletException, IOException 
 	{
 		response.getWriter().append("Served at: ").append(request.getContextPath());
+		try {
+		String name        = request.getParameter("name");
+		String maingenre   = request.getParameter("maingenre");
+		String publisher   = request.getParameter("publisher");
+		int agemin         = Integer.parseInt(request.getParameter("agemin"));
+		String console     = request.getParameter("console");
+		int year 	       = Integer.parseInt(request.getParameter("year"));
+	    int month          = Integer.parseInt(request.getParameter("month"));
+	    int day            = Integer.parseInt(request.getParameter("day"));
+		double price       = Double.parseDouble(request.getParameter("price"));
+		int quantity       = Integer.parseInt(request.getParameter("quantity"));
+		String description = request.getParameter("description");
 		
-//		String name        = request.getParameter("name");
-//		String maingenre   = request.getParameter("maingenre");
-//		int publisher      = Integer.parseInt(request.getParameter("publisher"));
-//		int agemin         = Integer.parseInt(request.getParameter("agemin"));
-//		int console        = Integer.parseInt(request.getParameter("console"));
-//		String releasedate = request.getParameter("releasedate");
-//		float price        = Float.parseFloat(request.getParameter("price"));
-//		int quantity       = Integer.parseInt(request.getParameter("quantity"));
+		ProductsFromServer.create(name, agemin, day, month, year, price, quantity, description, console, maingenre, publisher);
+		
+		List<Product> listP = ProductsFromServer.findAll();
+		request.setAttribute("ProductsList", listP);
+			
+		// Forward to /WEB-INF/views/productListView.jsp
+        RequestDispatcher dispatcher = request.getRequestDispatcher("AdminProductsView.jsp");
+        dispatcher.forward(request, response);
+        
+        
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 
 	}
