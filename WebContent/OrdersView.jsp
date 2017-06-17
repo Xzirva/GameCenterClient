@@ -36,7 +36,7 @@
 							<ul class="sf-menu">
 								<li class="current"><a href="index.html">ABOUT</a></li>
 								<li><a href="http://localhost:8080/GameCenterClient/orders?action=show">OUR GAMES</a></li>
-								<li><a href="index-2.html"> SALES </a></li>
+								<li><a href="orders?action=showCart"> MY CART </a></li>
 								<li><a href="http://localhost:8080/GameCenterClient/customers?action=myaccount">MY ACCOUNT</a></li>
 								<li><a href="index-4.html">CONTACTS</a></li>
 							</ul>
@@ -101,7 +101,7 @@
 		}
 		else
 		{
-			%><h1>NULL</h1>
+			%><h1>Orders Empty... Order Now!</h1>
 			<%
 			
 		}

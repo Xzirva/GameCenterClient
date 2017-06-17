@@ -26,7 +26,7 @@ public class ProductsFromServer {
 	
 	public static List<Product> findAll() throws ParseException, JsonParseException, JsonMappingException, IOException {
 		URL url = new URL("http://localhost:8080/GameCenter/web-services/products");
-		String s = ServerInterfaceByGet.get_request(url);
+		String s = ServerInterfaceByGet.get_request(url, null);
 		JSONArray jsons = (JSONArray) new JSONParser().parse(s);
 		List<Product> lu = new ArrayList<Product>();
 		for (int i = 0; i < jsons.size(); i++) {
@@ -52,7 +52,7 @@ public class ProductsFromServer {
 		params.put("genre", genre);
 		params.put("publisher", publisher);
 		
-		String s = ServerInterfaceByGet.write_request(url, "POST", params);
+		String s = ServerInterfaceByGet.write_request(url, "POST", null, params);
 		JSONArray jsons = (JSONArray) new JSONParser().parse(s);
 		List<Product> lu = new ArrayList<Product>();
 		for (int i = 0; i < jsons.size(); i++) {
@@ -65,7 +65,7 @@ public class ProductsFromServer {
 	
 	public static Product findId(int id) throws ParseException, JsonParseException, JsonMappingException, IOException {
 		URL url = new URL("http://localhost:8080/GameCenter/web-services/products/" + id);
-		String s = ServerInterfaceByGet.get_request(url);
+		String s = ServerInterfaceByGet.get_request(url, null);
 		JSONObject jsons = (JSONObject) new JSONParser().parse(s);
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.readValue(jsons.toString(), Product.class);
@@ -80,7 +80,7 @@ public class ProductsFromServer {
 	
 	public static List<Product> filter(String feature, String value) throws ParseException, JsonParseException, JsonMappingException, IOException {
 		URL url = new URL("http://localhost:8080/GameCenter/web-services/products/filter?feature="+ feature +"&value=" + value);
-		String s = ServerInterfaceByGet.get_request(url);
+		String s = ServerInterfaceByGet.get_request(url, null);
 		JSONArray jsons = (JSONArray) new JSONParser().parse(s);
 		List<Product> lu = new ArrayList<Product>();
 		for (int i = 0; i < jsons.size(); i++) {

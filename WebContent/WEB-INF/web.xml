@@ -29,10 +29,6 @@
     <servlet-class>controllers.OrdersController</servlet-class>
   </servlet>
   
-  <servlet>
-    <servlet-name>OrderLinesController</servlet-name>
-    <servlet-class>controllers.OrderLinesController</servlet-class>
-  </servlet>
   
   <servlet>
     <servlet-name>AuthenticationController</servlet-name>
@@ -44,7 +40,7 @@
     <servlet-class>controllers.PaymentsController</servlet-class>
   </servlet>
   
-    <servlet>
+  <servlet>
     <servlet-name>AdminProductsController</servlet-name>
     <servlet-class>controllers.AdminProductsController</servlet-class>
   </servlet>
@@ -72,10 +68,6 @@
     <url-pattern>/orders</url-pattern>
   </servlet-mapping>
   
-  <servlet-mapping>
-    <servlet-name>OrderLinesController</servlet-name>
-    <url-pattern>/oderlines</url-pattern>
-  </servlet-mapping>
   
   <servlet-mapping>
   <servlet-name>CustomersController</servlet-name>
@@ -92,7 +84,7 @@
     <url-pattern>/auth</url-pattern>
   </servlet-mapping>
   
-    <servlet-mapping>
+  <servlet-mapping>
     <servlet-name>AdminProductsController</servlet-name>
     <url-pattern>/adminproducts</url-pattern>
   </servlet-mapping>

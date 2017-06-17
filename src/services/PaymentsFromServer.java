@@ -22,9 +22,9 @@ import server_interfaces.ServerInterfaceByGet;
 
 public class PaymentsFromServer {
 	private static ObjectMapper mapper = new ObjectMapper();
-	public static List<Payment> findAll(int customer_id) throws ParseException, JsonParseException, JsonMappingException, IOException {
+	public static List<Payment> findAll(int customer_id, String authToken) throws ParseException, JsonParseException, JsonMappingException, IOException {
 		URL url = new URL("http://localhost:8080/GameCenter/web-services/customers/" + customer_id + "/payments");
-		String s = ServerInterfaceByGet.get_request(url);
+		String s = ServerInterfaceByGet.get_request(url, authToken);
 		JSONArray jsons = (JSONArray) new JSONParser().parse(s);
 		List<Payment> lu = new ArrayList<Payment>();
 		for (int i = 0; i < jsons.size(); i++) {
@@ -35,14 +35,14 @@ public class PaymentsFromServer {
 		
 	}
 	
-	public static Payment findId(int customer_id, int id) throws ParseException, JsonParseException, JsonMappingException, IOException {
+	public static Payment findId(int customer_id, int id, String authToken) throws ParseException, JsonParseException, JsonMappingException, IOException {
 		URL url = new URL("http://localhost:8080/GameCenter/web-services/customers/" + customer_id + "/payments/" + id);
-		String s = ServerInterfaceByGet.get_request(url);
+		String s = ServerInterfaceByGet.get_request(url, authToken);
 		JSONObject jsons = (JSONObject) new JSONParser().parse(s);
 		return serializePayment(jsons);
 	}
 	
-	public static Payment update(int customer_id, int id, String type, String pan, String cvv, int month,int year) throws Exception {
+	public static Payment update(int customer_id, int id, String type, String pan, String cvv, int month,int year, String authToken) throws Exception {
 		URL url = new URL("http://localhost:8080/GameCenter/web-services/customers/" + customer_id + "/payments/" + id + "/update");
 		Map<String,Object> params = new LinkedHashMap<>();
 		params.put("type", type);
@@ -50,12 +50,12 @@ public class PaymentsFromServer {
 		params.put("cvv", cvv);
 		params.put("month", month);
 		params.put("year", year);
-		String s = ServerInterfaceByGet.write_request(url, "PUT", params);
+		String s = ServerInterfaceByGet.write_request(url, "PUT", authToken, params);
 		JSONObject jsons = (JSONObject) new JSONParser().parse(s);
 		return serializePayment(jsons);
 	}
 	
-	public static Payment create(int customer_id, String type, String pan, String cvv, int month,int year) throws Exception {
+	public static Payment create(int customer_id, String type, String pan, String cvv, int month,int year, String authToken) throws Exception {
 		URL url = new URL("http://localhost:8080/GameCenter/web-services/customers/" + customer_id + "/payments/create");
 		Map<String,Object> params = new LinkedHashMap<>();
 		params.put("type", type);
@@ -64,14 +64,14 @@ public class PaymentsFromServer {
 		params.put("month", month);
 		params.put("year", year);
 		
-		String s = ServerInterfaceByGet.write_request(url, "POST", params);
+		String s = ServerInterfaceByGet.write_request(url, "POST", authToken, params);
 		JSONObject jsons = (JSONObject) new JSONParser().parse(s);
 		return serializePayment(jsons);
 	}
 	
-	public static List<Payment> delete(int customer_id, int id) throws Exception {
+	public static List<Payment> delete(int customer_id, int id, String authToken) throws Exception {
 		URL url = new URL("http://localhost:8080/GameCenter/web-services/customers/" + customer_id + "/payments/" + id);
-		String s = ServerInterfaceByGet.write_request(url, "DELETE");
+		String s = ServerInterfaceByGet.write_request(url, "DELETE", authToken);
 		JSONArray jsons = (JSONArray) new JSONParser().parse(s);
 		List<Payment> lu = new ArrayList<Payment>();
 		for (int i = 0; i < jsons.size(); i++) {

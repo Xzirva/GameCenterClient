@@ -59,9 +59,10 @@ public class TestServer {
 //		OrdersFromServer.addToCart(1, 2, 5);
 //		return OrdersFromServer.payCart(1, 102);
 		//return PaymentsFromServer.delete(1, 103);
-		Customer cust = CustomersFromServer.findId(1);
-		return OrdersFromServer.findAll(cust);
+//		Customer cust = CustomersFromServer.findId(1);
+//		return OrdersFromServer.findAll(cust);
 		//return ProductsFromServer.filter("description", "mario");
 		//return ProductsFromServer.create("product name 4", 50, 15, 12, 2014, 85, 100, "Super Jeu de la mort qui tue 2 fois", "xbox", "action", "ubisoft");
+		return null;
 	}	
 }

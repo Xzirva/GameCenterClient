@@ -46,7 +46,7 @@
 							<ul class="sf-menu">
 								<li class="current"><a href="index.html">ABOUT</a></li>
 								<li><a href="http://localhost:8080/GameCenterClient/orders?action=show">OUR GAMES</a></li>
-								<li><a href="index-2.html"> SALES </a></li>
+								<li><a href="orders?action=showCart"> MY CART </a></li>
 								<li><a href="http://localhost:8080/GameCenterClient/customers?action=myaccount">MY ACCOUNT</a></li>
 								<li><a href="index-4.html">CONTACTS</a></li>
 							</ul>
@@ -66,41 +66,39 @@
 <body>
 
 <div id="sidebar">
-<form method="get" action="products">
+<form method="post" action="orders">
 Search : <input type="text" name="product" placeholder="Username" />
 <br>
-  			
+ <input type="hidden" name="type" value="search">
 <input type="submit" value="Search">
 </form>
 
 <div class="grid_3 prefix_1">
+						
+					<h3 class="head1">Consoles</h3>
+					<ul class="list">
+						<li><a href="orders?action=console&name=XBox">XBox </a></li>
+						<li><a href="orders?action=console&name=Wii">Wii </a></li>
+						<li><a href="orders?action=console&name=WiiU">Wii U </a></li>
+						<li><a href="orders?action=console&name=PSP">PSP </a></li>
+						<li><a href="orders?action=console&name=PlayStation">Play Station </a></li>
+						<li><a href="orders?action=console&name=GameCube">Game Cube </a></li>		
+					</ul>
+					
+					<h3 class="head1">Genres</h3>
+					<ul class="list">
+						<li><a href="orders?action=genre&name=action">Action</a></li>
+						<li><a href="orders?action=genre&name=adventure">Adventure </a></li>
+						<li><a href="orders?action=genre&name=race">Race </a></li>
+						<li><a href="orders?action=genre&name=dance">Dance</a></li>
+						<li><a href="orders?action=genre&name=educational">Educational </a></li>		
+					</ul>
 					<h3 class="head1">Filter By</h3>
 					<ul class="list">
 						<li><a href="#">Price Asc</a></li>
 						<li><a href="#">Price Desc </a></li>
 						<li><a href="#">Last Released </a></li>
 						<li><a href="#">Members Favorites</a></li>		
-					</ul>
-					
-					<h3 class="head1">Consoles</h3>
-					<ul class="list">
-						<li><a href="#">Nintendo DS </a></li>
-						<li><a href="#">XBox </a></li>
-						<li><a href="#">Wii </a></li>
-						<li><a href="#">Wii U </a></li>
-						<li><a href="#">PSP </a></li>
-						<li><a href="#">Play Station </a></li>
-						<li><a href="#">Game Cube </a></li>		
-					</ul>
-					
-					<h3 class="head1">Genres</h3>
-					<ul class="list">
-						<li><a href="#">All</a></li>
-						<li><a href="#">Action</a></li>
-						<li><a href="#">Adventure </a></li>
-						<li><a href="#">Race </a></li>
-						<li><a href="#">Dance</a></li>
-						<li><a href="#">Educational </a></li>		
 					</ul>
 </div>
 </div>

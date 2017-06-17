@@ -19,9 +19,9 @@ import server_interfaces.ServerInterfaceByGet;
 
 public class CustomersFromServer {
 
-	public static List<Customer> findAll() throws ParseException, JsonParseException, JsonMappingException, IOException {
+	public static List<Customer> findAll(String authToken) throws ParseException, JsonParseException, JsonMappingException, IOException {
 		URL url = new URL("http://localhost:8080/GameCenter/web-services/admins/customers");
-		String s = ServerInterfaceByGet.get_request(url);
+		String s = ServerInterfaceByGet.get_request(url, authToken);
 		JSONArray jsons = (JSONArray) new JSONParser().parse(s);
 		ObjectMapper mapper = new ObjectMapper();
 		List<Customer> lu = new ArrayList<Customer>();
@@ -33,9 +33,9 @@ public class CustomersFromServer {
 		
 	}
 	
-	public static Customer findId(int id) throws ParseException, JsonParseException, JsonMappingException, IOException {
+	public static Customer findId(int id, String authToken) throws ParseException, JsonParseException, JsonMappingException, IOException {
 		URL url = new URL("http://localhost:8080/GameCenter/web-services/customers/" + id);
-		String s = ServerInterfaceByGet.get_request(url);
+		String s = ServerInterfaceByGet.get_request(url, authToken);
 		JSONObject jsons = (JSONObject) new JSONParser().parse(s);
 		ObjectMapper mapper = new ObjectMapper();
 		Customer current = mapper.readValue(jsons.toString(), Customer.class);

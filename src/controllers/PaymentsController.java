@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import beans.Address;
 import beans.Payment;
 import services.AddressesFromServer;
+import services.ClientInterface;
 import services.PaymentsFromServer;
 
 /**
@@ -53,7 +54,7 @@ public class PaymentsController extends HttpServlet {
 			if (action.equals("showAll"))
 			{	
 				
-				 List<Payment> listP = PaymentsFromServer.findAll(idcust);
+				 List<Payment> listP = PaymentsFromServer.findAll(idcust, ClientInterface.findAuthToken(request));
 				
 				request.setAttribute("PaymentsList", listP);
 				request.getRequestDispatcher("PaymentsView.jsp").forward(request,response);
@@ -92,10 +93,10 @@ public class PaymentsController extends HttpServlet {
 		int year = Integer.parseInt(request.getParameter("year"));
 		
 		
-		PaymentsFromServer.create(idcust, type, pan, cvv, month, year);
+		PaymentsFromServer.create(idcust, type, pan, cvv, month, year, ClientInterface.findAuthToken(request));
 		
 		List<Payment> listP =  new ArrayList<Payment>();
-		PaymentsFromServer.findAll(idcust);
+		PaymentsFromServer.findAll(idcust, ClientInterface.findAuthToken(request));
 		
 		request.setAttribute("PaymentsList", listP);
 		request.getRequestDispatcher("PaymentsView.jsp").forward(request,response);

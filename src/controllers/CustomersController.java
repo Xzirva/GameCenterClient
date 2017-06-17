@@ -12,7 +12,7 @@ import org.json.simple.parser.ParseException;
 
 import beans.Customer;
 import services.CustomersFromServer;
-
+import services.ClientInterface;
 /**
  * Servlet implementation class CustomersController
  */
@@ -50,7 +50,7 @@ public class CustomersController extends HttpServlet {
 				{
 					int custid = (int)session.getAttribute("user_id"); 
 					System.out.println("ID Cust " + custid);
-					Customer cust = CustomersFromServer.findId(custid);
+					Customer cust = CustomersFromServer.findId(custid, ClientInterface.findAuthToken(request));
 					request.setAttribute("CustomersList", cust);
 					request.getRequestDispatcher("CustomersView.jsp").forward(request, response);
 				} 
@@ -62,6 +62,7 @@ public class CustomersController extends HttpServlet {
 				response.sendRedirect(request.getContextPath() + "/LoginFormCustomer.jsp");
 			}	
 		}
+		
 	}
 
 	/**

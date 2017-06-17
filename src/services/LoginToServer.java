@@ -25,7 +25,7 @@ public class LoginToServer {
 		Map<String,Object> params = new LinkedHashMap<>();
 		params.put("username", username);
 		params.put("pwd", password);
-	  	String response = ServerInterfaceByGet.write_request(url, "POST", params);
+	  	String response = ServerInterfaceByGet.write_request(url, "POST",null, params);
 	  	JSONObject json = (JSONObject) new JSONParser().parse(response);
 		JSONObject user_json = (JSONObject) json.get("user");
 		Customer loggedIn = new Customer(toIntExact( (long) user_json.get("id")), 
@@ -45,7 +45,7 @@ public class LoginToServer {
 		params.put("last_name", last_name);
 		params.put("email", email);
 		params.put("gender", gender);
-	  	String response = ServerInterfaceByGet.write_request(url, "POST", params);
+	  	String response = ServerInterfaceByGet.write_request(url, "POST",null, params);
 	  	JSONObject json = (JSONObject) new JSONParser().parse(response);
 		JSONObject user_json = (JSONObject) json.get("user");
 		System.out.print(json.keySet().toString());

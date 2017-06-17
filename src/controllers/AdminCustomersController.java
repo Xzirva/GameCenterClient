@@ -15,6 +15,7 @@ import org.json.simple.parser.ParseException;
 import beans.Customer;
 import beans.Order;
 import beans.Product;
+import services.ClientInterface;
 import services.CustomersFromServer;
 import services.OrdersFromServer;
 import services.ProductsFromServer;
@@ -47,7 +48,7 @@ public class AdminCustomersController extends HttpServlet {
 			try 
 			{
 				
-				listC = CustomersFromServer.findAll();
+				listC = CustomersFromServer.findAll(ClientInterface.findAuthToken(request));
 				request.setAttribute("CustomersList", listC);
 				
 		        RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/AdminCustomersView.jsp");
@@ -64,9 +65,9 @@ public class AdminCustomersController extends HttpServlet {
 			int custid = Integer.parseInt(request.getParameter("id"));
 			Customer cust;
 			
-			cust = CustomersFromServer.findId(custid);
+			cust = CustomersFromServer.findId(custid, ClientInterface.findAuthToken(request));
 				
-			List <Order> orders = OrdersFromServer.findAll(cust);
+			List <Order> orders = OrdersFromServer.findAll(cust, ClientInterface.findAuthToken(request));
 					
 			request.setAttribute("ListOrders", orders);		
 			request.getRequestDispatcher("AdminOrdersView.jsp").forward(request,response);

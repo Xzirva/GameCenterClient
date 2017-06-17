@@ -28,7 +28,8 @@ public class ServerInterfaceByGet {
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
 			conn.setRequestProperty("Accept", "application/json");
-			conn.setRequestProperty ("Authorization", authToken);
+			if(authToken != null)
+				conn.setRequestProperty ("Authorization", authToken);
 			if (conn.getResponseCode() == 401) {
 				throw new RuntimeException("Unauthorized action: Please Check out authentication("
 						+ conn.getResponseCode() + ")");
@@ -95,7 +96,8 @@ public class ServerInterfaceByGet {
 			throw new Exception("Unhandled request type " + type);
 		
         conn.setRequestMethod(type);
-		conn.setRequestProperty ("Authorization", authToken);
+        if(authToken != null)
+			conn.setRequestProperty ("Authorization", authToken);
         conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
         conn.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
         conn.setDoOutput(true);
@@ -119,11 +121,6 @@ public class ServerInterfaceByGet {
 		    postData.append(URLEncoder.encode(String.valueOf(param.getValue()), "UTF-8"));
 		}
 		return postData.toString().getBytes("UTF-8");
-	}
-	
-	public String findAuthToken(HttpServletRequest request) {
-		Cookie[] cookies = request.getCookies();
-		
 	}
 
 }

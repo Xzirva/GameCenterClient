@@ -100,12 +100,10 @@ Search : <input type="text" name="product" placeholder="Username" />
 						<li><a href="#">Race </a></li>
 						<li><a href="#">Dance</a></li>
 						<li><a href="#">Educational </a></li>		
-					</ul>
-					
+					</ul>			
+
+<h3 class="head1"><a href="productForm.html">Add New Product</a></h3>
 </div>
-
-<h3 class="head1"><a href="LoginFormCustomer.jsp">Add New Product</a></h3>
-
 </div>
 
 <table class="container">

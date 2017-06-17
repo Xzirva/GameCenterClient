@@ -11,19 +11,56 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.json.simple.parser.ParseException;
-
 import beans.Customer;
 import beans.Order;
-import beans.OrderLine;
-import beans.Product;
 import services.LoginToServer;
 import services.OrdersFromServer;
-import services.ProductsFromServer;
+import services.ClientInterface;
 
 public class AuthenticationController extends HttpServlet {
 	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException 
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException 
+	{
+		HttpSession session = request.getSession(false);
+		
+		if(session==null || (session != null && session.getAttribute("user_id")== null))
+		{	
+			request.getRequestDispatcher("LoginFormCustomer.jsp").forward(request,response);
+	
+		}
+		
+		Cookie[] mycookies = request.getCookies();
+		
+//		for (int index=0; index< mycookies.length; index++)
+//		{
+//			if(mycookies[index].getName().equals("authentication_token"))
+//			{
+//				Cookie newcook = new Cookie("authentication_token", "TRY AGAIN!");
+//				mycookies[index].setValue("YOU WISH!");	
+//				response.addCookie(newcook);
+//				System.out.println("Hello I am here");
+//			}
+//		}
+		
+		for (Cookie c : mycookies) {
+			if(c.getName().equals("authentication_token")) {
+				c.setValue("TRY AGAIN");
+				response.addCookie(c);
+				break;
+			}
+		}
+		
+		if (session != null) 
+		{
+		    session.invalidate();
+		}
+		
+		request.getRequestDispatcher("index.html").forward(request,response);
+			
+	}
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
 		// TODO Auto-generated method stub
 		//recuperer les parametres: idProduct, qte

@@ -24,9 +24,9 @@ public class AddressesFromServer
 {
 	private static ObjectMapper mapper = new ObjectMapper();
 	
-	public static List<Address> findAll(int customer_id, String type) throws JsonParseException, JsonMappingException, ParseException, IOException {
+	public static List<Address> findAll(int customer_id, String type, String authToken) throws JsonParseException, JsonMappingException, ParseException, IOException {
 		URL url = new URL("http://localhost:8080/GameCenter/web-services/customers/" + customer_id + "/addresses/" + type);
-		String s = ServerInterfaceByGet.get_request(url);
+		String s = ServerInterfaceByGet.get_request(url, authToken);
 		JSONArray jsons = (JSONArray) new JSONParser().parse(s);
 		List<Address> lu = new ArrayList<Address>();
 		for (int i = 0; i < jsons.size(); i++) {
@@ -46,7 +46,7 @@ public class AddressesFromServer
 		return current;
 	}
 	
-	public static Address create(int customer_id, String address, String zipcode, String city, String country, String type) throws Exception {
+	public static Address create(int customer_id, String address, String zipcode, String city, String country, String type, String authToken) throws Exception {
 		URL url = new URL("http://localhost:8080/GameCenter/web-services/customers/" + customer_id  + "/addresses/create");
 		Map<String,Object> params = new LinkedHashMap<>();
 		params.put("address", address);
@@ -54,14 +54,14 @@ public class AddressesFromServer
 		params.put("city", city);
 		params.put("country", country);
 		params.put("type", type);
-		String s = ServerInterfaceByGet.write_request(url, "POST", params);
+		String s = ServerInterfaceByGet.write_request(url, "POST", authToken, params);
 		JSONObject address_json = (JSONObject) new JSONParser().parse(s);
 		System.out.println(address_json.keySet());
 
 		return serializeAddress(address_json);
 	}
 	
-	public static Address update(int customer_id, int address_id,String address, String zipcode, String city, String country, String type) throws Exception {
+	public static Address update(int customer_id, int address_id,String address, String zipcode, String city, String country, String type, String authToken) throws Exception {
 		URL url = new URL("http://localhost:8080/GameCenter/web-services/customers/" + customer_id  + "/addresses/" + address_id + "/update");
 		Map<String,Object> params = new LinkedHashMap<>();
 		params.put("address", address);
@@ -69,23 +69,23 @@ public class AddressesFromServer
 		params.put("city", city);
 		params.put("country", country);
 		params.put("type", type);
-		String s = ServerInterfaceByGet.write_request(url, "PUT", params);
+		String s = ServerInterfaceByGet.write_request(url, "PUT", authToken, params);
 		JSONObject address_json = (JSONObject) new JSONParser().parse(s);
 		System.out.println(address_json.keySet());
 
 		return serializeAddress(address_json);
 	}
 	
-	public static boolean delete(int customer_id, int address_id) throws Exception {
+	public static boolean delete(int customer_id, int address_id, String authToken) throws Exception {
 		URL url = new URL("http://localhost:8080/GameCenter/web-services/customers/" + customer_id  + "/addresses/" + address_id);
-		String s = ServerInterfaceByGet.write_request(url, "DELETE");
+		String s = ServerInterfaceByGet.write_request(url, authToken, "DELETE");
 		JSONObject address_json = (JSONObject) new JSONParser().parse(s);
 		return (boolean) address_json.get("deleted");
 	}
 	
-	public static Address find(int customer_id, int address_id) throws Exception {
+	public static Address find(int customer_id, int address_id, String authToken) throws Exception {
 		URL url = new URL("http://localhost:8080/GameCenter/web-services/customers/" + customer_id  + "/addresses/" + address_id);
-		String s = ServerInterfaceByGet.get_request(url);
+		String s = ServerInterfaceByGet.get_request(url, authToken);
 		JSONObject address_json = (JSONObject) new JSONParser().parse(s);
 		return serializeAddress(address_json);
 	}
