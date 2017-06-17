@@ -116,7 +116,7 @@ Search : <input type="text" name="product" placeholder="Username" />
             <th><h1>Console</h1></th>
             <th><h1>Released date</h1></th>
             <th><h1>Price</h1></th>
-            <th><h1>Description</h1></th>
+            <th><h1>Stock</h1></th>
         </tr>
     </thead>
      <tbody>
@@ -137,13 +137,8 @@ Search : <input type="text" name="product" placeholder="Username" />
 				<td><%=u.getConsole()%> </td>
 				<td><%=u.getReleasedate()%> </td>
 				<td><%=u.getPrice()%> </td>
-				<td><%=u.getDescription()%> </td>
-				<td>
-					<a href="adminproducts?action=edit&id=<%=u.getId()%>">Edit</a>	
-					<a href="adminproducts?action=delete&id=<%=u.getId()%>">Delete</a>	
-					
-				</td>
-			</tr>
+				<td><%=u.getQuantity()%> </td>
+	</tr>
 			</tbody>
 			<%
 			}

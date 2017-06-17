@@ -76,7 +76,8 @@ public class AuthenticationController extends HttpServlet {
 				String gender = null;
 				String first_name = null;
 				String last_name = null;
-				while (parameterNames.hasMoreElements() && action.equals("login")) {
+				while (parameterNames.hasMoreElements() && action.equals("login")) 
+				{
 					String current = parameterNames.nextElement();
 					System.out.println(current.toString());
 					if(current.equals("register-user")) {
@@ -112,11 +113,13 @@ public class AuthenticationController extends HttpServlet {
 					e.printStackTrace();
 				}
 				
+				
+				
 				Order cart;
 				try 
 				{
+					//request.getRequestDispatcher("http://localhost:8080/GameCenterClient/customers?action=myaccount").forward(request, response);
 					cart = OrdersFromServer.findCart(user.getId());
-					
 					request.setAttribute("cart", cart);
 					request.getRequestDispatcher("cart.jsp").forward(request, response);
 				} catch (Exception e) 
