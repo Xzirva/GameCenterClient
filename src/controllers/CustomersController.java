@@ -36,31 +36,31 @@ public class CustomersController extends HttpServlet {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	
-		String action = request.getParameter("action");
-		if(action== null || action.equals("myaccount"))
-		{
-			HttpSession session = request.getSession(false);
-			if(session==null || (session != null && session.getAttribute("user_id")== null))
-			{	
-				request.getRequestDispatcher("LoginFormCustomer.jsp").forward(request,response);
-		
-			}
-			else
+		try {
+			String action = request.getParameter("action");
+			if(action== null || action.equals("myaccount"))
 			{
-				int custid = (int)session.getAttribute("user_id"); 
-				System.out.println("ID Cust " + custid);
-					try 
-					{
-						Customer cust = CustomersFromServer.findId(custid);
-						request.setAttribute("CustomersList", cust);
-						request.getRequestDispatcher("CustomersView.jsp").forward(request, response);
-					} 
-					catch (ParseException e) 
-	   			{
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+				HttpSession session = request.getSession(false);
+				if(session==null || (session != null && session.getAttribute("user_id")== null))
+				{	
+					request.getRequestDispatcher("LoginFormCustomer.jsp").forward(request,response);
+			
 				}
+				else
+				{
+					int custid = (int)session.getAttribute("user_id"); 
+					System.out.println("ID Cust " + custid);
+					Customer cust = CustomersFromServer.findId(custid);
+					request.setAttribute("CustomersList", cust);
+					request.getRequestDispatcher("CustomersView.jsp").forward(request, response);
+				} 
+			}
+		} catch (Exception e) {
+			System.out.println("------------------- YES: " + e.getMessage());
+			System.out.println("------------------- YES: " + e.getMessage().equals("Unauthorized action: Please Check out authentication(401)"));
+			if(e.getMessage().equals("Unauthorized action: Please Check out authentication(401)")){
+				response.sendRedirect(request.getContextPath() + "/LoginFormCustomer.jsp");
+			}	
 		}
 	}
 

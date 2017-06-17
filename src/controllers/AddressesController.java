@@ -90,10 +90,17 @@ public class AddressesController extends HttpServlet {
 				request.getRequestDispatcher("AddressesEdit.jsp").forward(request,response);
 				
 			}
+		} catch (RuntimeException e) {
+			String error  =  "Something went wrong with the server. Please contact the website administrator for further information...";
+			Address address = null;
+			request.setAttribute("Address", address);
+			request.setAttribute("Error", error);
+			request.getRequestDispatcher("AddressesEdit.jsp").forward(request,response);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 	   
 	}
 

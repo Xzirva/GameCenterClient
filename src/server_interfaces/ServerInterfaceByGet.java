@@ -12,20 +12,28 @@ import java.net.URLEncoder;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+
 public class ServerInterfaceByGet {
 
 	public static String test() throws MalformedURLException {
 		URL url = new URL("http://localhost:8080/GameCenter/admins/web-services/customers");
-		return get_request(url);
+		return get_request(url, "");
 	}
 	
-	public static String get_request(URL url) {
+	public static String get_request(URL url, String authToken) {
 		System.out.print(url);
 		  try {
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
 			conn.setRequestProperty("Accept", "application/json");
-
+			conn.setRequestProperty ("Authorization", authToken);
+			if (conn.getResponseCode() == 401) {
+				throw new RuntimeException("Unauthorized action: Please Check out authentication("
+						+ conn.getResponseCode() + ")");
+			}
+			
 			if (conn.getResponseCode() != 200) {
 				throw new RuntimeException("Failed : HTTP error code : "
 						+ conn.getResponseCode());
@@ -62,7 +70,7 @@ public class ServerInterfaceByGet {
 			  	Map<String,Object> params = new LinkedHashMap<>();
 				params.put("username", "xxxxxx");
 				params.put("password", "xxxxxx");
-			  	return write_request(url, "POST", params);
+			  	return write_request(url, "POST", "", params);
 			  } 
 		  catch (MalformedURLException e) {
 
@@ -72,13 +80,14 @@ public class ServerInterfaceByGet {
 		  catch (IOException e) {
 			  e.printStackTrace();
 		  }
+		  
 		  return null;
 	}
 	
-	public static String write_request(URL url, String type) throws Exception {
-		return write_request(url, type, new LinkedHashMap<String, Object>());
+	public static String write_request(URL url, String type, String authToken) throws Exception {
+		return write_request(url, type, authToken, new LinkedHashMap<String, Object>());
 	}
-	public static String write_request(URL url, String type ,Map<String,Object> params) throws Exception {
+	public static String write_request(URL url, String type ,String authToken, Map<String,Object> params) throws Exception {
 		System.out.print(url);
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 		byte[] postDataBytes = post_params(params);
@@ -86,6 +95,7 @@ public class ServerInterfaceByGet {
 			throw new Exception("Unhandled request type " + type);
 		
         conn.setRequestMethod(type);
+		conn.setRequestProperty ("Authorization", authToken);
         conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
         conn.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
         conn.setDoOutput(true);
@@ -109,6 +119,11 @@ public class ServerInterfaceByGet {
 		    postData.append(URLEncoder.encode(String.valueOf(param.getValue()), "UTF-8"));
 		}
 		return postData.toString().getBytes("UTF-8");
+	}
+	
+	public String findAuthToken(HttpServletRequest request) {
+		Cookie[] cookies = request.getCookies();
+		
 	}
 
 }

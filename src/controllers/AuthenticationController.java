@@ -23,10 +23,11 @@ import services.ProductsFromServer;
 
 public class AuthenticationController extends HttpServlet {
 	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException 
 	{
 		// TODO Auto-generated method stub
 		//recuperer les parametres: idProduct, qte
+		try {
 				Enumeration<String> parameterNames = request.getParameterNames();
 				String action = "login";
 				String username = request.getParameter("username");
@@ -48,41 +49,37 @@ public class AuthenticationController extends HttpServlet {
 				}
 
 				Customer user = null;
-				
-				try 
-				{
-					//Get the Product
-					if(action == "register") {
-						user = LoginToServer.register(gender, first_name, last_name, email, username, password);
-						
-					} else {
-						user = LoginToServer.login(username, password);
-					}
+			
+				//Get the Product
+				if(action == "register") {
+					user = LoginToServer.register(gender, first_name, last_name, email, username, password);
 					
-					HttpSession session = request.getSession();
-					session.setAttribute("user_id", user.getId());
-					
+				} else {
 					user = LoginToServer.login(username, password);
-					Cookie authToken = new Cookie("authentication_token", user.getAuthToken());
-					response.addCookie(authToken);
-					
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
 				}
+				
+				HttpSession session = request.getSession();
+				session.setAttribute("user_id", user.getId());
+				
+				user = LoginToServer.login(username, password);
+				Cookie authToken = new Cookie("authentication_token", user.getAuthToken());
+				response.addCookie(authToken);
 				
 				Order cart;
-				try 
-				{
-					cart = OrdersFromServer.findCart(user.getId());
+				cart = OrdersFromServer.findCart(user.getId(), authToken.getValue());
 					
-					request.setAttribute("cart", cart);
-					request.getRequestDispatcher("cart.jsp").forward(request, response);
-				} catch (Exception e) 
-				{
-					// TODO Auto-generated catch block
+				request.setAttribute("cart", cart);
+				request.getRequestDispatcher("cart.jsp").forward(request, response);
+				
+			} catch (Exception e) {
+				System.out.println("------------------- YES: " + e.getMessage());
+				System.out.println("------------------- YES: " + e.getMessage().equals("Unauthorized action: Please Check out authentication(401)"));
+				if(e.getMessage().equals("Unauthorized action: Please Check out authentication(401)")){
+					response.sendRedirect(request.getContextPath() + "/LoginFormCustomer.jsp");
+				} else {
 					e.printStackTrace();
 				}
+			}
 				
 	}
 }

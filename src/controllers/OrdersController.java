@@ -49,10 +49,221 @@ public class OrdersController extends HttpServlet {
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 		String action = request.getParameter("action");
 		
-	
-		if (action.equals("show"))
-		{
+		try {
+		
+			if (action.equals("show"))
+			{
+					
+					List<Product> listP = new ArrayList<Product>();
+				       
+				       try
+				       {
+				    	   listP = ProductsFromServer.findAll();
+				    	   request.setAttribute("ProductsList", listP);		
+							request.getRequestDispatcher("achat.jsp").forward(request, response);
+				       } catch (ParseException e) 
+				       {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+				       }
+				       
+				}
+				       
+			else if (action.equals("showProduct"))
+				{
+					try
+					{
+						int id = Integer.parseInt(request.getParameter("id"));
+					    Product p = ProductsFromServer.findId(id);
+					    request.setAttribute("Product", p);		
+						request.getRequestDispatcher("achatProduct.jsp").forward(request, response);
+				    }
+					catch (ParseException e) 
+				       {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+				       }
+					
+				}
+			else if (action.equals("showCart"))
+				{
+					HttpSession session = request.getSession(false);
+					
+					if(session == null)
+					{	
+						request.getRequestDispatcher("LoginFormCustomer.jsp").forward(request,response);
 				
+					}
+					
+					try 
+					{
+						int custid =(int)session.getAttribute("user_id"); 
+						System.out.println("Customer id: " + custid);
+						
+						
+						Order cart = OrdersFromServer.findCart(custid);
+						request.setAttribute("Cart", cart);		
+						request.getRequestDispatcher("cart.jsp").forward(request,response);
+					} catch (ParseException e) 
+					{
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+				}	
+			else if (action.equals("removeProduct"))
+				{
+					int productid = Integer.parseInt(request.getParameter("productid"));
+					
+					try 
+					{
+						HttpSession session = request.getSession(false);
+						
+						if(session == null)
+						{	
+							request.getRequestDispatcher("LoginFormCustomer.jsp").forward(request,response);
+					
+						}
+						
+						int custid =(int)session.getAttribute("user_id"); 
+						System.out.println("Customer id: " + custid);
+							
+						//Get the cart
+						Order cart = OrdersFromServer.findCart(custid);
+									
+						cart = OrdersFromServer.removeOrderLine(3, productid);
+						
+						request.setAttribute("Cart", cart);		
+						request.getRequestDispatcher("cart.jsp").forward(request,response);
+							
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					
+				}
+			else if (action.equals("removeCart"))
+				{
+					try 
+					{
+						HttpSession session = request.getSession(false);
+						
+						if(session == null)
+						{	
+							request.getRequestDispatcher("LoginFormCustomer.jsp").forward(request,response);
+					
+						}
+						
+						int custid =(int)session.getAttribute("user_id"); 
+						System.out.println("Customer id: " + custid);
+						
+						Order cart = OrdersFromServer.findCart(custid);
+						if(cart!= null)
+							cart = OrdersFromServer.clear(custid);
+						
+						request.setAttribute("Cart", cart);		
+						request.getRequestDispatcher("cart.jsp").forward(request,response);
+							
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+	
+				}
+			
+			else if (action.equals("showOrders"))
+				{
+					try 
+					{
+						HttpSession session = request.getSession(false);
+						
+						if(session == null)
+						{	
+							request.getRequestDispatcher("LoginFormCustomer.jsp").forward(request,response);
+					
+						}
+						
+						int custid =(int)session.getAttribute("user_id"); 
+						System.out.println("Customer id: " + custid);
+						Customer cust = CustomersFromServer.findId(custid);
+						
+						List <Order> orders = OrdersFromServer.findAll(cust);
+						
+						
+						request.setAttribute("ListOrders", orders);		
+						request.getRequestDispatcher("OrdersView.jsp").forward(request,response);
+							
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					
+				}
+			else if(action.equals("showOrder"))
+			{
+				try 
+				{
+					HttpSession session = request.getSession(false);
+					
+					if(session==null || (session != null && session.getAttribute("user_id")== null))
+					{	
+						request.getRequestDispatcher("LoginFormCustomer.jsp").forward(request,response);
+				
+					}
+					
+					int custid =(int)session.getAttribute("user_id"); 
+					int orderid = Integer.parseInt(request.getParameter("id"));
+					
+					System.out.println("Customer id: " + custid);
+					
+					Order order = OrdersFromServer.findOrder(custid, orderid);
+	
+					
+					request.setAttribute("Order", order);		
+					request.getRequestDispatcher("OrdersView.jsp").forward(request,response);
+						
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+			}
+			else if(action.equals("pay"))
+			{
+				try 
+				{
+					HttpSession session = request.getSession(false);
+					
+					if(session==null || (session != null && session.getAttribute("user_id")== null))
+					{	
+						request.getRequestDispatcher("LoginFormCustomer.jsp").forward(request,response);
+				
+					}
+					
+					int custid =(int)session.getAttribute("user_id"); 
+					System.out.println("Customer id: " + custid);
+				
+					List<Address> Lshipping = AddressesFromServer.findAll(custid, "shipping");
+					List<Address> Lbilling  = AddressesFromServer.findAll(custid, "billing");
+					List<Payment> Lpayment = PaymentsFromServer.findAll(custid);
+					
+					if(Lshipping==null || Lbilling==null || Lpayment==null)
+					{
+						request.getRequestDispatcher("http://localhost:8080/GameCenterClient/customers?action=myaccount").forward(request,response);
+					}
+					request.setAttribute("AddressesShippingList", Lshipping);		
+					request.setAttribute("AddressesBllingList", Lbilling);
+					request.setAttribute("PaymentList", Lpayment);
+					request.getRequestDispatcher("payForm.jsp").forward(request,response);
+						
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+			
+			
+			}
+			else
+			{
 				List<Product> listP = new ArrayList<Product>();
 			       
 			       try
@@ -66,222 +277,15 @@ public class OrdersController extends HttpServlet {
 					e.printStackTrace();
 			       }
 			       
-			}
-			       
-		else if (action.equals("showProduct"))
-			{
-				try
-				{
-					int id = Integer.parseInt(request.getParameter("id"));
-				    Product p = ProductsFromServer.findId(id);
-				    request.setAttribute("Product", p);		
-					request.getRequestDispatcher("achatProduct.jsp").forward(request, response);
-			    }
-				catch (ParseException e) 
-			       {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-			       }
 				
 			}
-		else if (action.equals("showCart"))
-			{
-				HttpSession session = request.getSession(false);
-				
-				if(session == null)
-				{	
-					request.getRequestDispatcher("LoginFormCustomer.jsp").forward(request,response);
 			
-				}
-				
-				try 
-				{
-					int custid =(int)session.getAttribute("user_id"); 
-					System.out.println("Customer id: " + custid);
-					
-					
-					Order cart = OrdersFromServer.findCart(custid);
-					request.setAttribute("Cart", cart);		
-					request.getRequestDispatcher("cart.jsp").forward(request,response);
-				} catch (ParseException e) 
-				{
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
+		} catch (RuntimeException e) {
+			if(e.getMessage().equals("Unauthorized action: Please Check out authentication(401)")){
+				response.sendRedirect(request.getContextPath() + "/LoginFormCustomer.jsp");
 			}	
-		else if (action.equals("removeProduct"))
-			{
-				int productid = Integer.parseInt(request.getParameter("productid"));
-				
-				try 
-				{
-					HttpSession session = request.getSession(false);
-					
-					if(session == null)
-					{	
-						request.getRequestDispatcher("LoginFormCustomer.jsp").forward(request,response);
-				
-					}
-					
-					int custid =(int)session.getAttribute("user_id"); 
-					System.out.println("Customer id: " + custid);
-						
-					//Get the cart
-					Order cart = OrdersFromServer.findCart(custid);
-								
-					cart = OrdersFromServer.removeOrderLine(3, productid);
-					
-					request.setAttribute("Cart", cart);		
-					request.getRequestDispatcher("cart.jsp").forward(request,response);
-						
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				
-			}
-		else if (action.equals("removeCart"))
-			{
-				try 
-				{
-					HttpSession session = request.getSession(false);
-					
-					if(session == null)
-					{	
-						request.getRequestDispatcher("LoginFormCustomer.jsp").forward(request,response);
-				
-					}
-					
-					int custid =(int)session.getAttribute("user_id"); 
-					System.out.println("Customer id: " + custid);
-					
-					Order cart = OrdersFromServer.findCart(custid);
-					if(cart!= null)
-						cart = OrdersFromServer.clear(custid);
-					
-					request.setAttribute("Cart", cart);		
-					request.getRequestDispatcher("cart.jsp").forward(request,response);
-						
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-
-			}
-		
-		else if (action.equals("showOrders"))
-			{
-				try 
-				{
-					HttpSession session = request.getSession(false);
-					
-					if(session == null)
-					{	
-						request.getRequestDispatcher("LoginFormCustomer.jsp").forward(request,response);
-				
-					}
-					
-					int custid =(int)session.getAttribute("user_id"); 
-					System.out.println("Customer id: " + custid);
-					Customer cust = CustomersFromServer.findId(custid);
-					
-					List <Order> orders = OrdersFromServer.findAll(cust);
-					
-					
-					request.setAttribute("ListOrders", orders);		
-					request.getRequestDispatcher("OrdersView.jsp").forward(request,response);
-						
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				
-			}
-		else if(action.equals("showOrder"))
-		{
-			try 
-			{
-				HttpSession session = request.getSession(false);
-				
-				if(session==null || (session != null && session.getAttribute("user_id")== null))
-				{	
-					request.getRequestDispatcher("LoginFormCustomer.jsp").forward(request,response);
-			
-				}
-				
-				int custid =(int)session.getAttribute("user_id"); 
-				int orderid = Integer.parseInt(request.getParameter("id"));
-				
-				System.out.println("Customer id: " + custid);
-				
-				Order order = OrdersFromServer.findOrder(custid, orderid);
-
-				
-				request.setAttribute("Order", order);		
-				request.getRequestDispatcher("OrdersView.jsp").forward(request,response);
-					
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
 		}
-		else if(action.equals("pay"))
-		{
-			try 
-			{
-				HttpSession session = request.getSession(false);
-				
-				if(session==null || (session != null && session.getAttribute("user_id")== null))
-				{	
-					request.getRequestDispatcher("LoginFormCustomer.jsp").forward(request,response);
-			
-				}
-				
-				int custid =(int)session.getAttribute("user_id"); 
-				System.out.println("Customer id: " + custid);
-			
-				List<Address> Lshipping = AddressesFromServer.findAll(custid, "shipping");
-				List<Address> Lbilling  = AddressesFromServer.findAll(custid, "billing");
-				List<Payment> Lpayment = PaymentsFromServer.findAll(custid);
-				
-				if(Lshipping==null || Lbilling==null || Lpayment==null)
-				{
-					request.getRequestDispatcher("http://localhost:8080/GameCenterClient/customers?action=myaccount").forward(request,response);
-				}
-				request.setAttribute("AddressesShippingList", Lshipping);		
-				request.setAttribute("AddressesBllingList", Lbilling);
-				request.setAttribute("PaymentList", Lpayment);
-				request.getRequestDispatcher("payForm.jsp").forward(request,response);
-					
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-		
-		
-		}
-		else
-		{
-			List<Product> listP = new ArrayList<Product>();
-		       
-		       try
-		       {
-		    	   listP = ProductsFromServer.findAll();
-		    	   request.setAttribute("ProductsList", listP);		
-					request.getRequestDispatcher("achat.jsp").forward(request, response);
-		       } catch (ParseException e) 
-		       {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-		       }
-		       
-			
-		}
-	
-		}
-	
-		
+	}
 
 		
 	

@@ -27,7 +27,7 @@ import services.ProductsFromServer;
 
 public class OrdersFromServer {
 	private static ObjectMapper mapper = new ObjectMapper();
-	public static List<Order> findAll(Customer customer) throws ParseException, JsonParseException, JsonMappingException, IOException {
+	public static List<Order> findAll(Customer customer, String authToken) throws ParseException, JsonParseException, JsonMappingException, IOException {
 		URL url = new URL("http://localhost:8080/GameCenter/web-services/customers/" + customer.getId() + "/orders");
 		String s = ServerInterfaceByGet.get_request(url);
 		JSONArray jsons = (JSONArray) new JSONParser().parse(s);
