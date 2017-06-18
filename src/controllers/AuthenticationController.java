@@ -73,7 +73,8 @@ public class AuthenticationController extends HttpServlet {
 				String gender = null;
 				String first_name = null;
 				String last_name = null;
-				while (parameterNames.hasMoreElements() && action.equals("login")) {
+				while (parameterNames.hasMoreElements() && action.equals("login")) 
+				{
 					String current = parameterNames.nextElement();
 					System.out.println(current.toString());
 					if(current.equals("register-user")) {
@@ -94,7 +95,7 @@ public class AuthenticationController extends HttpServlet {
 				} else {
 					user = LoginToServer.login(username, password);
 				}
-				
+
 				HttpSession session = request.getSession();
 				session.setAttribute("user_id", user.getId());
 				

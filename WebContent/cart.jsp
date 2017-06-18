@@ -78,32 +78,42 @@
 		if(obj!=null)
 		{
 			Order o = (Order)obj;
-			List<OrderLine> lo = o.getOrderLines();
-			for(OrderLine u : lo)
+			if(o.getTotal()==0)
 			{
+				
+				%><br>
+				  <h1> Empty Cart.. Start your shopping now!</h1>
+				  
+			<% }
+			else
+			{
+				List<OrderLine> lo = o.getOrderLines();
+				for(OrderLine u : lo)
+				{
 	%>
-		<tr>
-				<td><%=u.getProd().getName()%>(<%=u.getProd().getConsole()%>)</td>
-				<td><%=u.getQte()%> </td>
-				<td> <%=u.getTotal()%></td>	
-				<td>				
-					<a href="orders?action=removeProduct&productid=<%=u.getProd().getId()%>">Remove</a>						
-				</td>	
-		</tr>
-			</tbody>
-			<% 
-			}
-			%>
-			<tr>
+					<tr>
+					<td><%=u.getProd().getName()%>(<%=u.getProd().getConsole()%>)</td>
+					<td><%=u.getQte()%> </td>
+					<td> <%=u.getTotal()%></td>	
+					<td>				
+						<a href="orders?action=removeProduct&productid=<%=u.getProd().getId()%>">Remove</a>						
+					</td>	
+				</tr>
+				</tbody>
+				<% 
+				}
+				%>
+				<tr>
 				<td>Total Price<td>
 				<td><%= o.getTotal() %><td>
-			</tr>
+				</tr>
 		</table>
 		
 		 <p><h2><a href="orders?action=pay">Pay</a></h2></p>
 		
 		 <h2><a href="orders?action=removeCart">Remove</a></h2>
 		<%
+			}
 		}
 		
 		else

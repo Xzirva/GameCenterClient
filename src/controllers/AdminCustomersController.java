@@ -14,11 +14,9 @@ import org.json.simple.parser.ParseException;
 
 import beans.Customer;
 import beans.Order;
-import beans.Product;
 import services.ClientInterface;
 import services.CustomersFromServer;
 import services.OrdersFromServer;
-import services.ProductsFromServer;
 
 /**
  * Servlet implementation class CustomersController
@@ -42,39 +40,49 @@ public class AdminCustomersController extends HttpServlet {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 		String action = request.getParameter("action");
-		if(action.equals("show"))
-		{
-			List<Customer> listC = new ArrayList<Customer>();
-			try 
+		try {
+			if(action.equals("show"))
 			{
-				
-				listC = CustomersFromServer.findAll(ClientInterface.findAuthToken(request));
-				request.setAttribute("CustomersList", listC);
-				
-		        RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/AdminCustomersView.jsp");
-		        dispatcher.forward(request, response);
-			} catch (ParseException e) 
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}	
-		}
-		else if(action.equals("showOrders"))
-		{
-			try {
-			int custid = Integer.parseInt(request.getParameter("id"));
-			Customer cust;
-			
-			cust = CustomersFromServer.findId(custid, ClientInterface.findAuthToken(request));
-				
-			List <Order> orders = OrdersFromServer.findAll(cust, ClientInterface.findAuthToken(request));
+				List<Customer> listC = new ArrayList<Customer>();
+				try 
+				{
 					
-			request.setAttribute("ListOrders", orders);		
-			request.getRequestDispatcher("AdminOrdersView.jsp").forward(request,response);
-			} 
-			catch (ParseException e) 
+					listC = CustomersFromServer.findAll(ClientInterface.findAuthToken(request));
+					request.setAttribute("CustomersList", listC);
+					
+			        RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/AdminCustomersView.jsp");
+			        dispatcher.forward(request, response);
+				} catch (ParseException e) 
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}	
+			}
+			else if(action.equals("showOrders"))
 			{
-				// TODO Auto-generated catch block
+				try {
+				int custid = Integer.parseInt(request.getParameter("id"));
+				Customer cust;
+				
+				cust = CustomersFromServer.findId(custid, ClientInterface.findAuthToken(request));
+					
+				List <Order> orders = OrdersFromServer.findAll(cust, ClientInterface.findAuthToken(request));
+						
+				request.setAttribute("ListOrders", orders);		
+				request.getRequestDispatcher("AdminOrdersView.jsp").forward(request,response);
+				} 
+				catch (ParseException e) 
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		} catch (Exception e) {
+			System.out.println("------------------- YES: " + e.getMessage());
+			System.out.println("------------------- YES: " + e.getMessage().equals("Unauthorized action: Please Check out authentication(401)"));
+			if(e.getMessage().equals("Unauthorized action: Please Check out authentication(401)")){
+				response.sendRedirect(request.getContextPath() + "/LoginFormCustomer.jsp");
+			} else {
 				e.printStackTrace();
 			}
 		}
